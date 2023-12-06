@@ -1,0 +1,39 @@
+SET GLOBAL SQL_MODE = CONCAT(@@SQL_MODE, ',ONLY_FULL_GROUP_BY');    
+
+-- EX 1
+
+SELECT spj.ID_J, SUM(spj.QTY) FROM spj
+JOIN j ON j.ID_J = spj.ID_J
+WHERE j.CITY = 'Athens'
+GROUP BY spj.ID_J
+HAVING SUM(spj.QTY) > 1000;
+
+-- EX 2 
+
+SELECT spj.ID_P, spj.ID_J FROM spj
+GROUP BY spj.ID_P, spj.ID_J
+HAVING AVG(spj.QTY) > 320;
+
+-- EX 3
+
+SELECT spj.ID_S FROM spj
+GROUP BY spj.ID_S, spj.ID_P
+HAVING COUNT(DISTINCT spj.ID_J) > 2;
+
+-- EX 4
+
+SELECT spj.ID_P FROM spj
+GROUP BY spj.ID_P
+HAVING COUNT(DISTINCT spj.ID_S) > 1;
+
+-- EX 5
+
+SELECT DISTINCT spj.ID_P FROM spj
+GROUP BY spj.ID_J, spj.ID_P
+HAVING COUNT(DISTINCT spj.ID_S) > 1;
+
+-- EX 6
+
+SELECT spj.ID_P, SUM(spj.QTY) FROM spj
+GROUP BY spj.ID_P
+HAVING COUNT(*) > 3;

@@ -1,0 +1,136 @@
+
+// a 
+
+public static void main(String[] args) {
+    for(int cpt = 1; cpt <= 10; ++cpt)
+        System.out.print(cpt + " ");
+}
+
+out => 1 2 3 4 5 6 7 8 9 10
+
+*********************************************** 
+// b 
+
+public static void main(String[] args) {
+    int s = 0;
+    for (int cpt = 1; cpt <= 10; ++cpt)
+        s += cpt;
+    System.out.println(s);
+}
+
+out => 55
+
+*********************************************** 
+// c
+
+public static void main(String[] args) {
+    int a = 3, b = 0;
+    for (int k = 1; k < 5; ++k)
+        b = 2 * a + b;
+    System.out.println(a + " " + b);
+}
+
+k = 1, b = 6
+k = 2, b = 12
+k = 3; b = 18
+k = 4; b = 24
+
+out => 3 24
+
+*********************************************** 
+// d
+
+public static void main(String[] args) {
+    int a = 1;
+    for (int i = 1; i <= 4; ++i) {
+        if (a % 2 == 0)
+            ++a;
+        a += i;
+    }
+    System.out.println(a);
+}
+
+i = 1, a = 2
+i = 2, a = 5
+i = 3, a = 8
+i = 4, a = 13
+
+out => 13
+
+*********************************************** 
+// e
+
+public static void main(String[] args) {
+    int a = 1;
+    for (int i = 1; i <= 3; ++i)
+        a += i;
+    for (int i = 4; i <= 5; ++i)
+        a += 1;
+    System.out.println(a);
+}
+
+out => 9
+
+*********************************************** 
+// f
+
+public static void main(String[] args) {
+    int a = 1;
+    for (int i = 1; i <= 3; ++i) {
+        a += i;
+        for (int j = 4; j <= 5; ++j)
+            a += 1;
+    }
+    System.out.println(a);
+}
+
+out => 13
+
+*********************************************** 
+//g
+
+public static void main(String[] args) {
+    int a = 1;
+    for (int i = 1; i <= 3; ++i) {
+        if (a % 2 == 0) {
+            a /= 2;
+            System.out.println(i);
+        }
+        else
+            a = 2 * a + i;
+        System.out.println(a);
+    }
+}
+
+a = 1
+i = 1, a = 3
+i = 2, a = 8
+i = 3, a = 4
+a = 2
+
+out => 3
+out => 8
+out => 3
+out => 4
+
+*********************************************** 
+//h
+
+public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+    System.out.println("Entrer 2 nbs. entiers: ");
+    int a = scan.nextInt();
+    int b = scan.nextInt();
+    int p = 0, s = 1;
+    if (b < 0) {
+        s = -1;
+        b = -b;
+    }
+    for (int i = 0; i < b; ++i) {
+        p += a;
+    }
+    // Que représente la valeur affichée ?
+    System.out.println(s * p);
+}
+
+out => a * b
