@@ -19,14 +19,14 @@ create table Groupe (
 	ville varchar(50) not null
 );
 
-create table client (
+create table Client (
 	idClient int PRIMARY KEY AUTO_INCREMENT,
     prenom varchar(50) not null,
     nom varchar(50) not null,
     ville varchar(50) not null
 );
 
-create table representation (
+create table Representation (
 	numGroupe int,
     numClient int,
     dateRepresentation date not null,
@@ -44,7 +44,7 @@ create table Musicien_Groupe (
     PRIMARY KEY (numGroupe, numMusicien)
 );
 
-insert into musicien (prenom, nom, ddn, ddd) values 
+insert into Musicien (prenom, nom, ddn, ddd) values 
 	('Angus', 'Young', '1955-03-31', null),
     ('Hugh', 'Laurie', '1959-06-11', null),
     ('Bill', 'Evans', '1929-08-16', '1980-09-15'),
@@ -52,7 +52,7 @@ insert into musicien (prenom, nom, ddn, ddd) values
     ('Benny', 'Goodman', '1909-05-30', '1986-06-13')
 ;
 
-insert into groupe (nom, price, ville) values 
+insert into Groupe (nom, price, ville) values 
 	('Big band 1', 120, 'Bruxelles'),
     ('Big band 2', 110, 'Bruxelles'),
     ('Band from TV', 75, 'New York'),
@@ -60,7 +60,7 @@ insert into groupe (nom, price, ville) values
     ('Brussel singer', 25, 'Bruxelles')
 ;
 
-insert into musicien_groupe (nummusicien, numgroupe) values 
+insert into Musicien_Groupe (numMusicien, numGroupe) values 
 	(1,4),
     (2,1),
     (2,2),
@@ -72,7 +72,7 @@ insert into musicien_groupe (nummusicien, numgroupe) values
     (5,2)
 ;
 
-insert into client (prenom, nom, ville) values 
+insert into Client (prenom, nom, ville) values 
 	('Xavier', 'Pigeolet', 'Nivelles'),
 	('Laëtitia', 'Bastide', 'Montpellier'),
     ('Boris', 'Verhaegen', 'Bruxelles'),
@@ -82,7 +82,7 @@ insert into client (prenom, nom, ville) values
     ('Éléonore', 'Pigeolet', 'Nivelles')
 ;
 
-insert into representation (numclient, numgroupe, dateRepresentation, nbheure) values 
+insert into Representation (numClient, numGroupe, dateRepresentation, nbHeure) values 
 	(1, 1, '2022-01-02', 4),
     (1, 2, '2012-04-15', 3),
     (1, 3, '2015-07-11', 10),
