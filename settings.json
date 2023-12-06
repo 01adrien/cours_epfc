@@ -1,0 +1,37 @@
+{
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.formatOnSave": true,
+    "terminal.integrated.tabs.showActiveTerminal": "singleTerminal",
+    "window.menuBarVisibility": "hidden",
+    "workbench.editor.showTabs": "single",
+    "workbench.editor.enablePreview": false,  
+    "workbench.editor.decorations.badges": false,
+    "editor.minimap.enabled": false,
+    "workbench.statusBar.visible": false,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.scrollbar.verticalScrollbarSize": 0,
+    "editor.glyphMargin": false,
+    "editor.folding": true,
+    "workbench.colorCustomizations": {
+        "editorGroupHeader.border": "#6c6969",        
+      },
+        
+    "terminal.integrated.defaultLocation": "editor",
+    "window.titleBarStyle": "native",
+    "workbench.colorTheme": "Visual Studio 2017 Dark - C++",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "workbench.activityBar.location": "hidden",
+    "window.zoomLevel": 1,
+    "[java]": {
+      "editor.defaultFormatter": "redhat.java"
+    },
+    "[c]": {
+      "editor.wordBasedSuggestions": false,
+      "editor.suggest.insertMode": "replace",
+      "editor.semanticHighlighting.enabled": true,
+      "editor.defaultFormatter": "ms-vscode.cpptools"
+    }
+      
+}
