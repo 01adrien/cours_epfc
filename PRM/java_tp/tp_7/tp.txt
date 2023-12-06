@@ -1,0 +1,34 @@
+Ex 1
+
+programme a:
+
+public static void fct_01a(int a, int b) {
+    System.out.println(a + b);
+}
+
+imprime la somme des parametres
+
+programme b:
+
+static final int MAX = 4;
+public static int fct_01b(int n) {
+    int somme = 0;
+    while(n < MAX) {
+        somme += n;
+        ++n;
+    }
+    return somme;
+}
+
+public static void main(String[] args) {
+    for (int cpt = 1; cpt < MAX; ++cpt)
+        System.out.println(fct_01b(cpt));
+}
+
+1 + 2 + 3 
+6 
+5
+3
+
+
+si n en parametre plus petit que max, rentre dans le while
