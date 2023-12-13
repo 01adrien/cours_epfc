@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/bob/Bureau/cours_EPFC
+cd /home/adrien/Bureau/cours_epfc
 git pull
 cat .config/.bashrc > ~/.bashrc
 cat .config/VScode/settings.json > ~/.config/Code/User/settings.json
