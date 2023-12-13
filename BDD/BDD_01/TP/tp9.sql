@@ -83,3 +83,26 @@ SELECT p.PNAME FROM p WHERE p.WEIGHT = (
     SELECT MAX(p.WEIGHT) FROM p
 );
 
+-- EX 9
+
+SELECT s.ID_S FROM s WHERE s.ID_S NOT IN (
+    SELECT DISTINCT spj.ID_S FROM spj
+    JOIN p ON p.ID_P = spj.ID_P
+    WHERE p.COLOR = 'Blue'
+); 
+
+
+SELECT s.ID_S FROM s WHERE s.ID_S NOT IN (
+    SELECT spj.ID_S FROM spj WHERE spj.ID_P IN (
+        SELECT p.ID_P FROM p WHERE p.COLOR = 'Blue'
+    )
+); 
+
+-- EX 10
+
+SELECT COUNT(*) FROM spj
+WHERE spj.ID_S NOT IN (
+    SELECT spj.ID_S FROM spj
+    JOIN j ON j.ID_J = spj.ID_J
+    WHERE j.CITY = 'Paris'
+) AND spj.QTY < 350;
