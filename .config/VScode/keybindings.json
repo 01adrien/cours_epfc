@@ -147,5 +147,9 @@
     {
         "key": "ctrl+g",
         "command": "-workbench.action.gotoLine"
+    },
+    {
+        "key": "ctrl+x ctrl+j",
+        "command": "java.debug.runJavaFile"
     }
 ]

@@ -1,5 +1,9 @@
 {
+  "editor.tabSize": 4,
   "editor.defaultFormatter": "ms-vscode.cpptools",
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "git.openRepositoryInParentFolders": "never",
   "editor.formatOnSave": true,
   "terminal.integrated.tabs.showActiveTerminal": "singleTerminal",
   "window.menuBarVisibility": "hidden",
@@ -32,7 +36,6 @@
     "editor.semanticHighlighting.enabled": true,
     "editor.defaultFormatter": "ms-vscode.cpptools"
   },
-  "git.openRepositoryInParentFolders": "never",
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
