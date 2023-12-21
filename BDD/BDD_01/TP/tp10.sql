@@ -25,6 +25,7 @@ WHERE p.SSN IN (
     WHERE d.ID_Message = 'M4'
 );
 
+
 /*
 -- EX 3
 Afficher le contenu des messages reçus par une femme de moins de 30 ans.
@@ -53,6 +54,7 @@ WHERE p.SSN IN (
     WHERE a.SSN1 = 'P1'
 );
 
+
 /*
 -- EX 5
 Quels sont les amis des amis de P1 ?
@@ -64,6 +66,7 @@ WHERE a.SSN1 IN (
     SELECT a.SSN2 FROM EstAmi AS a
     WHERE a.SSN1 = 'P1'
 );
+
 
 /*
 -- EX 6
@@ -79,6 +82,7 @@ WHERE a.SSN1 IN (
         WHERE p.Nom = 'Xavier'
     )
 );
+
 
 /*
 -- EX 7
@@ -123,6 +127,7 @@ WHERE p.SSN IN (
     WHERE p.Sexe = 'M'
 );
 
+
 /*
 -- EX 8
 Quelle personne n’a envoyé aucun message ? 
@@ -133,6 +138,7 @@ SELECT p.Nom FROM Personne AS p
 WHERE p.SSN NOT IN (
     SELECT DISTINCT m.Expediteur FROM Message AS m
 );
+
 
 /*
 -- EX 9
@@ -163,3 +169,68 @@ WHERE p.SSN NOT IN (
         )
     )
 );
+
+
+/*
+-- EX 11
+Quel est le message le plus récent ? Utilisez ANY ou ALL. 
+>> (M6)
+*/
+
+SELECT m.ID_Message FROM Message AS m
+WHERE m.Date_Expedition >= ALL (
+    SELECT m.Date_Expedition FROM Message AS m
+);
+
+
+/*
+-- EX 12
+Quelle est la personne la plus jeune ? Ecrivez une version 
+avec ANY ou ALL et une seconde avec une liaison naturelle. 
+>> (Remy)
+*/
+
+SELECT p.NOM FROM Personne AS p
+WHERE p.Age <= ALL (
+    SELECT p.Age FROM Personne AS p
+);
+
+SELECT p.NOM FROM Personne AS p
+WHERE p.Age = (
+    SELECT MIN(p.Age) FROM Personne AS p
+);
+
+
+/*
+-- EX 13
+Afficher le contenu de tous les messages sauf le plus ancien.
+>> (5 réponses)
+*/
+
+SELECT m.Contenu FROM Message AS m
+WHERE m.ID_Message NOT IN (
+    SELECT m.ID_Message FROM Message AS m
+    WHERE m.Date_Expedition = (
+        SELECT MIN(m.Date_Expedition) FROM Message AS m
+    )
+);
+
+
+/*
+-- EX 14
+Afficher la ou les personnes qui ont le plus d’amis. 
+(Paul et Julie)
+*/
+
+SELECT p.NOM FROM Personne AS p
+WHERE p.SSN IN (
+    SELECT a.SSN1 FROM EstAmi AS a
+    GROUP BY a.SSN1
+    HAVING COUNT(*) >= ALL (
+        SELECT COUNT(*) FROM EstAmi AS a
+        GROUP BY a.SSN1
+    )
+);
+
+
+
