@@ -77,3 +77,34 @@ AND NOT EXISTS (
     WHERE SPJ1.ID_S = SPJ.ID_S
     AND J.CITY = 'Paris' 
 );
+
+/*
+EX 6
+On souhaite connaître les fournisseurs qui n’ont jamais fourni 
+plus de 650 pièces identiques au total de toutes leurs livraisons. 
+(C’est à dire ceux dont aucune pièce de leur stock n’a baissé de 650 unités) 
+>> (S3 et S4).
+*/
+
+SELECT s.ID_S, s.SNAME FROM s WHERE NOT EXISTS (
+    SELECT spj.ID_S FROM spj
+    WHERE s.ID_S = spj.ID_S
+    GROUP BY spj.ID_S, spj.ID_P
+    HAVING SUM(spj.QTY) > 650
+);
+
+
+/*
+EX 7
+On souhaite connaître les fournisseurs qui ont fait au minimum 
+4 livraisons représentant au moins trois pièces différentes (S5)
+*/
+
+SELECT s1.ID_S FROM spj AS s1 WHERE EXISTS (
+    SELECT * FROM spj
+    WHERE s1.ID_S = spj.ID_S
+    GROUP BY spj.ID_S
+    HAVING COUNT(DISTINCT spj.ID_P) > 2
+) GROUP BY s1.ID_S
+HAVING COUNT(*) > 3;
+

@@ -110,8 +110,10 @@ SELECT DISTINCT spj.id_s FROM spj
 JOIN p ON p.id_p = spj.id_p
 JOIN j ON j.id_j = spj.id_j
 GROUP BY spj.id_s
-HAVING COUNT(DISTINCT(j.city)) > 2
-AND COUNT(DISTINCT(p.city)) > 1;
+HAVING (
+    COUNT(DISTINCT(j.city)) > 2
+    AND COUNT(DISTINCT(p.city)) > 1
+);
 
 
 
