@@ -4,6 +4,9 @@ import seqint.*;
 
 public class SeqUtils {
 
+    public SeqUtils() {
+    }
+
     public boolean isEmpty(SeqInt seq) {
         return !seq.iterator().hasNext();
     }
@@ -37,6 +40,24 @@ public class SeqUtils {
             }
         }
         return max;
+    }
+
+    public int lastPosMax(SeqInt seq) {
+        SeqIntIterator iter = seq.iterator();
+        int pos = -1;
+        int current;
+
+        if (iter.hasNext()) {
+            int m = this.max(seq);
+            for (int i = 0; iter.hasNext(); i++) {
+                current = iter.next();
+                if (current == m) {
+                    pos = i;
+                }
+            }
+
+        }
+        return pos;
     }
 
 }
