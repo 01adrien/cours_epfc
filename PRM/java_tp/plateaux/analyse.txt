@@ -1,0 +1,69 @@
+
+|------>
+|------ EX 4 ->
+|------>
+
+Écrire une fonction qui calcule le nombre de plateaux de longueur supérieure
+ou égale à 3.
+
+curr    1 1 2 2 2 2 4 4 5 5 5 5 5 8 9 9 4 4 4 4 4 4   curr = it.next()
+prev      1 1 2 2 2 2 4 4 5 5 5 5 5 8 9 9 4 4 4 4 4   prev = curr
+res     0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3   if (lgPlat==3)res++
+lgPlat  1 2 1 2 3 4 1 2 1 2 3 4 5 1 1 2 1 2 3 4 5 6   if (curr==prev) lgPlat++ else lgPlat = 1
+
+INIT:
+res = 0;
+curr = it.next;
+prev = curr
+lgPlat = 1
+
+
+|------>
+|------ EX 5 ->
+|------>
+
+Écrire une fonction qui calcule le nombre de plateaux de longueur supérieure ou égale à LG
+
+lg = 2
+
+curr    1 1 2 2 2 2 4 4 5 5 5 5 5 8 9 9 4 4 4 4 4 4   curr = it.next()
+prev      1 1 2 2 2 2 4 4 5 5 5 5 5 8 9 9 4 4 4 4 4   prev = curr
+res     0 1 1 2 2 2 2 3 3 4 4 4 4 4 4 5 4 6 6 6 6 6   if (lgPlat == lg)res++
+lgPlat  1 2 1 2 3 4 1 2 1 2 3 4 5 1 1 2 1 2 3 4 5 6   if (curr == prev) lgPlat++ else lgPlat = 1
+
+INIT:
+res = 0;
+curr = it.next;
+prev = curr
+lgPlat = 1
+
+
+|------>
+|------ EX 6 ->
+|------>
+
+Écrire une fonction qui calcule le nombre de plateaux de longueur 3.
+
+curr    1 1 2 2 2 4 4 4 5 5 5 5 9 9 9 9 4 4 4 8 8 8   curr = it.next()
+prev      1 1 2 2 2 4 4 4 5 5 5 5 9 9 9 9 4 4 4 8 8   prev = curr
+res     0 0 0 0 1 1 1 2 2 2 3 2 2 2 3 2 2 2 3 3 3 4   if (lgPlat == 3) res++ else if (lgPlat == 4) res--
+lgPlat  1 2 1 2 3 1 2 3 1 2 3 4 1 2 3 4 1 2 3 1 2 3   if (curr == prev) lgPlat++ else lgPlat = 1
+
+
+
+|------>
+|------ EX 7 ->
+|------>
+
+Écrire une fonction qui calcule le nombre de plateaux de longueur 1.
+
+curr    1 2 2 2 2 2 3 4 5 5 2 1 9 9 7 9 4 4 4 8 8 7   curr = it.next()
+prev      1 2 2 2 2 2 3 4 5 5 2 1 9 9 7 9 4 4 4 8 8   prev = curr
+res     1 1 1 1 1 1 2 3 4 3 4 5 6 5 6 7 8 7 7 7 8 8   if (lgPlat == 1) res++ else if (lgPlat == 2) res--
+lgPlat  1 1 2 3 4 5 1 1 1 2 1 1 1 2 1 1 1 2 3 4 1 1   if (curr == prev) lgPlat++ else lgPlat = 1
+
+INIT:
+res = 0;
+curr = it.next;
+prev = curr
+lgPlat = res = 1
