@@ -1,6 +1,5 @@
 import seqint.*;
-
-import pack.SeqUtils;
+import pack.*;
 
 public class App {
 
