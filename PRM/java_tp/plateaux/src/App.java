@@ -164,8 +164,46 @@ public class App {
         return res;
     }
 
+    public static int ex8(SeqInt seq) {
+        // pareil que ex 6
+        return 0;
+    }
+
+    public static int ex9(SeqInt seq, int lg1, int lg2) {
+        SeqIntIterator it = seq.iterator();
+        int res, curr, prev, lgPlat;
+        res = 0;
+        if (it.hasNext()) {
+            curr = it.next();
+            lgPlat = 1;
+            boolean inc = false;
+            if ((lg1 == lg2) && lg1 == 1) {
+                res = 1;
+            }
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                if (curr == prev) {
+                    lgPlat++;
+                } else {
+                    lgPlat = 1;
+                    inc = false;
+                }
+                if ((lgPlat >= lg1 && lgPlat <= lg2) && !inc) {
+                    res++;
+                    inc = true;
+                } else if (lgPlat > lg2 && inc) {
+                    res -= res != 0 ? 1 : 0;
+                    inc = false;
+                }
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) throws Exception {
-        SeqInt seq = new SeqInt(1, 1, 2, 2, 3, 3);
-        System.out.println(ex7(seq));
+        SeqInt seq = new SeqInt(1, 1, 2, 3, 2, 2, 4, 1, 5, 5, 5, 5, 8, 9, 9, 4, 4, 4, 4, 4, 4);
+        System.out.println(ex9(seq, 2, 4));
+
     }
 }

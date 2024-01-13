@@ -67,3 +67,31 @@ res = 0;
 curr = it.next;
 prev = curr
 lgPlat = res = 1
+
+|------>
+|------ EX 8 ->
+|------>
+
+// pareil que ex 6 
+
+|------>
+|------ EX 9 ->
+|------>
+
+Écrire une fonction qui calcule le nombre de plateaux de longueur comprise entre LG1 et LG2,
+LG1 et LG2 inclus (données et on suppose LG1 > 0 et LG1 <= LG2).
+
+lg1 = 2 | lg2 = 4
+
+curr    1 1 2 3 2 2 4 1 5 5 5 5 5 8 9 9 4 4 4 4 4 4   curr = it.next()
+prev      1 1 2 3 2 2 4 1 5 5 5 5 5 8 9 9 4 4 4 4 4   prev = curr
+res     0 1 1 1 2 2 2 2 2 3 3 3 2 2 2 2 3 3 4 4 3 3   if ((lgPlat >= lg1 && lgPlat <= lg2) && !inc)res++ ; inc = true else if (lgPlat > lg2 && inc) res-- ; inc = false
+lgPlat  1 2 1 1 1 2 1 1 1 2 3 4 5 1 1 2 1 2 3 4 5 6   if (curr == prev) lgPlat++ else lgPlat = 1; inc = false
+inc     0 1 0 0 0 1 0 0 0 1 1 1 0 0 0 1 0 1 1 1 0 0
+
+INIT:
+res = 0;
+curr = it.next;
+prev = curr
+lgPlat = 1
+inc = false
