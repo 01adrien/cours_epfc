@@ -201,9 +201,117 @@ public class App {
         return res;
     }
 
+    public static int ex10(SeqInt seq) {
+        SeqIntIterator it = seq.iterator();
+        int curr, prev, res, max;
+        res = 0;
+        if (it.hasNext()) {
+            curr = it.next();
+            max = curr;
+            res = 1;
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                if (curr != prev && curr == max) {
+                    res++;
+                } else if (curr > max) {
+                    max = curr;
+                    res = 1;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static int ex11(SeqInt seq) {
+        SeqIntIterator it = seq.iterator();
+        int curr, prev, res, max, lgPlat;
+        res = 0;
+        if (it.hasNext()) {
+            curr = it.next();
+            max = curr;
+            lgPlat = 1;
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                if (curr == prev) {
+                    lgPlat++;
+                } else {
+                    lgPlat = 1;
+                }
+                if (curr == max && lgPlat == 2) {
+                    res++;
+                } else if (curr > max) {
+                    max = curr;
+                    res = 0;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static int ex12(SeqInt seq, int lg) {
+        SeqIntIterator it = seq.iterator();
+        int curr, prev, res, max, lgPlat;
+        res = 0;
+        if (it.hasNext()) {
+            curr = it.next();
+            max = curr;
+            lgPlat = 1;
+            res = (lg == 1) ? 1 : res;
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                if (curr == prev) {
+                    lgPlat++;
+                } else {
+                    lgPlat = 1;
+                }
+                if (curr == max) {
+                    if (lgPlat == lg) {
+                        res++;
+                    } else if (lgPlat == lg + 1) {
+                        res--;
+                    }
+                } else if (curr > max) {
+                    max = curr;
+                    res = (lg > 1) ? 0 : 1;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static int ex13(SeqInt seq) {
+        SeqIntIterator it = seq.iterator();
+        int curr, prev, res, max, i;
+        res = -1;
+        if (it.hasNext()) {
+            curr = it.next();
+            res = i = 0;
+            max = curr;
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                i++;
+                if (curr == max) {
+                    res = i;
+                } else if (curr > max) {
+                    max = curr;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static int ex14(SeqInt seq) {
+
+        return -1;
+    }
+
     public static void main(String[] args) throws Exception {
-        SeqInt seq = new SeqInt(1, 1, 2, 3, 2, 2, 4, 1, 5, 5, 5, 5, 8, 9, 9, 4, 4, 4, 4, 4, 4);
-        System.out.println(ex9(seq, 2, 4));
+        SeqInt seq = new SeqInt();
+        System.out.println(ex14(seq));
 
     }
 }
