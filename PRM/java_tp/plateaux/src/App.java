@@ -294,7 +294,7 @@ public class App {
                 prev = curr;
                 curr = it.next();
                 i++;
-                if (curr == max) {
+                if (curr == max && prev != curr) {
                     res = i;
                 } else if (curr > max) {
                     max = curr;
@@ -306,12 +306,72 @@ public class App {
 
     public static int ex14(SeqInt seq) {
 
-        return -1;
+        SeqIntIterator it = seq.iterator();
+        int curr, prev, res, max, length;
+        res = 0;
+        if (it.hasNext()) {
+            curr = it.next();
+            length = res = 1;
+            max = curr;
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                if (curr == prev) {
+                    length++;
+                } else {
+                    length = 1;
+                }
+                if (curr == max) {
+                    res = length;
+                } else if (curr > max) {
+                    max = curr;
+                    res = 1;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static SeqInt ex15(SeqInt seq) {
+        SeqIntIterator it = seq.iterator();
+        int curr, prev, pos, len, max, currLen, i;
+        len = 0;
+        pos = -1;
+        if (it.hasNext()) {
+            curr = it.next();
+            currLen = len = 1;
+            pos = i = 0;
+            max = curr;
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                i++;
+                if (curr == prev) {
+                    currLen++;
+                } else {
+                    currLen = 1;
+                }
+                if (curr == max) {
+                    if (prev != curr) {
+                        pos = i;
+                    }
+                    len = currLen;
+                } else if (curr > max) {
+                    max = curr;
+                    len = 1;
+                }
+            }
+        }
+
+        return new SeqInt(pos, len);
     }
 
     public static void main(String[] args) throws Exception {
-        SeqInt seq = new SeqInt();
-        System.out.println(ex14(seq));
+        SeqInt seq = new SeqInt(15, 1, 2, 8, 8, 15, 15, 15, 9, 8, 15);
+        SeqIntIterator it = ex15(seq).iterator();
+        int pos = it.next();
+        int len = it.next();
+        System.out.println("pos => " + pos + " | len => " + len);
 
     }
 }
