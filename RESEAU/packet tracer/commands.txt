@@ -1,0 +1,6 @@
+
+----------- Useful command for router ----------------------
+
+show run                   =>  list interface on Router
+show ip interface brief    =>  brief list of interfaces router 
+clear ip nat translations  =>  clear nat table on Router

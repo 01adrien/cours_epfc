@@ -1,0 +1,16 @@
+rendu rapport dimanche 11 fevrier
+
+Definitions:
+- routeurs
+- routes (statique et dynamiques)
+- Les differents NAT
+- DNS / DHCP / IPV4
+
+
+----------- Useful command for router ----------------------
+
+show run                    =>  list interface on Router
+show ip interface brief     =>  brief list of interfaces router 
+clear ip nat translation *  =>  clear nat table on Router
+
+

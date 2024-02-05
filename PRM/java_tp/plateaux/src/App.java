@@ -358,7 +358,6 @@ public class App {
                     len = currLen;
                 } else if (curr > max) {
                     max = curr;
-                    len = 1;
                 }
             }
         }
@@ -366,12 +365,32 @@ public class App {
         return new SeqInt(pos, len);
     }
 
+    public static int ex16(SeqInt seq, int h) {
+
+        SeqIntIterator it = seq.iterator();
+        int curr, prev, pos, i;
+        pos = -1;
+        if (it.hasNext()) {
+            i = 0;
+            curr = it.next();
+            if (curr == h) {
+                pos = i;
+            }
+            while (it.hasNext()) {
+                prev = curr;
+                curr = it.next();
+                i++;
+                if (curr == h && prev != curr) {
+                    pos = i;
+                }
+            }
+        }
+        return pos;
+    }
+
     public static void main(String[] args) throws Exception {
-        SeqInt seq = new SeqInt(15, 1, 2, 8, 8, 15, 15, 15, 9, 8, 15);
-        SeqIntIterator it = ex15(seq).iterator();
-        int pos = it.next();
-        int len = it.next();
-        System.out.println("pos => " + pos + " | len => " + len);
+        SeqInt seq = new SeqInt(15, 1, 2, 8, 8, 15, 15, 15, 9, 8);
+        System.out.println(ex16(seq, 15));
 
     }
 }
