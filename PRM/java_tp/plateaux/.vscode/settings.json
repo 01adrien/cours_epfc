@@ -32,7 +32,7 @@
   "workbench.colorTheme": "Visual Studio 2017 Dark - C++",
   "terminal.integrated.enableMultiLinePasteWarning": false,
   "workbench.activityBar.location": "hidden",
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0,
   "[java]": {
     "editor.defaultFormatter": "redhat.java"
   },

@@ -180,7 +180,6 @@ public class App {
             for (int i = pos; i < arr.size(); i++) {
                 ex6(arr, i, arr.size() - 1);
             }
-
         }
     }
 
@@ -213,6 +212,11 @@ public class App {
      * 4, 3, 5, 4] donnerait [3, 7, 2, 5, 3, 5]. Refaites le même exercice mais en
      * commençant
      * à partir d’une position donnée et plus à partir du début du tableau
+     * 
+     * !! A REFAIRE AVEC UNE SEULE BOUCLE
+     * 
+     * 2 pointeurs (lecture / ecriture) tout pousser au debut
+     * 
      */
     public static void ex12(Array<Integer> arr, int val) {
         int s = arr.size();
@@ -224,12 +228,15 @@ public class App {
         }
     }
 
+    public static void ex12Bis(Array<Integer> arr, int val) {
+        int s = arr.size();
+    }
+
     public static void main(String[] args) throws Exception {
         Array<Integer> arr = new Array<>(4, 3, 7, 2, 5, 4, 4, 4, 4, 3, 5, 4);
         System.out.println(arr);
         ex12(arr, 4);
         System.out.println(arr);
-
     }
 
 }
