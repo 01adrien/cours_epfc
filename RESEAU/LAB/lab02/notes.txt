@@ -2,7 +2,7 @@ rendu rapport dimanche 11 fevrier
 
 Definitions:
 - routeurs
-- routes (statique et dynamiques)
+- routes (statique, dynamiques, connectees)
 - Les differents NAT
 - DNS / DHCP / IPV4
 

@@ -109,7 +109,7 @@ public class App {
      * données. Que se
      * passe-t-il si les positions sont invalides ?
      */
-    public static boolean ex6(Array<Integer> arr, int p1, int p2) {
+    public static boolean swap(Array<Integer> arr, int p1, int p2) {
         if (p1 < arr.size() && p2 < arr.size()) {
             int temp = arr.get(p1);
             arr.set(p1, arr.get(p2));
@@ -130,7 +130,7 @@ public class App {
         int start = 0;
         int end = arr.size() - 1;
         for (int i = 0; i < arr.size() / 2; i++) {
-            ex6(arr, end--, start++);
+            swap(arr, end--, start++);
         }
     }
 
@@ -144,7 +144,7 @@ public class App {
      */
     public static void ex8(Array<Integer> arr) {
         for (int i = 0; i < arr.size() - 1; i++) {
-            ex6(arr, i, i + 1);
+            swap(arr, i, i + 1);
         }
     }
 
@@ -156,7 +156,7 @@ public class App {
      */
     public static void ex9(Array<Integer> arr) {
         for (int i = 0; i < arr.size(); i++) {
-            ex6(arr, i, arr.size() - 1);
+            swap(arr, i, arr.size() - 1);
         }
     }
 
@@ -178,7 +178,7 @@ public class App {
         if (pos < arr.size()) {
             arr.add(val);
             for (int i = pos; i < arr.size(); i++) {
-                ex6(arr, i, arr.size() - 1);
+                swap(arr, i, arr.size() - 1);
             }
         }
     }
@@ -198,7 +198,7 @@ public class App {
     public static void ex11(Array<Integer> arr, int pos) {
         if (pos < arr.size()) {
             for (int i = pos; i < arr.size(); i++) {
-                ex6(arr, i, i + 1);
+                swap(arr, i, i + 1);
             }
             arr.reduceTo(arr.size() - 1);
         }
@@ -228,15 +228,29 @@ public class App {
         }
     }
 
-    public static void ex12Bis(Array<Integer> arr, int val) {
-        int s = arr.size();
+    public static void ex12BisSwap(Array<Integer> arr, int val) {
+        int pStart = 0;
+        int pEnd = arr.size() - 1;
+        while (pStart != pEnd) {
+            if (arr.get(pEnd) == val) {
+                pEnd--;
+            } else if (arr.get(pStart) == val) {
+                swap(arr, pStart, pEnd);
+            } else {
+                pStart++;
+            }
+        }
+        System.out.println("start " + pStart);
+        System.out.println("end " + pEnd);
+        System.out.println(arr);
+        arr.reduceTo(pEnd + 1);
     }
 
     public static void main(String[] args) throws Exception {
-        Array<Integer> arr = new Array<>(4, 3, 7, 2, 5, 4, 4, 4, 4, 3, 5, 4);
+        Array<Integer> arr = new Array<>(4, 8, 6, 4, 6, 9, 9, 6, 4, 7, 8, 5, 6, 9, 1, 9, 9, 3, 9);
+        ex12BisSwap(arr, 9);
         System.out.println(arr);
-        ex12(arr, 4);
-        System.out.println(arr);
+
     }
 
 }
