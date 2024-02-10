@@ -1,5 +1,3 @@
-;; mult(a,b)
-	
 	LDA b
 	SUB one
 	STA b

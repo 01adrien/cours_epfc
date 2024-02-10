@@ -1,0 +1,14 @@
+
+
+cours samedi 17 => 9H - 13H30 + exam blanc
+
+transistor
+RAID
+operations binaire
+float
+haming
+
+JIT compiler => https://github.com/spencertipping/jit-tutorial?tab=readme-ov-file
+
+
+
