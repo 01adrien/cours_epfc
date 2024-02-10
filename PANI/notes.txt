@@ -1,0 +1,8 @@
+Etapes projet:
+    - idee
+    - faisabilite
+    - preparation
+    - implementation
+    - deploiement
+    - maintenance
+    - demantelement
