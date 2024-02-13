@@ -1,3 +1,5 @@
+import javax.management.RuntimeErrorException;
+
 public class App {
 
     // EX 1
@@ -52,11 +54,8 @@ public class App {
 
     // EX 10
     public static boolean StrEqual(String str1, String str2) {
-        boolean lenMatch = false;
+        boolean lenMatch = (str1.length() == str2.length());
         boolean stringMatch = false;
-        if (str1.length() == str2.length()) {
-            lenMatch = true;
-        }
         if (lenMatch) {
             int i = 0;
             while (i < str1.length() && str1.charAt(i) == str2.charAt(i)) {
@@ -70,10 +69,37 @@ public class App {
 
     // EX 12
     public static int strCompare(String str1, String str2) {
-        return 0;
+        int j = Math.min(str1.length(), str2.length());
+        int s1, s2;
+        for (int i = 0; i < j; i++) {
+            s1 = (int) toUpper(str1.charAt(i));
+            s2 = (int) toUpper(str2.charAt(i));
+            if (s1 != s2) {
+                return s2 - s1;
+            }
+        }
+        return str2.length() - str1.length();
     }
 
+    // EX 14
+    public static String posIntTostring(int n) throws Exception {
+        String str = "";
+        if (n < 0) {
+            throw new Exception("n < 0");
+        }
+        while (n > 0) {
+            str += (char) n % 10;
+            n /= 10;
+        }
+        return reverse(str);
+
+    }
+
+    // EX 16
+
+    // public static Ar
+
     public static void main(String[] args) throws Exception {
-        System.out.println(strCompare("test", "test") ? "equal" : "not equal");
+        System.out.println(posIntTostring(456));
     }
 }
