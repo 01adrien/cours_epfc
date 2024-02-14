@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="05f1379f-91a9-46cb-a13a-135477453973" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/tp1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tp1.sql" afterDir="false" />
+    <list default="true" id="d7457b45-e14c-49d3-9a94-f10970e4a90f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/bdge.oBAuAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/bdge.oBAuAA/schema/bdlivre.irvq8A.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/bdge.oBAuAA/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/bdge.oBAuAA/schema/information_schema.FNRwLQ.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/bdge.oBAuAA/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/bdge.oBAuAA/schema/pg_catalog.0S1ZNQ.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/bdge.oBAuAA/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/postgres.edMnLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/770a299e-a0ee-42fe-9c76-97f056ac6b94/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,9 +26,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
   "associatedIndex": 8
 }]]></component>
-  <component name="ProjectId" id="2cN6rK02lQQa2YyxFxtP9s2fTqn" />
+  <component name="ProjectId" id="2cNEcF9oP3yfUYDQsNozP3xHSDd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,8 +40,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/adrien",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "last_opened_file_path": "/home/adrien"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
