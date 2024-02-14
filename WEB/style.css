@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'RobotoBold';
+    src: url('fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'RobotoLight';
+    src: url('fonts/Roboto/Roboto-Light.ttf') format('truetype');
+}
+
+
+
+body {
+    background-color: gray;
+    padding: 5%;
+    font-size: 'RobotoLight';
+}
+
+main {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid white;
+    width: 800px;
+    margin: auto;
+    padding: 50px 0px 0px 30px;
+}
+
+ul {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: #37474f;
+    font-family: 'RobotoBold';
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #5c6bc0;
+}
+
+section>h2 {
+    border-bottom: 2px solid #5c6bc0;
+    padding-bottom: 5%;
+}
+
+.chip-list {
+    padding: 0;
+}
+
+.chip-list>li {
+    background-color: #5c6bc0;
+    border: 1px solid #5c6bc0;
+    border-radius: 25px;
+    color: white;
+    font-size: 0.8 rem;
+    padding: 1% 3% 1% 3%;
+    display: inline;
+    margin: 0% 3% 2% 0%;
+}
+
+.contact i {
+    margin: 5px 15px 5px 15px;
+    color: #5c6bc0;
+}
+
+.contact a {
+    color: inherit;
+}
