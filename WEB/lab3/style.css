@@ -1,0 +1,61 @@
+@font-face {
+    font-family: RobotoBold;
+    src: url('fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: RobotoLight;
+    src: url('fonts/Roboto/Roboto-Light.ttf') format('truetype');
+}
+
+
+html {
+    display: flex;
+    justify-content: center;
+    font: 1rem "RobotoLight";
+}
+
+#html_part section,
+#css_part section {
+    line-height: 0.5em;
+    margin-left: 40px;
+}
+
+
+
+h3 {
+    color: rgb(46, 73, 146);
+    padding: 15px 0;
+}
+
+h2 {
+    padding-top: 20px;
+}
+
+h2, h3 {
+    font: "RobotoBold";
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+#main_title {
+    text-align: center;
+    padding: 15px 0px;
+    font-weight: 600;
+    border-radius: 20px;
+    background: linear-gradient(0.25turn, #9cc3d4, #ebf8e1);
+    
+}
+
+ul {
+    list-style: none;
+}
+
+nav {
+    padding-top: 10px;
+}
+
+footer {
+    
+    height: 50px;
+}
