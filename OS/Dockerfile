@@ -1,3 +1,8 @@
-FROM ubuntu:20.04
-RUN apt-get update && apt-get -y upgrade
-CMD echo "Vive les canards"
+FROM ubuntu 
+RUN apt update
+# RUN apt install apache2 -y
+# RUN apt install apache2-utils -y
+# RUN apt clean 
+# EXPOSE 80
+# CMD [“apache2ctl”, “-D”, “FOREGROUND”]
+

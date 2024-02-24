@@ -20,10 +20,7 @@ html {
     line-height: 0.5em;
     margin-left: 40px;
 }
-
-
-
-h3 {
+    h3 {
     color: rgb(46, 73, 146);
     padding: 15px 0;
 }
@@ -48,7 +45,9 @@ h2, h3 {
 }
 
 ul {
-    list-style: none;
+    /* list-style: none; */
+    list-style-type: upper-roman;
+    
 }
 
 nav {
