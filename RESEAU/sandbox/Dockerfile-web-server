@@ -1,0 +1,6 @@
+FROM php:8.0-apache
+
+EXPOSE 80
+
+COPY ./index.html /var/www/html/. 
+

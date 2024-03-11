@@ -25,4 +25,26 @@ JOIN bdlivre.livre_paru lp on o.idoeuvre = lp.numoeuvre
 WHERE lp.editeur IS NOT NULL
 ;
 
+-- EX 3
+-- Créez une vue Livre_français avec tous les renseignements des livres français.
+-- Remarquez que vous pouvez modifier les données des livres en question à partir de cette vue.
+
+CREATE VIEW  livre_francais AS
+SELECT l.* FROM bdlivre.livre_paru as l
+WHERE l.langue = 'Fr'
+;
+
+UPDATE livre_francais SET langue = 'Nl' WHERE editeur ='Pauvert';
+
+-- EX
+-- Modifiez la vue précédente afin de faire en sorte que l’on puisse
+-- modifier toutes données de ces livres exceptés le fait qu’ils soient écrits en français.
+
+CREATE OR REPLACE VIEW  livre_francais AS
+SELECT l.* FROM bdlivre.livre_paru as l
+WHERE l.langue = 'Fr'
+WITH  CHECK OPTION
+;
+
+
 
