@@ -1,3 +1,5 @@
+import eu.epfc.prm2.Array;
+
 public class App {
 
     public static int strCompare(String str1, String str2) {
@@ -65,6 +67,7 @@ public class App {
         } else {
             System.out.println(p1 + " a le meme age que " + p2);
         }
+        Array<Person> arr = new Array<Person>();
 
     }
 }
