@@ -1,0 +1,180 @@
+@font-face {
+    font-family: 'RobotoBold';
+    src: url('fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'RobotoLight';
+    src: url('fonts/Roboto/Roboto-Light.ttf') format('truetype');
+}
+
+:root {
+    --text-color: #5c6bc0;
+    --primary-color: #37474f;
+}
+
+
+body {
+    background-color: gray;
+    font-family: 'RobotoLight';
+    padding: 5% 0 5% 0;
+}
+
+main {
+    background-color: white;
+    padding: 50px;
+    margin: auto;
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 21cm;
+    min-width: 21cm;
+    min-height: 29.7cm;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    font-family: 'RobotoBold';
+    color: var(--primary-color)
+}
+
+h2 {
+    color: var(--text-color);
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 2%;
+    /* gap: 2%; */
+}
+
+.section-container {
+    display: flex;
+    gap: 5%;
+}
+
+.section-container__left {
+    width: 60%;
+}
+
+.section-container__right {
+    width: 40%;
+}
+
+
+
+section>section {
+    margin-left: 5%;
+}
+
+section>h2 {
+    border-bottom: 2px solid var(--text-color);
+    margin-bottom: 5%;
+}
+
+ul {
+    list-style: none;
+}
+
+.main-header__bio {
+    width: 50%;
+    text-align: justify;
+}
+
+.main-header__bio li {
+    display: flex;
+}
+
+.main-header__bio>h1,
+.main-header__bio>h2 {
+    text-align: center;
+}
+
+.main-header__contact i {
+    margin: 5px 15px 5px 15px;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.main-header__contact a {
+    /* get the color from the parent instead of keeping this ugly default link style  */
+    color: inherit;
+}
+
+.chip-list {
+    list-style: none;
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chip-list>li {
+    background-color: var(--text-color);
+    border: 1px solid var(--text-color);
+    padding: 2% 5%;
+    margin: 0 2% 3% 0;
+    border-radius: 25px;
+    color: white;
+    font-size: 0.8em;
+}
+
+.education-section>section {
+    margin-bottom: 2%;
+    display: flex;
+    gap: 5%;
+}
+
+.stepper {
+    border-left: 2px solid var(--text-color);
+}
+
+.step {
+    position: relative;
+}
+
+.step::after {
+    /* un pseudo-élément doit avoir un contenu même vide si on veut qu'il s'affiche */
+    content: "";
+    /* z-index signifie que l'élément sera positionné au dessus des autres (puisqu'ils ont la valeur par défaut de 0) */
+    z-index: 1;
+    /* nous allons positionner le pseudo-élément en haut à gauche de son parent, de manière absolue */
+    position: absolute;
+    /* position absolue de l'élément, la valeur de left est arbitraire et a été choisie "à l'oeil" */
+    left: -10px;
+    top: 0;
+    /* taille de l'élément */
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border: 3px solid #5c6bc0;
+    /* un cercle a un border-radius de 100% */
+    border-radius: 100%;
+}
+
+.experience-section>section>span {
+    color: var(--text-color);
+}
+
+.language-section__item {
+    margin: 15px 0 15px 0;
+}
+
+.language-section__item>p {
+    margin: 0;
+    padding: 0;
+}
+
+.language-section__item>p:last-child {
+    color: var(--text-color);
+}
+
+.education-section section span {
+    color: var(--text-color);
+}

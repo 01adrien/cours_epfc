@@ -52,7 +52,7 @@ CHECK (genre <> 'Tragédie' OR annee > 1600);
 
 ALTER TABLE bdlivre.livre_paru
 ADD CONSTRAINT ck_gall
-CHECK ( editeur <> 'Gallimard' OR nb_pages < 300) ;
+CHECK ( editeur <> 'Gallimard' OR nb_pages <= 300) ;
 
 -- EX 8
 -- Les livres édités chez "Pearson" doivent, s’ils sont parus à partir de l’an 2000, contenir au moins 1000 pages.
