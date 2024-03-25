@@ -1,18 +1,27 @@
+import java.util.Scanner;
+
 import eu.epfc.prm2.Array;
 
 public class App {
 
     public static int strCompare(String str1, String str2) {
+        /*
+         * 
+         * str1 == str2 : The method returns 0.
+         * str1 > str2 : The method returns a positive value.
+         * str1 < str2 : The method returns a negative value.
+         * 
+         */
         int j = Math.min(str1.length(), str2.length());
         int s1, s2;
         for (int i = 0; i < j; i++) {
             s1 = Character.toUpperCase(str1.charAt(i));
             s2 = Character.toUpperCase(str2.charAt(i));
             if (s1 != s2) {
-                return s2 - s1;
+                return s1 - s2;
             }
         }
-        return str2.length() - str1.length();
+        return str1.length() - str2.length();
     }
 
     public static Person createPerson(Date ddn, String fname, String lname) {
@@ -24,27 +33,11 @@ public class App {
     }
 
     public static Date createDate(int day, int month, int year) {
-        Date d = new Date();
-        d.day = day;
-        d.month = month;
-        d.year = year;
-        return d;
-    }
-
-    public static int compareDate(Date d1, Date d2) {
-        int diff = 0;
-        if (d1.year != d2.year) {
-            diff = d2.year - d1.year;
-        } else if (d1.month != d2.month) {
-            diff = d2.month - d1.month;
-        } else if (d1.day != d2.day) {
-            diff = d2.day - d1.day;
-        }
-        return diff;
+        return new Date(day, month, year);
     }
 
     public static int compareAge(Person p1, Person p2) {
-        return compareDate(p1.ddn, p2.ddn);
+        return p1.ddn.compare(p2.ddn);
     }
 
     public static int compareNames(Person p1, Person p2) {
@@ -54,20 +47,93 @@ public class App {
         return strCompare(p1.lname, p2.lname);
     }
 
-    public static void main(String[] args) throws Exception {
-        // Bob
-        Person p1 = createPerson(createDate(15, 5, 1999), "Bob", "Martin");
-        // Henry
-        Person p2 = createPerson(createDate(14, 5, 1997), "Henry", "Dupont");
-        int compAge = compareAge(p1, p2);
-        if (compAge > 0) {
-            System.out.println(p1 + " plus grand que " + p2);
-        } else if (compAge < 0) {
-            System.out.println(p1 + " plus petit que " + p2);
-        } else {
-            System.out.println(p1 + " a le meme age que " + p2);
+    public static void printPersonArray(Array<Person> arr) {
+        for (Person p : arr) {
+            System.out.println(p);
         }
-        Array<Person> arr = new Array<Person>();
+    }
 
+    public static void printIntegerArray(Array<Integer> arr) {
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(arr.get(i));
+        }
+    }
+
+    public static void swapPerson(Array<Person> arr, int i, int j) {
+        Person tmp = arr.get(i);
+        arr.set(i, arr.get(j));
+        arr.set(j, tmp);
+    }
+
+    // TRIS
+    // tri par selection EX 1
+    public static void alphaSort(Array<Person> arr) {
+        for (int i = 0; i < arr.size(); i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < arr.size(); j++) {
+                Person p1 = arr.get(minIndex);
+                Person p2 = arr.get(j);
+                if (compareNames(p1, p2) > 0) {
+                    minIndex = j;
+                }
+            }
+            if (minIndex != i) {
+                swapPerson(arr, i, minIndex);
+            }
+        }
+    }
+
+    // tri par insertion EX 1
+    public static void ageSort(Array<Person> arr) {
+        for (int i = 1; i < arr.size(); i++) {
+            int j = i;
+            Person p1 = arr.get(i);
+            while (j > 0 && (p1.ddn.compare(arr.get(j - 1).ddn)) < 0) {
+                arr.set(j, arr.get(j - 1));
+                j--;
+            }
+            arr.set(j, p1);
+        }
+    }
+
+    public static int inputNum(int i) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("entrez num " + i + " :");
+        return s.nextInt();
+    }
+
+    public static void insertSort(Array<Integer> arr, int n) {
+        arr.add(n);
+        if (arr.size() > 0) {
+            int i = arr.size() - 1;
+            int val = arr.get(i);
+            int j = i;
+            while (j > 0 && arr.get(j - 1) > val) {
+                arr.set(j, arr.get(j - 1));
+                j--;
+            }
+            arr.set(j, val);
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        Person p1 = createPerson(createDate(15, 5, 1999), "Bob", "Z");
+        Person p2 = createPerson(createDate(14, 5, 1997), "Henry", "D");
+        Person p3 = createPerson(createDate(15, 5, 1995), "Bob", "E");
+        Person p4 = createPerson(createDate(14, 5, 1924), "Henry", "C");
+        Person p6 = createPerson(createDate(14, 5, 2020), "James", "G");
+        Person p5 = createPerson(createDate(15, 5, 1935), "Bob", "C");
+        Array<Person> arrP = new Array<Person>(p1, p2, p3, p4, p5, p6);
+        // printPersonArray(arrP);
+        // ageSort(arrP);
+        // System.out.println();
+        // printPersonArray(arrP);
+        Array<Integer> arrI = new Array<Integer>();
+        for (int i = 0; i < 5; i++) {
+            insertSort(arrI, inputNum(i + 1));
+        }
+        // arrI.add(78);
+        System.out.println(arrI);
+        // printIntegerArray(arrI);
     }
 }
