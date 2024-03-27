@@ -1,0 +1,45 @@
+
+.header {
+    background-color: orange;
+    grid-column: 1 / span 4;
+    grid-area: header;
+}
+
+.main {
+    background-color: blue;
+    grid-column: 1 / span 2;
+    grid-area: main;
+}
+
+.empty {
+    background-color: white;
+    grid-area: empty;
+}
+
+.sidebar {
+    background-color: red;
+    grid-area: sidebar;
+}
+
+.footer {
+    background-color: green;
+    grid-column: 1 / span 4;
+    grid-area: footer;
+}
+
+.grid-container {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr)  ;
+    grid-template-rows: repeat(3, 1fr) ;
+
+    grid-template-areas: 
+    "header header header header"
+    "main main empty sidebar"
+    "footer footer footer footer";
+}
+
+.grid-container > * {
+    border-radius: 50px;
+}

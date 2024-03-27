@@ -97,7 +97,7 @@ public class App {
     }
 
     public static int inputNum(int i) {
-        Scanner s = new Scanner(System.in);
+        Scanner s = (new Scanner(System.in));
         System.out.println("entrez num " + i + " :");
         return s.nextInt();
     }

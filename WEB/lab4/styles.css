@@ -136,10 +136,11 @@ ul {
 }
 
 .step {
+    padding-left: 5%;
     position: relative;
 }
 
-.step::after {
+.step::before {
     /* un pseudo-élément doit avoir un contenu même vide si on veut qu'il s'affiche */
     content: "";
     /* z-index signifie que l'élément sera positionné au dessus des autres (puisqu'ils ont la valeur par défaut de 0) */
@@ -147,16 +148,17 @@ ul {
     /* nous allons positionner le pseudo-élément en haut à gauche de son parent, de manière absolue */
     position: absolute;
     /* position absolue de l'élément, la valeur de left est arbitraire et a été choisie "à l'oeil" */
-    left: -10px;
+    left: -12px;
     top: 0;
     /* taille de l'élément */
     width: 18px;
     height: 18px;
     background-color: #fff;
-    border: 3px solid #5c6bc0;
+    border: 3px solid var(--text-color);
     /* un cercle a un border-radius de 100% */
     border-radius: 100%;
 }
+
 
 .experience-section>section>span {
     color: var(--text-color);
