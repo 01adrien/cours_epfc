@@ -14,6 +14,7 @@ begin
 end;
 $$ language plpgsql;
 
+select ex1();
 
 -- EX 2
 -- Ecrivez une fonction table qui liste les nom, prénom, nationalité des différents traducteurs de la BD.

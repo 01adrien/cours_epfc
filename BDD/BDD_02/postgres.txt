@@ -1,0 +1,15 @@
+Connect to postgres:
+sudo -i -u postgres => switch to postgres user
+psql                => launch postgres client
+
+Command:
+\l         => list DBs
+\c         => change DB
+\dt        => list table
+\d <table> => describe <table>
+
+set search_path TO <db>; 
+
+
+
+
