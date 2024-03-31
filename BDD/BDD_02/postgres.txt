@@ -7,6 +7,7 @@ Command:
 \c         => change DB
 \dt        => list table
 \d <table> => describe <table>
+\dT        => list custom types
 
 set search_path TO <db>; 
 
