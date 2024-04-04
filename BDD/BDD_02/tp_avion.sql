@@ -55,7 +55,6 @@ WHERE av.nb_places >= 300;
 -- nomc et plus_cher_pilote. Chaque ligne associe le nom d’une compagnie et un prix qui est 
 -- celui du pilote qui peut travailler pour elle et qui a le plus haut prix_par_vol. 
 -- On se restreint aux compagnies ayant plus de fonds_propres que le paramètre fonds reçu par la fonction.
-
 -- GROUP BY + HAVING
 DROP FUNCTION IF EXISTS most_expensive_pilot;
 CREATE FUNCTION most_expensive_pilot (fp int)
