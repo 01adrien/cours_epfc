@@ -30,4 +30,27 @@ token ring => les machines se passent un jeton pour parler
 
 <br/>
 <img src="./images/osi-vs-tcpip.jpg" >
-<br/>
+
+## Couche transport (TCP)
+
+<img src="./images/tcp_header.jpg" width="500px" class="img-center">
+<p class="txt-center">TCP header</p>
+<br>
+<img src="./images/tcp-connect.png" class="img-center">
+<p class="txt-center">TCP connection schema</p>
+<br>
+<img src="./images/tct-connect-wireshark.png">
+<p class="txt-center">TCP connection process (wireshark)</p>
+
+
+### <u>SEQ , ACK & WIN</u>
+
+Le numero de sequence et le numero d'acquitement suivent les paquets et garantissent que rien ne se perd.<br>
+Ils sont incrementes par le nombre de bytes envoyes<br>
+Les flags SYN et ACK envoie un byte.
+
+<img src="./images/seq-ack.png" class="img-center" width="500px">  
+
+## Couche reseau
+
+jfj
