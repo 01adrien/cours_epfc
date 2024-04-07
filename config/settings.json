@@ -62,4 +62,11 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
+  "java.project.sourcePaths": [
+    "src"
+  ],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+  ]
 }

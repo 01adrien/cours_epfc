@@ -79,14 +79,14 @@ $$
     BEGIN
         CALL creer_oeuvre(titre, annee, genre, langue, idOeuvre);
         CALL ecr_existe(ecr_nom, ecr_prenom, idEcriv);
-        IF (IS NULL idEcriv)
+        IF (idEcriv IS NULL) THEN
             CALL creer_ecr(ecr_nom, ecr_prenom, idEcriv);
         END IF;
         CALL lier_oeuvre_ecriv(idOeuvre, idEcriv);
     END
 $$;
 
-CALL creer_oeuvre_et_lier_a_ecriv('test titre oeuvre', 1850, 'Roman', 'En', 'LISKOV', 'Barbara');
+CALL creer_oeuvre_et_lier_a_ecriv('test oeuvre 2', 1875, 'Roman', 'En', 'HARRIS', 'Bob');
 
 ------------------------------------------------------------------
 
@@ -96,7 +96,104 @@ $$
 DECLARE id int;
 BEGIN
     -- id := 0;
-    CALL ecr_existe('LISKOV', 'Barbara', id);
+    CALL creer_ecr('DUPOND', 'Jason', id);
     RAISE NOTICE 'id = %', id;
 END
+$$;
+
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+/*
+EX 2
+
+
+Soit la problématique suivante : Créer une procédure qui reçoit le nom et le genre d'une oeuvre, 
+le titre d'un livre et sa date d'édition, le nom et le prénom du traducteur du livre. 
+Vous devrez répondre aux exigences suivantes :
+
+a. Respecter les principes de la programmation modulaire
+
+b. Vérifier que l'oeuvre existe et qu'elle est associée au genre fourni en paramètre. 
+Si aucune oeuvre n'a le titre fourni en paramètre, 
+la procédure la créera et la liera à l'auteur qui a l'idtrad_ecriv numéro 1. 
+Si le couple (titre, genre) n'est pas bon, la procédure devra renvoyer un 
+message d'erreur cohérent avec l'erreur rencontrée.
+
+c. Vérifier que le traducteur existe. Si ce n'est pas le cas, la procédure le créera. 
+S'il existe plusieurs entrées dans la table traducteur_ecrivain avec 
+le couple (nom, prenom) fourni en paramètre, la procédure devra renvoyer un message d'erreur 
+cohérent avec l'erreur rencontrée.
+
+d. Insérer le livre fourni en paramètre sauf s'il existe déjà un couple (titre, date_parution) 
+associé au traducteur fourni en paramètre. 
+Un message d'erreur cohérent doit être renvoyé dans ce dernier cas.
+
+e. Lier le livre au traducteur fourni en paramètre ainsi qu'à l'oeuvre fournie en paramètre.
+
+f. Votre procédure doit renvoyer toutes les erreurs rencontrées et, à la moindre erreur, 
+ne faire aucune modification de la base de données.
+
+*/
+
+DROP PROCEDURE IF EXISTS check_oeuvre_et_genre;
+CREATE PROCEDURE check_oeuvre_et_genre(
+    oeuvre_titre ttitre, oeuvre_genre tgenre, INOUT oeuvre_exist boolean
+)
+LANGUAGE plpgsql
+AS
+$$
+    DECLARE oeuvre_ok int;
+    BEGIN
+        SELECT * INTO oeuvre_ok FROM oeuvre AS o
+        WHERE o.titre = oeuvre_titre AND o.genre = oeuvre_genre;
+        IF (oeuvre_ok IS NULL) THEN
+            oeuvre_exist = FALSE;
+        ELSE 
+            oeuvre_exist = TRUE;
+        END IF;
+    END
+$$;
+
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS checks;
+CREATE PROCEDURE checks(
+    oeuvre_titre ttitre, oeuvre_genre tgenre, livre_titre ttitre, 
+    livre_edit_date tannee, trad_nom tnom, trad_prenom tprenom, OUT err int, OUT oeuvre_exist boolean 
+)
+LANGUAGE plpgsql
+AS
+$$
+    BEGIN
+        err := 0;
+        CALL check_oeuvre_et_genre(oeuvre_titre, oeuvre_genre, oeuvre_exist);
+        IF (err <> 0) THEN
+            RAISE NOTICE 'Couple (oeuvre, genre) non valide.';
+        -- ELSE
+        -- CALL 
+        END IF;
+        -- RETURNING 1 INTO err;
+        RAISE NOTICE 'check() => err = %', err;
+    END
+$$;
+
+
+------------------------------------------------------------------
+
+DO
+LANGUAGE plpgsql
+$$
+    DECLARE err int;
+    DECLARE oeuvre_exist boolean;
+    BEGIN
+        CALL checks('Hamlet', 'Tragédie', 'tesst','1950', 'HARRIS', 'Bob', err, oeuvre_exist);
+        RAISE NOTICE 'main() => err = %', oeuvre_exist;
+        IF (err = 0) THEN
+            RAISE NOTICE 'CHECKS OK.';
+        END IF;
+    END
 $$;
