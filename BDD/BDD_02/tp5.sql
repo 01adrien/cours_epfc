@@ -135,65 +135,143 @@ e. Lier le livre au traducteur fourni en paramètre ainsi qu'à l'oeuvre fournie
 f. Votre procédure doit renvoyer toutes les erreurs rencontrées et, à la moindre erreur, 
 ne faire aucune modification de la base de données.
 
+variable check int sur 4 bits
+bit a 1 ou 0 si condition OK
+
+Exemple:
+1 0 1 1
+a b c err
+
 */
 
-DROP PROCEDURE IF EXISTS check_oeuvre_et_genre;
-CREATE PROCEDURE check_oeuvre_et_genre(
-    oeuvre_titre ttitre, oeuvre_genre tgenre, INOUT oeuvre_exist boolean
+DROP PROCEDURE IF EXISTS check_oeuvre_genre;
+CREATE PROCEDURE check_oeuvre_genre(
+    oeuvre_titre ttitre, oeuvre_genre tgenre, INOUT flags int
 )
 LANGUAGE plpgsql
 AS
 $$
-    DECLARE oeuvre_ok int;
+    DECLARE oeuvre int;
     BEGIN
-        SELECT * INTO oeuvre_ok FROM oeuvre AS o
+        SELECT COUNT(*) INTO oeuvre FROM oeuvre AS o
         WHERE o.titre = oeuvre_titre AND o.genre = oeuvre_genre;
-        IF (oeuvre_ok IS NULL) THEN
-            oeuvre_exist = FALSE;
+        IF (oeuvre > 0) THEN
+            flags = flags::BIT(4) | B'1000';
         ELSE 
-            oeuvre_exist = TRUE;
+            flags = flags::BIT(4) | B'0000';
         END IF;
     END
 $$;
 
 ------------------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS check_traducteur;
+CREATE PROCEDURE check_traducteur(
+    trad_nom tnom, trad_prenom tprenom, INOUT flags int
+)
+LANGUAGE plpgsql
+AS
+$$
+    DECLARE traducteur int;
+    BEGIN
+        SELECT COUNT(*) INTO traducteur FROM traducteur_ecrivain AS te
+        WHERE te.nom = trad_nom AND te.prenom = trad_prenom;
+        IF (traducteur = 0) THEN
+            flags = flags::BIT(4) | B'0000';
+        ELSEIF (traducteur = 1) THEN
+            flags = flags::BIT(4) | B'0100';
+        ELSEIF (traducteur > 1) THEN
+            flags = flags::BIT(4) | B'0001';
+            RAISE NOTICE 'trop de traducteur ( %, % )', trad_prenom, trad_nom; 
+        END IF;
+    END
+$$;
+
+------------------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS check_titre_date;
+CREATE PROCEDURE check_titre_date(
+    livre_titre ttitre, livre_date date, INOUT flags int
+)
+LANGUAGE plpgsql
+AS
+$$
+    DECLARE livre int;
+    BEGIN
+        SELECT COUNT(*) INTO livre FROM livre_paru AS lp
+        WHERE lp.titre = livre_titre AND lp.date_parution = livre_date;
+        IF (livre > 0) THEN
+            flags = flags::BIT(4) | B'0001';
+            RAISE NOTICE 'couple (livre, date) deja existant ( %, % )', 
+                livre_titre, livre_date;
+        END IF;
+    END
+$$;
 
 ------------------------------------------------------------------
 
 DROP PROCEDURE IF EXISTS checks;
 CREATE PROCEDURE checks(
     oeuvre_titre ttitre, oeuvre_genre tgenre, livre_titre ttitre, 
-    livre_edit_date tannee, trad_nom tnom, trad_prenom tprenom, OUT err int, OUT oeuvre_exist boolean 
+    livre_date date, trad_nom tnom, trad_prenom tprenom, INOUT flags int
 )
 LANGUAGE plpgsql
 AS
 $$
     BEGIN
-        err := 0;
-        CALL check_oeuvre_et_genre(oeuvre_titre, oeuvre_genre, oeuvre_exist);
-        IF (err <> 0) THEN
-            RAISE NOTICE 'Couple (oeuvre, genre) non valide.';
-        -- ELSE
-        -- CALL 
-        END IF;
-        -- RETURNING 1 INTO err;
-        RAISE NOTICE 'check() => err = %', err;
+        RAISE NOTICE 'avant checks => flags = %', flags::BIT(4);
+        -- check b
+        CALL check_oeuvre_genre(oeuvre_titre, oeuvre_genre, flags);
+        RAISE NOTICE 'apres check b => flags = %', flags::BIT(4);
+        -- check c
+        CALL check_traducteur(trad_nom, trad_prenom, flags);
+        RAISE NOTICE 'apres check c => flags = %', flags::BIT(4);
+        -- check d
+        CALL check_titre_date(livre_titre, livre_date, flags);
+        RAISE NOTICE 'apres check d => flags = %', flags::BIT(4);
     END
 $$;
 
+
+DROP PROCEDURE IF EXISTS insert_data;
+CREATE PROCEDURE insert_data(
+    oeuvre_titre ttitre, oeuvre_genre tgenre, livre_titre ttitre, 
+    livre_date tannee, trad_nom tnom, trad_prenom tprenom, INOUT flags int
+)
+LANGUAGE plpgsql
+AS
+$$
+    BEGIN
+    END;
+$$;
 
 ------------------------------------------------------------------
 
 DO
 LANGUAGE plpgsql
 $$
-    DECLARE err int;
-    DECLARE oeuvre_exist boolean;
+    DECLARE 
+    oeuvre_titre ttitre := 'Hamlet';
+    oeuvre_genre tgenre := 'Tragédie';
+    livre_titre ttitre := 'test';
+    livre_date date := '1950/01/01'::DATE;
+    trad_nom tnom := 'DUPOND';
+    trad_prenom tprenom := 'Jason';
+    flags int := B'0000' ;
+
     BEGIN
-        CALL checks('Hamlet', 'Tragédie', 'tesst','1950', 'HARRIS', 'Bob', err, oeuvre_exist);
-        RAISE NOTICE 'main() => err = %', oeuvre_exist;
-        IF (err = 0) THEN
-            RAISE NOTICE 'CHECKS OK.';
+        CALL checks(
+            oeuvre_titre, oeuvre_genre, livre_titre,
+            livre_date, trad_nom, trad_prenom, flags
+            );
+        IF ((flags & 1) = 0) THEN
+            -- insert_data(
+            --     oeuvre_titre, oeuvre_genre, livre_titre, 
+            --     livre_date, trad_nom, trad_prenom, flags
+            -- );
+        ELSE 
+            RAISE NOTICE 'informations invalides';
         END IF;
     END
 $$;
+

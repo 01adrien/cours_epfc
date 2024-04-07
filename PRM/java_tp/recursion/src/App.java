@@ -32,7 +32,7 @@ public class App {
 
     // EX 5
     public static int pow2(int n, int exp) {
-        return isEven(n) ? pow(n * n, exp / 2) : pow(n, exp);
+        return isEven(n) ? pow(n * n, exp / 2) : pow(n * n, (exp - 1) / 2) * n;
     }
 
     // EX 6
@@ -45,6 +45,7 @@ public class App {
         return n < 10 ? n : n % 10 + ex7(n / 10);
     }
 
+    // EX 8
     public static int ex8(Array<Integer> arr) {
         if (arr.size() == 1) {
             return arr.get(0);
@@ -56,7 +57,7 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(ex8(new Array<Integer>(10, 20, 30)));
+        System.out.println(pow2(5, 5));
     }
 
 }

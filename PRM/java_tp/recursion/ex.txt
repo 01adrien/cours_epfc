@@ -6,6 +6,19 @@ c. 5 6 7 8 9 10 ... stack overflow
 d. stack overflow
 
 
-EX 2
+EX 3
+                        fib(5)
+                    fib(3) + fib(4)
+           fib(1) + fib(2) + fib(2) + fib(3)
+              1   +    1   +   1    + fib(1) + fib(2)
+                                         1    +    1 
 
-f
+
+EX 4
+
+2exp24 = 23 multiplications
+
+EX 5 
+
+2exp24 = 12 multiplications
+2exp1000 = 500 multiplications
