@@ -53,4 +53,8 @@ Les flags SYN et ACK envoie un byte.
 
 ## Couche reseau
 
-jfj
+**IGP** : Intern Gateway Protocol<br>
+**EGP** : Extern Gateway Protocol
+
+<p class="txt-center">Protocole de routage</p>
+<img src="./images/protocole-de-routage.png"/>

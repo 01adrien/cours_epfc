@@ -7,16 +7,16 @@
 ## <u>adresse unicast</u>  ##
 
 1) **loopback** ::1/128 || 127.0.0.0/8
-2) **link local**  FE80::/10 || 169.254.0.0/16 (APIPA pas de dhcp, reseau local, pas de redirection des paquets )
-3) **global** 2001::/16 || public IP
+2) **link local**  FE80::/10 || 169.254.0.0/16 (APIPA pas de dhcp, reseau local, pas routable )
+3) **global** 2001::/16 || public IP (routable sur internet)
 4) **unspecified** ::/128 || 0.0.0.0 (*)
 5) **site-local**  FEC0::/10 || private adresse (replace with unique local address (ULA))
-6) **ULA** FC00::/7 || private LAN
+6) **ULA** FC00::/7 || private LAN (routable en local)
 7) **IPV4 compatible** 0:0:0:0:0:0::/96 
 
 ## <u>adresse multicast</u> ##   
 
-pour contacter de groupes de machine FF02::**
+1.**sollicited node** FF02::** (pour contacter de groupes de machine)
 
 ### <u>Link local:</u> ###
 &nbsp;

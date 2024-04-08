@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="./style.css"/>
 
 
-## Wireshark lab
+# Wireshark lab
 
-# HTTP 
+## HTTP 
 
-# DNS #
+## DNS #
 
 4 types de serveurs DNS
 - authoritative name servers 
@@ -21,3 +21,5 @@ DNS records
 - type CNAME (resolve alias domain)
 - type NS (donne le nom du authoritative name servers)
 - type PTR (reverse DNS lookup)
+  
+## TCP 
