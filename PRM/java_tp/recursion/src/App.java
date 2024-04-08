@@ -56,8 +56,35 @@ public class App {
 
     }
 
+    // EX 9
+    public static int binSearch(Array<Integer> arr, int low, int high, int num) {
+        if (low > high) {
+            return -1;
+        }
+        int mid = (high + low) / 2;
+        if (arr.get(mid) == num) {
+            return mid;
+        } else if (arr.get(mid) > num) {
+            return binSearch(arr, low, mid - 1, num);
+        } else {
+            return binSearch(arr, mid + 1, high, num);
+        }
+    }
+
+    // EX 10
+    public static int ex10(int n) {
+        return n <= 1 ? 0 : 1 + ex10(n - 2);
+    }
+
+    // EX 11
+    public static boolean ex11(int n) {
+        return n < 10 ? isEven(n) : isEven(n % 10) && ex11(n / 10);
+    }
+
     public static void main(String[] args) throws Exception {
-        System.out.println(pow2(5, 5));
+        Array<Integer> arr = new Array<>(1, 5, 8, 15, 19, 26, 31, 39);
+        // System.out.println(binSearch(arr, 0, arr.size() - 1, 89));
+        System.out.println(ex11(28648892));
     }
 
 }

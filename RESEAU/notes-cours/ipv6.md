@@ -13,7 +13,11 @@
 5) **site-local**  FEC0::/10 || private adresse (replace with unique local address (ULA))
 6) **ULA** FC00::/7 || private LAN
 7) **IPV4 compatible** 0:0:0:0:0:0::/96 
-   
+
+## <u>adresse multicast</u> ##   
+
+pour contacter de groupes de machine FF02::**
+
 ### <u>Link local:</u> ###
 &nbsp;
 ![image](./images/link-local-address.png)
