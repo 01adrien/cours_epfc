@@ -84,7 +84,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         Array<Integer> arr = new Array<>(1, 5, 8, 15, 19, 26, 31, 39);
         // System.out.println(binSearch(arr, 0, arr.size() - 1, 89));
-        System.out.println(ex11(28648892));
+        System.out.println(ex11(2864882));
     }
 
 }
