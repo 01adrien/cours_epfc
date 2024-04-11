@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="./index.css" rel="stylesheet">
+    <script src="./index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="POST" action="#">
+        <h1>Signup form</h1>
+        <fieldset>
+            <div class="field">
+                <label for="pseudo">pseudo</label>
+                <input type="text" name="pseudo" id="pseudo" placeholder="your pseudo" required minlength="3"
+                    maxlength="10" />
+            </div>
+            <div class="field">
+                <label for="password">password</label>
+                <input type="password" name="password" id="password" placeholder="password" required />
+            </div>
+            <div class="field">
+                <label for="passwordConfirm">password confirm</label>
+                <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="password confirm"
+                    required />
+            </div>
+            <div class="field">
+                <label for="birthdate">birthdate</label>
+                <input type="date" id="birthdate" name="birthdate" min="" max="" />
+            </div>
+            <div class="field">
+                <label for="favoriteColor">color</label>
+                <input type="text" id="favoriteColor" name="favoriteColor" placeholder="your favorite color" />
+            </div>
+            <div class="field">
+                <label for="email">email</label>
+                <input type="email" id="email" name="email" placeholder="your email" />
+            </div>
+            <div class="field">
+                <label for="tel">tel</label>
+                <input type="tel" id="tel" name="tel" placeholder="your tel" />
+            </div>
+            <div class="field">
+                <label for="age">age</label>
+                <input type="number" id="age" name="age" />
+            </div>
+            <div class="fiel">
+                <input type="radio" name="catOrDog" id="cat">
+                <label>cat</label>
+                <input type="radio" name="catOrDog" id="dog">
+                <label>dog</label>
+            </div>
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+</body>
+
+</html>
