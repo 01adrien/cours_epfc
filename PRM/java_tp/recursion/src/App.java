@@ -81,10 +81,44 @@ public class App {
         return n < 10 ? isEven(n) : isEven(n % 10) && ex11(n / 10);
     }
 
+    public static void swap(Array<Integer> arr, int a, int b) {
+        int temp = arr.get(a);
+        arr.set(a, arr.get(b));
+        arr.set(b, temp);
+    }
+
+    public static int arrange1(Array<Integer> arr, int start, int end, int pivot) {
+        int pVal = arr.get(pivot);
+        while (start != end) {
+            while (arr.get(start) < pVal) {
+                start++;
+            }
+            while (arr.get(end) > pVal) {
+                end--;
+            }
+            if (arr.get(start) == pVal && arr.get(end) == pVal) {
+                System.out.println(start + " " + end);
+                System.out.println(arr);
+            }
+            swap(arr, start, end);
+        }
+        return end;
+    }
+
+    public static void quickSort(Array<Integer> arr, int start, int end, int pivot) {
+        if (Math.abs(end - start) > 1) {
+            System.out.println(arr.get(pivot));
+            int newPivot = arrange1(arr, start, end, pivot);
+            quickSort(arr, start, newPivot, (start + newPivot) / 2);
+            quickSort(arr, newPivot, end, (end + newPivot) / 2);
+        }
+    }
+
     public static void main(String[] args) throws Exception {
-        Array<Integer> arr = new Array<>(1, 5, 8, 15, 19, 26, 31, 39);
-        // System.out.println(binSearch(arr, 0, arr.size() - 1, 89));
-        System.out.println(ex11(28648892));
+        Array<Integer> arr = new Array<>(3, 5, 1, 9, 4, 5);
+        System.out.println(arr);
+        quickSort(arr, 0, arr.size() - 1, arr.size() / 2);
+        System.out.println(arr);
     }
 
 }
