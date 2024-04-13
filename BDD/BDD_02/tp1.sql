@@ -5,6 +5,7 @@ set search_path = bdge, bdlivre;
 -- Quels sont les traducteurs français des livres parus en français et dont le titre parle d'intelligence artificielle ?
 
 
+SELECT * FROM bdlivre.ecrit_par;
 
 SELECT * FROM bdlivre.traducteur_ecrivain as trad
 JOIN bdlivre.traduit_par AS tdp ON tdp.numtrad = trad.idtrad_ecriv

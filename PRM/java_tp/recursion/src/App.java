@@ -12,16 +12,12 @@ public class App {
 
     // EX 2
     public static int fact(int n) {
-        return n > 1
-                ? n * fact(n - 1)
-                : n;
+        return n > 1 ? n * fact(n - 1) : n;
     }
 
     // EX 3
     public static int fib(int n) {
-        return n >= 2
-                ? fib(n - 2) + fib(n - 1)
-                : n;
+        return n >= 2 ? fib(n - 2) + fib(n - 1) : n;
     }
 
     // EX 4
@@ -36,23 +32,17 @@ public class App {
 
     // EX 5
     public static int pow2(int n, int exp) {
-        return isEven(exp)
-                ? pow(n * n, exp / 2)
-                : pow(n * n, (exp - 1) / 2) * n;
+        return isEven(n) ? pow(n * n, exp / 2) : pow(n * n, (exp - 1) / 2) * n;
     }
 
     // EX 6
     public static int ex6(int n) {
-        return n >= 10
-                ? 1 + ex6(n / 10)
-                : 1;
+        return n >= 10 ? 1 + ex6(n / 10) : 1;
     }
 
     // EX 7
     public static int ex7(int n) {
-        return n < 10
-                ? n
-                : n % 10 + ex7(n / 10);
+        return n < 10 ? n : n % 10 + ex7(n / 10);
     }
 
     // EX 8
@@ -186,16 +176,10 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-<<<<<<< HEAD
         Array<Integer> arr = new Array<>(3, 5, 1, 9, 4, 5);
         System.out.println(arr);
         quickSort(arr, 0, arr.size() - 1, arr.size() / 2);
         System.out.println(arr);
-=======
-        Array<Integer> arr = new Array<>(1, 5, 8, 15, 99, 19, 26, 31, 39);
-        // System.out.println(binSearch(arr, 0, arr.size() - 1, 89));
-        System.out.println(ex14(10100110, 0));
->>>>>>> 81ff0d8accc11e70aeee2c6f214ca0b1c5e72dea
     }
 
 }

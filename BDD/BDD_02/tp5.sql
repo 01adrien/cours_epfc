@@ -1,4 +1,4 @@
-set search_path TO dblivre;
+set search_path TO bdge, dblivre;
 
 -- EX 1 
 /*
@@ -70,7 +70,7 @@ $$;
 DROP PROCEDURE IF EXISTS creer_oeuvre_et_lier_a_ecriv;
 CREATE PROCEDURE creer_oeuvre_et_lier_a_ecriv(
     titre ttitre, annee tannee, genre tgenre, langue tlangue, ecr_nom tnom, ecr_prenom tprenom
-    )
+)
 LANGUAGE plpgsql
 AS
 $$
@@ -138,9 +138,18 @@ ne faire aucune modification de la base de données.
 variable check int sur 4 bits
 bit a 1 ou 0 si condition OK
 
+
+a   => erreur (oeuvre, genre)
+b   => oeuvre exist
+c   => erreur trad (nom, prenom)
+d   => trad exist
+e   => erreur livre (titre, date_parution) 
+
+
 Exemple:
-1 0 1 1
-a b c err
+1 0 1 1 1
+a b c d e 
+
 
 */
 
@@ -151,14 +160,17 @@ CREATE PROCEDURE check_oeuvre_genre(
 LANGUAGE plpgsql
 AS
 $$
-    DECLARE oeuvre int;
+    DECLARE oeuvre_record RECORD;
     BEGIN
-        SELECT COUNT(*) INTO oeuvre FROM oeuvre AS o
-        WHERE o.titre = oeuvre_titre AND o.genre = oeuvre_genre;
-        IF (oeuvre > 0) THEN
-            flags = flags::BIT(4) | B'1000';
+        SELECT idoeuvre, genre INTO oeuvre_record FROM oeuvre AS o WHERE o.titre = oeuvre_titre;
+        IF (oeuvre_record IS NOT NULL) THEN
+            -- RAISE NOTICE 'uuu';
+            -- RAISE NOTICE '% %', oeuvre_record.idoeuvre, oeuvre_record.genre ;
+            IF (oeuvre_record.genre <> oeuvre_genre) THEN
+                flags = flags::BIT(5) | B'10000';
+            END IF;
         ELSE 
-            flags = flags::BIT(4) | B'0000';
+            flags = flags::BIT(5) | B'01000';
         END IF;
     END
 $$;
@@ -176,13 +188,10 @@ $$
     BEGIN
         SELECT COUNT(*) INTO traducteur FROM traducteur_ecrivain AS te
         WHERE te.nom = trad_nom AND te.prenom = trad_prenom;
-        IF (traducteur = 0) THEN
-            flags = flags::BIT(4) | B'0000';
-        ELSEIF (traducteur = 1) THEN
-            flags = flags::BIT(4) | B'0100';
+        IF (traducteur = 1) THEN
+            flags = flags | 2;
         ELSEIF (traducteur > 1) THEN
-            flags = flags::BIT(4) | B'0001';
-            RAISE NOTICE 'trop de traducteur ( %, % )', trad_prenom, trad_nom; 
+            flags = flags::BIT(5) | B'00100';
         END IF;
     END
 $$;
@@ -201,9 +210,7 @@ $$
         SELECT COUNT(*) INTO livre FROM livre_paru AS lp
         WHERE lp.titre = livre_titre AND lp.date_parution = livre_date;
         IF (livre > 0) THEN
-            flags = flags::BIT(4) | B'0001';
-            RAISE NOTICE 'couple (livre, date) deja existant ( %, % )', 
-                livre_titre, livre_date;
+            flags = flags::BIT(5) | B'00001';
         END IF;
     END
 $$;
@@ -219,30 +226,69 @@ LANGUAGE plpgsql
 AS
 $$
     BEGIN
-        RAISE NOTICE 'avant checks => flags = %', flags::BIT(4);
+        RAISE NOTICE 'avant checks => flags = %', flags::BIT(5);
         -- check b
         CALL check_oeuvre_genre(oeuvre_titre, oeuvre_genre, flags);
-        RAISE NOTICE 'apres check b => flags = %', flags::BIT(4);
+        RAISE NOTICE 'apres check b => flags = %', flags::BIT(5);
         -- check c
         CALL check_traducteur(trad_nom, trad_prenom, flags);
-        RAISE NOTICE 'apres check c => flags = %', flags::BIT(4);
+        RAISE NOTICE 'apres check c => flags = %', flags::BIT(5);
         -- check d
-        CALL check_titre_date(livre_titre, livre_date, flags);
-        RAISE NOTICE 'apres check d => flags = %', flags::BIT(4);
+         CALL check_titre_date(livre_titre, livre_date, flags);
+        RAISE NOTICE 'apres check d => flags = %', flags::BIT(5);
+    END
+$$;
+
+------------------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS creer_oeuvre_et_lier_a_ecriv_1;
+CREATE PROCEDURE creer_oeuvre_et_lier_a_ecriv_1(
+    oeuvre_titre ttitre, oeuvre_genre tgenre
+)
+LANGUAGE plpgsql
+AS
+$$
+    DECLARE id_oeuvre int;
+    BEGIN
+        INSERT INTO oeuvre (titre, genre) VALUES (oeuvre_titre, oeuvre_genre)
+        RETURNING idoeuvre INTO id_oeuvre;
+        INSERT INTO ecrit_par  (numOeuvre, numEcriv) VALUES (id_oeuvre, 1);
     END
 $$;
 
 
+------------------------------------------------------------------
+
 DROP PROCEDURE IF EXISTS insert_data;
 CREATE PROCEDURE insert_data(
     oeuvre_titre ttitre, oeuvre_genre tgenre, livre_titre ttitre, 
-    livre_date tannee, trad_nom tnom, trad_prenom tprenom, INOUT flags int
+    livre_date date, trad_nom tnom, trad_prenom tprenom, INOUT flags int
 )
 LANGUAGE plpgsql
 AS
 $$
     BEGIN
-    END;
+        -- erreur oeuvre genre 
+        RAISE NOTICE 'flags = %', flags::BIT(5);
+        IF (flags::BIT(5) & B'10000' = 0::BIT(5)) THEN
+            -- oeuvre NOT exist
+            IF (flags::BIT(5) & B'01000' = 1::BIT(5)) THEN
+                RAISE NOTICE 'oeuvre inexistante (%, %)', oeuvre_titre, oeuvre_genre;
+                -- creer_oeuvre_et_lier_a_ecriv_1(oeuvre_titre, oeuvre_genre);
+            END IF;
+            RAISE NOTICE 'step a OK';
+            -- traducteur erreur
+            -- IF (NOT flags::BIT(5) & B'00100')
+
+            -- ELSE
+            --     RAISE NOTICE 'mauvais couple (nom, prenom) (%, %)',
+            --     trad_nom, trad_prenom;
+            -- END IF;
+        ELSE
+            RAISE NOTICE 'mauvais couple (oeuvre, genre) (%, %)', 
+            oeuvre_titre, oeuvre_genre;
+        END IF;
+    END
 $$;
 
 ------------------------------------------------------------------
@@ -250,28 +296,28 @@ $$;
 DO
 LANGUAGE plpgsql
 $$
-    DECLARE 
-    oeuvre_titre ttitre := 'Hamlet';
-    oeuvre_genre tgenre := 'Tragédie';
-    livre_titre ttitre := 'test';
-    livre_date date := '1950/01/01'::DATE;
-    trad_nom tnom := 'DUPOND';
-    trad_prenom tprenom := 'Jason';
-    flags int := B'0000' ;
+    DECLARE
+    oeuvre_titre ttitre  := 'Hamlet';
+    oeuvre_genre tgenre  := 'Tragédie';
+    livre_titre ttitre   := 'test';
+    livre_date date      := '1950/01/01'::DATE;
+    trad_nom tnom        := 'DUPOND';
+    trad_prenom tprenom  := 'Jason';
+    flags int            := '00000';
 
     BEGIN
         CALL checks(
             oeuvre_titre, oeuvre_genre, livre_titre,
             livre_date, trad_nom, trad_prenom, flags
             );
-        IF ((flags & 1) = 0) THEN
-            -- insert_data(
-            --     oeuvre_titre, oeuvre_genre, livre_titre, 
-            --     livre_date, trad_nom, trad_prenom, flags
-            -- );
-        ELSE 
-            RAISE NOTICE 'informations invalides';
-        END IF;
+        RAISE NOTICE 'flags = %', flags::BIT(5);
+        /*
+
+        CALL insert_data(
+            oeuvre_titre, oeuvre_genre, livre_titre, 
+            livre_date, trad_nom, trad_prenom, flags
+            );
+            */
     END
 $$;
 
