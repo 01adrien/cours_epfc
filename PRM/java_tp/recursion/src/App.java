@@ -148,9 +148,9 @@ public class App {
         arr.set(b, temp);
     }
 
-    public static int arrange1(Array<Integer> arr, int start, int end, int pivot) {
+    public static int arrange(Array<Integer> arr, int start, int end, int pivot) {
         int pVal = arr.get(pivot);
-        while (start != end) {
+        while (start < end) {
             while (arr.get(start) < pVal) {
                 start++;
             }
@@ -158,25 +158,24 @@ public class App {
                 end--;
             }
             if (arr.get(start) == pVal && arr.get(end) == pVal) {
-                System.out.println(start + " " + end);
-                System.out.println(arr);
+                start++;
+            } else {
+                swap(arr, start, end);
             }
-            swap(arr, start, end);
         }
         return end;
     }
 
     public static void quickSort(Array<Integer> arr, int start, int end, int pivot) {
-        if (Math.abs(end - start) > 1) {
-            System.out.println(arr.get(pivot));
-            int newPivot = arrange1(arr, start, end, pivot);
-            quickSort(arr, start, newPivot, (start + newPivot) / 2);
-            quickSort(arr, newPivot, end, (end + newPivot) / 2);
+        if (start < end) {
+            int p = arrange(arr, start, end, pivot);
+            quickSort(arr, start, p - 1, (start + p - 1) / 2);
+            quickSort(arr, p + 1, end, (end + p + 1) / 2);
         }
     }
 
     public static void main(String[] args) throws Exception {
-        Array<Integer> arr = new Array<>(3, 5, 1, 9, 4, 5);
+        Array<Integer> arr = new Array<>(8, 9, 5, 9, 3, 2, 9);
         System.out.println(arr);
         quickSort(arr, 0, arr.size() - 1, arr.size() / 2);
         System.out.println(arr);
