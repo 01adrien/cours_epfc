@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import eu.epfc.prm2.Array;
 
 public class App {
@@ -142,6 +146,8 @@ public class App {
                 : isCap(str.charAt(0)) + ex16(str.substring(1));
     }
 
+    // --------------------------------------------------------------------------------------------------------
+
     public static void swap(Array<Integer> arr, int a, int b) {
         int temp = arr.get(a);
         arr.set(a, arr.get(b));
@@ -174,11 +180,45 @@ public class App {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        Array<Integer> arr = new Array<>(8, 9, 5, 9, 3, 2, 9);
-        System.out.println(arr);
+    public static void qsort(Array<Integer> arr) {
         quickSort(arr, 0, arr.size() - 1, arr.size() / 2);
-        System.out.println(arr);
+    }
+
+    public static void merge(Array<Integer> a1, Array<Integer> a2) {
+
+    }
+
+    public static void copyArray(Array<Integer> from, Array<Integer> to, int start, int end) {
+        while (start != end) {
+            to.add(from.get(start++));
+        }
+    }
+
+    public static void mergeSort(Array<Integer> arr) {
+        if (arr.size() == 1) {
+            return;
+        }
+        int mid = arr.size() / 2;
+        Array<Integer> a1 = new Array<Integer>();
+        Array<Integer> a2 = new Array<Integer>();
+        copyArray(arr, a1, 0, mid);
+        copyArray(arr, a2, mid, arr.size());
+        System.out.println("A1 => " + a1);
+        System.out.println("A2 => " + a2);
+        mergeSort(a1);
+        mergeSort(a2);
+        merge(a1, a2);
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        Array<Integer> arr = new Array<Integer>(8, 9, 2, 3, 5, 6, 9);
+        // Array<Integer> arr2 = new Array<Integer>();
+        // copyArray(arr, arr2, 0, 1);
+        // System.out.println(arr);
+        // System.out.println(arr2);
+        mergeSort(arr);
+
     }
 
 }
