@@ -1,0 +1,76 @@
+:root {
+    --title-color: red;
+}
+
+body {
+    margin: 0;
+}
+
+nav {
+    background-color: #646464;
+}
+
+nav>ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 24px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white
+}
+
+h1,
+h3 {
+    color: var(--title-color);
+    border-bottom: solid 1px var(--title-color);
+}
+
+section>p {
+    margin-left: 10px;
+}
+
+article>section {
+    margin-left: 20px;
+}
+
+p+p {
+    color: blue;
+}
+
+a[href^="https"] {
+    font-size: 1.5em;
+}
+
+a[href$=".com"] {
+    font-size: 1.2em;
+}
+
+a:hover {
+    color: chartreuse;
+    animation: grow 3s ease-in-out;
+}
+
+article section:first-of-type p:nth-of-type(2) {
+    color: green;
+}
+
+p::first-letter {
+    font-weight: bold;
+    font-size: 1.5em;
+
+}
+
+
+@keyframes grow {
+    from {
+        font-size: initial;
+    }
+
+    to {
+        font-size: 2em;
+    }
+}

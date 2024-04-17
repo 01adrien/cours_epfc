@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.custom-input {
+    display: inline;
+}
+
+.custom-input>label {
+    position: absolute;
+}
+
+.custom-input>input {}
