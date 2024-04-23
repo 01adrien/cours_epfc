@@ -186,28 +186,25 @@ public class App {
 
     public static Array<Integer> merge(Array<Integer> a1, Array<Integer> a2) {
         Array<Integer> sorted = new Array<Integer>();
-        int lenMin = Math.min(a1.size(), a2.size());
-        int lenMax = Math.max(a1.size(), a2.size());
         int ia = 0;
         int ib = 0;
-        int i = 0;
-        System.out.println("a1 => " + a1);
-        System.out.println("a2 => " + a2);
-        while (ia < a1.size() && ib < a1.size()) {
+        while (ia < a1.size() && ib < a2.size()) {
             if (a1.get(ia) < a2.get(ib)) {
                 sorted.add(a1.get(ia));
                 ia++;
-            } else if (a2.get(ib) < a1.get(ia)) {
-                sorted.add(a2.get(ib));
-                ib++;
             } else {
                 sorted.add(a2.get(ib));
-                sorted.add(a1.get(ia));
-                ia++;
                 ib++;
             }
         }
-        System.out.println(sorted);
+        while (ia < a1.size()) {
+            sorted.add(a1.get(ia));
+            ia++;
+        }
+        while (ib < a2.size()) {
+            sorted.add(a2.get(ib));
+            ib++;
+        }
         return sorted;
     }
 
@@ -217,34 +214,27 @@ public class App {
         }
     }
 
-    public static void mergeSort(Array<Integer> arr, int n) {
+    public static Array<Integer> mergeSort(Array<Integer> arr, int n) {
         if (arr.size() == 1) {
-            return;
+            return arr;
         }
         int mid = arr.size() / 2;
         Array<Integer> a1 = new Array<Integer>();
         Array<Integer> a2 = new Array<Integer>();
         copyArray(arr, a1, 0, mid);
         copyArray(arr, a2, mid, arr.size());
-        // System.out.println("STEP " + n);
-        // System.out.println("A1 => " + a1);
-        // System.out.println("A2 => " + a2);
+
         mergeSort(a1, n + 1);
         mergeSort(a2, n + 1);
-        arr = merge(a1, a2);
+        return merge(a1, a2);
     }
 
     public static void main(String[] args) throws Exception {
 
-        Array<Integer> arr = new Array<Integer>(8, 9, 2, 3, 5, 6, 9, 7);
+        Array<Integer> arr = new Array<Integer>(8, 9, 2, 5, 6, 1);
         System.out.println(arr);
-        mergeSort(arr, 0);
-        System.out.println(arr);
-        // Array<Integer> arr2 = new Array<Integer>();
-        // copyArray(arr, arr2, 0, 1);
-        // System.out.println(arr);
-        // System.out.println(arr2);
-
+        Array<Integer> arrS = mergeSort(arr, 0);
+        System.out.println(arrS);
     }
 
 }

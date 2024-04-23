@@ -14,7 +14,6 @@
   "editor.scrollbar.horizontal": "hidden",
   "editor.scrollbar.vertical": "hidden",
   "editor.scrollbar.verticalScrollbarSize": 0,
-  "editor.glyphMargin": false,
   "editor.folding": true,
   "workbench.editor.showTabs": "single",
   "workbench.editor.enablePreview": false,
