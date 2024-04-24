@@ -1,3 +1,10 @@
+:root {
+    --idle-color: grey;
+    --focus-color: #1535e7;
+    --error-color: #fC5e66;
+}
+
+
 body {
     margin: 0;
     width: 100vw;
@@ -9,11 +16,45 @@ body {
 
 
 .custom-input {
-    display: inline;
+    display: flex;
+    align-items: center;
 }
 
 .custom-input>label {
     position: absolute;
+    padding-left: 5px;
 }
 
-.custom-input>input {}
+.custom-input>input {
+    border: none;
+    border-bottom: 1px solid var(--idle-color);
+    background-color: rgb(242, 247, 247);
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.custom-input>input:focus {
+    border-bottom: 1px solid var(--focus-color);
+    outline: none;
+    animation: border-color 1s ease-in-out;
+}
+
+
+.form-input:focus~.form-label {
+    color: var(--focus-color);
+}
+
+
+
+
+
+@keyframes border-color {
+    from {
+        border-bottom: 1px solid var(--idle-color);
+    }
+
+    to {
+        border-bottom: 1px solid var(--focus-color);
+    }
+}
