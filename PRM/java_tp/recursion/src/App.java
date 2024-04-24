@@ -197,6 +197,7 @@ public class App {
                 ib++;
             }
         }
+
         while (ia < a1.size()) {
             sorted.add(a1.get(ia));
             ia++;
@@ -208,33 +209,31 @@ public class App {
         return sorted;
     }
 
-    public static void copyArray(Array<Integer> from, Array<Integer> to, int start, int end) {
+    public static Array<Integer> copyArray(Array<Integer> from, int start, int end) {
+        Array<Integer> dest = new Array<Integer>();
         while (start != end) {
-            to.add(from.get(start++));
+            dest.add(from.get(start++));
         }
+        return dest;
     }
 
-    public static Array<Integer> mergeSort(Array<Integer> arr, int n) {
+    public static Array<Integer> mergeSort(Array<Integer> arr) {
         if (arr.size() == 1) {
             return arr;
         }
         int mid = arr.size() / 2;
-        Array<Integer> a1 = new Array<Integer>();
-        Array<Integer> a2 = new Array<Integer>();
-        copyArray(arr, a1, 0, mid);
-        copyArray(arr, a2, mid, arr.size());
-
-        mergeSort(a1, n + 1);
-        mergeSort(a2, n + 1);
-        return merge(a1, a2);
+        Array<Integer> a1 = copyArray(arr, 0, mid);
+        Array<Integer> a2 = copyArray(arr, mid, arr.size());
+        return merge(mergeSort(a1), mergeSort(a2));
     }
 
     public static void main(String[] args) throws Exception {
 
-        Array<Integer> arr = new Array<Integer>(8, 9, 2, 5, 6, 1);
+        Array<Integer> arr = new Array<Integer>(8, 10, 9, 3, 2, 4, 5, 6, 85, 7, 1, 89, 2);
         System.out.println(arr);
-        Array<Integer> arrS = mergeSort(arr, 0);
-        System.out.println(arrS);
+        Array<Integer> arrSorted = mergeSort(arr);
+        System.out.println(arrSorted);
+
     }
 
 }
