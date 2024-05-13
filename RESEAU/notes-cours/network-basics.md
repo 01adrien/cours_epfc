@@ -53,8 +53,9 @@ Les flags SYN et ACK envoie un byte.
 
 ## Couche reseau
 
-**IGP** : Intern Gateway Protocol<br>
-**EGP** : Extern Gateway Protocol
 
-<p class="txt-center">Protocole de routage</p>
-<img src="./images/protocole-de-routage.png"/>
+## Couche datalink
+
+Elle achemine les trames ethernet a bon port dans un envoronement phisyque defini.<br> 
+Concept d'interface physique | logique.<br>
+

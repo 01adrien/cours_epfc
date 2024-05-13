@@ -184,27 +184,22 @@ public class App {
         quickSort(arr, 0, arr.size() - 1, arr.size() / 2);
     }
 
-    public static Array<Integer> merge(Array<Integer> a1, Array<Integer> a2) {
+    public static Array<Integer> merge(Array<Integer> a, Array<Integer> b) {
         Array<Integer> sorted = new Array<Integer>();
         int ia = 0;
         int ib = 0;
-        while (ia < a1.size() && ib < a2.size()) {
-            if (a1.get(ia) < a2.get(ib)) {
-                sorted.add(a1.get(ia));
-                ia++;
+        while (ia < a.size() && ib < b.size()) {
+            if (a.get(ia) < b.get(ib)) {
+                sorted.add(a.get(ia++));
             } else {
-                sorted.add(a2.get(ib));
-                ib++;
+                sorted.add(b.get(ib++));
             }
         }
-
-        while (ia < a1.size()) {
-            sorted.add(a1.get(ia));
-            ia++;
+        while (ia < a.size()) {
+            sorted.add(a.get(ia++));
         }
-        while (ib < a2.size()) {
-            sorted.add(a2.get(ib));
-            ib++;
+        while (ib < b.size()) {
+            sorted.add(b.get(ib++));
         }
         return sorted;
     }
@@ -222,9 +217,9 @@ public class App {
             return arr;
         }
         int mid = arr.size() / 2;
-        Array<Integer> a1 = copyArray(arr, 0, mid);
-        Array<Integer> a2 = copyArray(arr, mid, arr.size());
-        return merge(mergeSort(a1), mergeSort(a2));
+        Array<Integer> a = copyArray(arr, 0, mid);
+        Array<Integer> b = copyArray(arr, mid, arr.size());
+        return merge(mergeSort(a), mergeSort(b));
     }
 
     public static void main(String[] args) throws Exception {

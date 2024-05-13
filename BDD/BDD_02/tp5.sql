@@ -346,3 +346,77 @@ $$
     END
 $$;
 
+
+------------------------------------------------------------------
+------------------ EXERCICES COMPLEMENTAIRES ---------------------
+------------------------------------------------------------------
+
+-- EX 1
+
+DROP FUNCTION IF EXISTS super_trad_ls;
+CREATE FUNCTION super_trad_ls()
+    RETURNS TABLE(idtrad_ecriv int) AS
+$$
+    SELECT tp.numtrad FROM traduit_par AS tp
+    GROUP BY tp.numtrad HAVING COUNT(*) > 1;
+$$ LANGUAGE SQL;
+
+DROP FUNCTION IF EXISTS ecrivains_productif;
+CREATE FUNCTION ecrivains_productif()
+    RETURNS TABLE(idtrad_ecriv int) AS
+$$
+
+$$ LANGUAGE SQL;
+
+
+DROP PROCEDURE IF EXISTS creer_livre_super_traduct;
+CREATE PROCEDURE creer_livre_super_traduct()
+LANGUAGE plpgsql
+AS
+$$
+    DECLARE id int;
+    BEGIN
+        INSERT INTO livre_paru (titre, editeur) VALUES ('Super Traduct', 'Dunod')
+        RETURNING idlivre INTO id;
+        INSERT INTO traduit_par (numlivre, numtrad) VALUES (id, super_trad_ls());
+    END
+$$;
+
+
+DO 
+LANGUAGE plpgsql
+$$
+
+    BEGIN
+        CALL creer_livre_super_traduct();
+    END
+$$;
+
+
+------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
