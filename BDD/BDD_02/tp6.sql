@@ -97,6 +97,7 @@ UPDATE traduit_par SET numtrad = 23 WHERE numlivre = 1;
 
 -- TRIGGER BEFORE EACH sur UPDATE INSERT ecrit_par 
 -- TRIGGER BEFORE EACH sur UPDATE traducteur_ecrivain
+-- TRIGGER BEFORE EACH sur UPDATE oeuvre
 
 CREATE OR REPLACE FUNCTION ecr_ddn(ecr_id int)
     RETURNS tannee AS 
@@ -127,7 +128,7 @@ $$
     DECLARE
     BEGIN
         IF (oeuvre_date(new.numoeuvre) < ecr_ddn(new.numecriv)) THEN
-            RAISE EXCEPTION 'date de oeuvre < ddn auteur';
+            RAISE EXCEPTION 'date oeuvre < ddn auteur';
         END IF ;
         RETURN new;
     END;
@@ -143,9 +144,6 @@ EXECUTE FUNCTION avant_naissance_ep_fct();
 CREATE OR REPLACE FUNCTION avant_naissance_te_fct() 
     RETURNS TRIGGER AS
 $$
-    DECLARE
-    oeuvre_date tannee;
-    ecr_ddn date;
     BEGIN
         IF (EXTRACT(YEAR FROM new.ddn) > ANY ( 
                 SELECT o.annee FROM oeuvre AS o
@@ -165,9 +163,87 @@ FOR EACH ROW
 EXECUTE FUNCTION avant_naissance_te_fct();
 
 
+CREATE OR REPLACE FUNCTION avant_naissance_o_fct() 
+    RETURNS TRIGGER AS
+$$
+    BEGIN
+        IF (new.annee < ANY (
+            SELECT EXTRACT(YEAR FROM te.ddn) FROM traducteur_ecrivain AS te
+            JOIN ecrit_par AS ep ON ep.numecriv = te.idtrad_ecriv
+            WHERE ep.numoeuvre = old.idoeuvre)
+        ) THEN
+            RAISE EXCEPTION 'date oeuvre < any ddn';
+        END IF;
+        RETURN new;
+    END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER avant_naissance_o
+BEFORE UPDATE
+ON oeuvre
+FOR EACH ROW
+EXECUTE FUNCTION avant_naissance_o_fct();
+
+
 INSERT INTO ecrit_par (numOeuvre, numecriv) VALUES (2, 9);
 UPDATE ecrit_par SET numecriv = 1 WHERE numoeuvre = 2;
 
 
 UPDATE traducteur_ecrivain SET ddn = '01/01/1900'::DATE WHERE idtrad_ecriv = 3;
 
+
+-- EX 4
+-- Ecrire un (des) déclencheur(s) qui fait(font) en sorte qu'un livre ne peut faire l'objet 
+-- d'une traduction dans la même langue que l’oeuvre liée à ce livre.
+
+-- TRIGGER BEFORE EACH sur UPDATE INSERT livre-paru 
+-- TRIGGER BEFORE EACH sur UPDATE oeuvre
+
+CREATE OR REPLACE FUNCTION trad_lp_fct() 
+    RETURNS TRIGGER AS
+$$
+    DECLARE 
+        oeuvre_lang tlangue;
+    BEGIN
+        SELECT o.langue INTO oeuvre_lang
+        FROM oeuvre AS o WHERE o.idoeuvre = new.numoeuvre;
+        IF (oeuvre_lang = new.langue) THEN
+            RAISE EXCEPTION 'Un livre ne peut etre traduit dans la langue originale';
+        END IF;
+        RETURN new;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE TRIGGER trad_lp
+BEFORE UPDATE OR INSERT
+ON livre_paru
+FOR EACH ROW
+EXECUTE FUNCTION trad_lp_fct();
+
+INSERT INTO livre_paru (titre, langue, numoeuvre) VALUES ('test', 'En', 3);
+UPDATE livre_paru SET langue = 'Gr' WHERE idlivre = 2;
+
+
+CREATE OR REPLACE FUNCTION trad_o_fct() 
+    RETURNS TRIGGER AS
+$$
+    BEGIN
+        IF (new.langue = ANY (
+            SELECT lp.langue FROM livre_paru AS lp
+            WHERE lp.numoeuvre = old.idoeuvre)
+        ) THEN 
+            RAISE EXCEPTION 'livre deja traduit dans cette langue';
+        END IF;
+        return null;
+    END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE TRIGGER trad_o
+BEFORE UPDATE 
+ON oeuvre
+FOR EACH ROW
+EXECUTE FUNCTION trad_o_fct();
+
+UPDATE oeuvre SET langue = 'Fr' WHERE idoeuvre = 3;
