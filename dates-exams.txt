@@ -1,9 +1,0 @@
-
-
-
-- Lundi 3      | 17h    =>  20h |  BNET  | B105
-- Jeudi 6      | 18h    =>  22h |  BDD   | B110
-- Samedi 8     | 9h     =>  12h |  PANI  | C008
-- Lundi 10     | 19h30  =>  22h |  SYS	 | B105
-- mercredi 12  | 18h    =>  20h |  WEB   | C008
-- Vendredi 13  | 17h    =>  22h |  PRM   | ####

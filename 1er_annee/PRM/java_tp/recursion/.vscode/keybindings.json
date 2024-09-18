@@ -1,0 +1,165 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+]",
+        "command": "editor.action.insertCursorAtEndOfEachLineSelected",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+i",
+        "command": "-editor.action.insertCursorAtEndOfEachLineSelected",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "end",
+        "command": "cursorEnd",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "end",
+        "command": "-cursorEnd",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+alt+pagedown",
+        "command": "workbench.action.focusNextGroup"
+    },
+    {
+        "key": "ctrl+alt+pageup",
+        "command": "workbench.action.focusPreviousGroup"
+    },
+    {
+        "key": "ctrl+numpad4",
+        "command": "workbench.action.decreaseViewSize"
+    },
+    {
+        "key": "ctrl+numpad6",
+        "command": "workbench.action.increaseViewSize"
+    },
+    {
+        "key": "ctrl+shift+pagedown",
+        "command": "workbench.action.nextPanelView"
+    },
+    {
+        "key": "ctrl+shift+pageup",
+        "command": "workbench.action.moveEditorToNextGroup"
+    },
+    {
+        "key": "ctrl+alt+right",
+        "command": "-workbench.action.moveEditorToNextGroup"
+    },
+    {
+        "key": "ctrl+shift+up",
+        "command": "workbench.action.increaseViewHeight"
+    },
+    {
+        "key": "ctrl+x left",
+        "command": "workbench.action.increaseViewWidth"
+    },
+    {
+        "key": "ctrl+shift+down",
+        "command": "workbench.action.decreaseViewHeight"
+    },
+    {
+        "key": "ctrl+shift+right",
+        "command": "workbench.action.decreaseViewWidth"
+    },
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.createTerminalEditor"
+    },
+    {
+        "key": "ctrl+shift+r",
+        "command": "workbench.action.terminal.renamePanel"
+    },
+    {
+        "key": "ctrl+shift+down",
+        "command": "workbench.action.terminal.resizePaneDown"
+    },
+    {
+        "key": "ctrl+shift+up",
+        "command": "workbench.action.terminal.resizePaneUp"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "workbench.action.files.openFile",
+        "when": "true"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-workbench.action.files.openFile",
+        "when": "true"
+    },
+    {
+        "key": "alt+c",
+        "command": "editor.action.addCommentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+k ctrl+c",
+        "command": "-editor.action.addCommentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+u",
+        "command": "editor.action.removeCommentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+k ctrl+u",
+        "command": "-editor.action.removeCommentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+x ctrl+d",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+home",
+        "command": "workbench.action.terminal.resizePaneLeft",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+shift+left",
+        "command": "-workbench.action.terminal.resizePaneLeft",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+x ctrl+left",
+        "command": "cursorWordLeftSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+shift+left",
+        "command": "-cursorWordLeftSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+x ctrl+g",
+        "command": "workbench.action.gotoLine"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "-workbench.action.gotoLine"
+    },
+    {
+        "key": "ctrl+x ctrl+j",
+        "command": "java.debug.runJavaFile"
+    },
+    {
+        "key": "ctrl+x ctrl+r",
+        "command": "editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "-editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    }
+]
