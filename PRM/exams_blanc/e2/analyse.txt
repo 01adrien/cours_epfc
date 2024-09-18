@@ -1,0 +1,46 @@
+Écrivez une fonction qui reçoit une séquence d’entiers et qui
+détermine le nombre de plateaux de hauteur paire et de longueur impaire.
+
+curr  = element courant
+prev  = celui d'avant le courant
+isHtP = le plateaux courant est il d'hauteur paire (bool)
+isLgI = le plateaux courant est il de longueur impaire (bool)
+res   = nombre de plateaux stisfaisant la condition 
+
+
+curr    8, 8, 8, 5, 5, 5, 2, 2, 2, 2, 2, 4, 4, 6 
+prev       8, 8, 8, 5, 5, 5, 2, 2, 2, 2, 2, 4, 4  
+isHtP   T  T  T  F  F  F  T  T  T  T  T  T  T  T
+isLgI   T  F  T  T  F  T  T  F  T  F  T  T  F  T   
+res     0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3
+condOk
+
+
+curr    8, 6
+prev       8
+isHtP   T  T 
+isLgI   T  T
+res     1  1
+
+INIT:
+
+curr = it.next
+prev = curr
+isHtP = curr % 2 == 0
+isLgI = true
+res = IsHtP && isLgI ? 1 : 0;
+
+RETABLISSEMENTS INVARIANTS
+
+if (curr != prev)
+   if (isHtP && isLgI) res ++;
+   isLgI = true;
+   isHtp = curr % 2 == 0 
+else
+   isLgi = !isLgi
+   isHtp = curr % 2 == 0
+
+
+** Gestion des sequences a 1 seul element dans le code
+   
+

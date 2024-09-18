@@ -38,7 +38,7 @@ declare
 begin
     select count(*) from bdlivre.traduit_par as tp
     join bdlivre.traducteur_ecrivain as te on te.idtrad_ecriv = tp.numtrad
-    where lower(te.prenom) = lower(p) and lower(te.nom) = lower(n) into num;
+    where lower (te.prenom) = lower(p) and lower(te.nom) = lower(n) into num;
     return num;
 end;
 $$ language plpgsql;

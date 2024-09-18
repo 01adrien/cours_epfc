@@ -1,0 +1,63 @@
+{
+  "editor.tabSize": 4,
+  "editor.defaultFormatter": "ms-vscode.cpptools",
+  "editor.wordBasedSuggestions": "allDocuments",
+  "editor.suggest.insertMode": "replace",
+  "editor.semanticHighlighting.enabled": true,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "editor.cursorStyle": "line",
+  "editor.cursorBlinking": "smooth",
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.scrollbar.verticalScrollbarSize": 0,
+  "editor.folding": true,
+  "workbench.editor.showTabs": "single",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.decorations.badges": false,
+  "workbench.statusBar.visible": false,
+  "workbench.colorTheme": "Visual Studio Dark - C++",
+  "workbench.activityBar.location": "hidden",
+  "workbench.colorCustomizations": {
+    "editorGroupHeader.border": "#6c6969",
+  },
+  "git.openRepositoryInParentFolders": "never",
+  "terminal.integrated.tabs.showActiveTerminal": "singleTerminal",
+  "terminal.integrated.defaultLocation": "editor",
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "java.project.sourcePaths": [
+    "src"
+  ],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar"
+  ],
+  "[c]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "files.associations": {
+    "*.lox": "javascript",
+    "*.py": "python",
+    "*.h": "c",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+}

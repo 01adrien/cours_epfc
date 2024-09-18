@@ -29,7 +29,8 @@ ADD CONSTRAINT ck_genre
 CHECK ( genre IN ('Roman', 'Poesie', 'Musique', 'Tragédie', 'Essai', 'Informatique', 'Mystère') );
 
 -- EX 5
--- La date de décès de tout individu doit être postérieure à sa date de naissance.
+-- La date de décès de tQ
+-- individu doit être postérieure à sa date de naissance.
 
 ALTER TABLE bdlivre.traducteur_ecrivain
 ADD CONSTRAINT ck_date
