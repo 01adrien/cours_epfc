@@ -19,7 +19,7 @@
   "workbench.editor.enablePreview": false,
   "workbench.editor.decorations.badges": false,
   "workbench.statusBar.visible": false,
-  "workbench.colorTheme": "Default Light+",
+  "workbench.colorTheme": "Visual Studio Dark",
   "workbench.activityBar.location": "hidden",
   "workbench.colorCustomizations": {
     "editorGroupHeader.border": "#6c6969",

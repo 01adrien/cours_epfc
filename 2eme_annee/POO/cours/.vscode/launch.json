@@ -5,6 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "App",
+      "projectName": "cours_95c06b0f"
+    },
+    {
       "name": "(gdb) Lancer",
       "type": "cppdbg",
       "request": "launch",

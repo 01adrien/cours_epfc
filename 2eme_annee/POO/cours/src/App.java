@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class App {
 
@@ -26,20 +27,19 @@ public class App {
 
     public static void ex3(int[] array) {
         if (array.length > 1) {
-            int last = array[array.length - 1] ;
-            for (int i = array.length -2; i != -1; i--) {
+            int last = array[array.length - 1];
+            for (int i = array.length - 2; i != -1; i--) {
                 array[i + 1] = array[i];
             }
             array[0] = last;
         }
-        
+
     }
 
     public static int[] ex4(int[] array1, int[] array2) {
         int length = array1.length + array2.length;
         int[] array3 = new int[length];
-
-        for (int i = 0; i < length ; i++) {
+        for (int i = 0; i < length; i++) {
             if (i < array1.length) {
                 array3[i] = array1[i];
             } else {
@@ -47,13 +47,56 @@ public class App {
             }
         }
         return array3;
-        
+
+    }
+
+    public static int[] ex5(int[] a, int[] b) {
+        int length = a.length + b.length;
+        int[] c = new int[length];
+        int ia, ib, ic;
+        ia = ib = ic = 0;
+        while (ia < a.length && ib < b.length) {
+            if (a[ia] < b[ib]) {
+                c[ic++] = a[ia++];
+            } else {
+                c[ic++] = b[ib++];
+            }
+        }
+        while (ia < a.length) {
+            c[ic++] = a[ia++];
+        }
+        while (ib < b.length) {
+            c[ic++] = b[ib++];
+        }
+        return c;
+    }
+
+    public static void ex6() {
+        try (Scanner s = new Scanner(System.in)) {
+            System.out.print("Quelle largeur? ");
+            int lg = s.nextInt();
+            System.out.print("Quelle hauteur? ");
+            int ht = s.nextInt();
+            int mat[][] = new int[lg][ht];
+            int value;
+            for (int i = 0; i < lg; i++) {
+                for (int j = 0; j < ht; j++) {
+                    System.out.println("Quelle valeur pour (" + i + ", " + j + ") ? ");
+                    value = s.nextInt();
+                    mat[i][j] = value;
+                }
+            }
+            System.out.println("Voila la matrice:");
+            for (int i = 0; i < lg; i++) {
+                for (int j = 0; j < ht; j++) {
+                    System.out.print(mat[i][j] + " ");
+                }
+                System.out.println("");
+            }
+        }
     }
 
     public static void main(String[] args) throws Exception {
-        int[] array1 = {1,2,3,4};
-        int[] array2 = {5,6,7,8};
-        System.out.println();
-        System.out.println(Arrays.toString(ex4(array1, array2)));
+        ex6();
     }
 }
