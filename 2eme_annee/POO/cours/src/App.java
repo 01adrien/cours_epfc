@@ -77,18 +77,18 @@ public class App {
             int lg = s.nextInt();
             System.out.print("Quelle hauteur? ");
             int ht = s.nextInt();
-            int mat[][] = new int[lg][ht];
+            int mat[][] = new int[ht][lg];
             int value;
-            for (int i = 0; i < lg; i++) {
-                for (int j = 0; j < ht; j++) {
-                    System.out.println("Quelle valeur pour (" + i + ", " + j + ") ? ");
+            for (int i = 0; i < ht; i++) {
+                for (int j = 0; j < lg; j++) {
+                    System.out.print("Quelle valeur pour (" + i + ", " + j + ") ? ");
                     value = s.nextInt();
                     mat[i][j] = value;
                 }
             }
             System.out.println("Voila la matrice:");
-            for (int i = 0; i < lg; i++) {
-                for (int j = 0; j < ht; j++) {
+            for (int i = 0; i < ht; i++) {
+                for (int j = 0; j < lg; j++) {
                     System.out.print(mat[i][j] + " ");
                 }
                 System.out.println("");
