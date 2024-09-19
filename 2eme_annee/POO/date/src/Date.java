@@ -31,7 +31,9 @@ public class Date {
     } 
 
     public int dayOfWeek() {
-        return -1;
+        int k = year % 100;
+        int j = year/100;
+        return (day + (((month + 1) * 13)/5) + k + ((k) / 4) +((j)/4) + (5 * j)) % 7;
     } 
 
     public void prettyPrint(){
@@ -53,7 +55,7 @@ public class Date {
         String[] days = {"lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"};
         String[] months = {"janvier", "fevrier", "mars", "avril", "mai", "juin", "juillet", 
                             "aout", "septembre", "octobre", "novembre", "decembre"};
-        return "Date [day=" + day + ", month=" + month + ", year=" + year + "]";
+        return "Date [day=" + days[dayOfWeek()] + ", month=" + months[month] + ", year=" + year + "]";
     }
 
     

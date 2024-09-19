@@ -40,12 +40,15 @@ public class App {
     }
 
     public static void testDayOfWeek() {
-        
+        Date d1 = new Date(3, 3, 2024);
+        System.out.println(d1.dayOfWeek());
+        d1.prettyPrint();
     }
     
     public static void main(String[] args) throws Exception {
         App.testIncrementDay();
         App.testDayOfYear();
+        App.testDayOfWeek();
 
     }
 }
