@@ -60,5 +60,6 @@ public class Test {
         //testDayOfWeek();
         //testPersonn();
         testCreateIllegalDate();
+        System.out.println("All test passed.");
     }
 }
