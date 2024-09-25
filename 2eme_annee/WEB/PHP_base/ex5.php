@@ -33,10 +33,11 @@ function main(): void
     }
 
     $max_per_pages = 20;
-    $page_number = $max_per_pages / $max_per_pages;
+    $page_number = ($max - $min) / $max_per_pages;
     $need_pagination = $page_number > 1;
-    $max_page = $max / $max_per_pages;
     $current_page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
+    $first_item = $min;
+    $last_item = $max;
 
     if ($need_pagination) {
 
@@ -44,16 +45,21 @@ function main(): void
 
     echo "<ul>";
     if ($max > 0) {
-        for ($i = $min; $i <= $max; $i++) {
+        for ($i = $first_item; $i <= $last_item; $i++) {
             echo "<li>$i</li>";
         }
     }
 
     if ($need_pagination) {
         if ($current_page > 1) {
-            echo "<a href='./ex6.php?min=$min&max=$max&page=$current_page'>prev</a>";
+            $prev_page = $current_page + 1;
+            echo "<a href='./ex6.php?min=$min&max=$max&page=$prev_page'>prev</a>";
         }
-        echo "<a href='./ex6.php?min=$min&max=$max&page=$current_page'>next</a>";
+        for ($j = 1; $j <= $page_number; $j++) {
+            echo " $j ";
+        }
+        $next_page = $current_page + 1;
+        echo "<a href='./ex6.php?min=$min&max=$max&page=$next_page'>next</a>";
     }
 
     echo "</ul>";
