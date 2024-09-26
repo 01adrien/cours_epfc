@@ -3,6 +3,7 @@
         name = 01adrien
 [credential]
         helper = manager
+[credential "helperselector"]
 	selected = manager
 [core]
 	autocrlf = true
