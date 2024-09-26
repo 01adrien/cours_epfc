@@ -74,20 +74,7 @@ public class Date {
         return res;
     }
 
-    public int numberDayInMonth() {
-
-        return 0;
-    }
-
     public int dayOfWeek() {
-        /*
-         * int k = year % 100;
-         * int j = year/100;
-         * int h = (day + (((month + 1) * 13)/5) + k + ((k) / 4) +((j)/4) + (5 * j)) %
-         * 7;
-         * return h ;
-         * 
-         */
         int q = this.day;
         int m = this.month;
         int y = this.year;
