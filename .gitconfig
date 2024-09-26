@@ -2,4 +2,21 @@
         email = adriengaucher02@gmail.com
         name = 01adrien
 [credential]
-        # helper = store
+        helper = manager
+	selected = manager
+[core]
+	autocrlf = true
+	safecrlf = false
+	askPass = 
+	editor = nano
+[alias]
+	l = log --pretty='%h - %s - %cn%C(auto)%d'
+	la = log --pretty='%h - %s - %cn%C(auto)%d' --all
+	g = log --graph --pretty='%h - %s - %cn%C(auto)%d'
+	ga = log --graph --pretty='%h - %s - %cn%C(auto)%d' --all
+	lr = "log -g --pretty=\"%h;%s;%cn;%ce;%cd;%p;%D;%gs;%gd\" --all --date=format:\"%Y-%m-%d %H:%M:%S\""
+[merge]
+	ff = false	 # force la création d'un commit de fusion à chaque merge
+[pull]
+	ff = true	 # permet d'éviter que l'option merge.ff=false ne s'applique lors d'un pull
+	rebase = false
