@@ -18,7 +18,7 @@ public class Test {
         d1.increment();
         ASSERT(d1.getDay() == 1 && d1.getMonth() == 2 && d1.getYear() == 1995);
         // bissextile year
-        Date d2 = new Date(28, 2, 2024);
+        Date d2 = new Date(29, 2, 2024);
         d2.increment();
         ASSERT(d2.getDay() == 1 && d2.getMonth() == 3 && d2.getYear() == 2024);
         // end of year
@@ -52,7 +52,11 @@ public class Test {
     }
 
     private void testCreateIllegalDate() {
-        Date d = new Date(31, 7, 2024);
+        // Date d = new Date(29, 2, 2024);
+        // d.setYear(2011);
+        Date d1 = new Date(31, 1, 2012);
+        d1.setMonth(2);
+
     }
 
     public void runAll() {

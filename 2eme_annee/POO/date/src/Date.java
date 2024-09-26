@@ -13,9 +13,9 @@ public class Date {
     }
 
     public Date() {
-        this(LocalDate.now().getDayOfMonth(), 
-             LocalDate.now().getMonthValue(),
-             LocalDate.now().getYear());
+        this(LocalDate.now().getDayOfMonth(),
+                LocalDate.now().getMonthValue(),
+                LocalDate.now().getYear());
     }
 
     public int getDay() {
@@ -34,7 +34,12 @@ public class Date {
     }
 
     public void setMonth(int month) {
-        if (month > 0 && month < 13) {
+        if (this.day == 0) {
+            this.month = month;
+        }
+        int currMonthDays = daysInMonth();
+        int targetMonthDays = daysInMonth(month);
+        if (month > 0 && month < 13 && !(isEndOfMonth() && currMonthDays > targetMonthDays)) {
             this.month = month;
         } else {
             throw new RuntimeErrorException(null, "Invalid month number");
@@ -46,10 +51,18 @@ public class Date {
     }
 
     public void setYear(int year) {
-        this.year = year;
+        if (this.day == 0 || this.month == 0) { // for constructor
+            this.year = year;
+        } else if (isEndOfMonth() && isBisextile() && month == 2 && !isBisextile(year)) {
+            throw new RuntimeErrorException(null, "Invalid year number");
+        }
+
     }
 
     public int daysInMonth() {
+        if (isBisextile() && month == 2) {
+            return 29;
+        }
         return Date.daysInMonth(month);
     }
 
