@@ -157,8 +157,8 @@ public class Date implements Comparable {
     @Override
     public String toString() {
         return DAY_IN_FRENCH[dayOfWeek()] + " " + getDay() + " "
-                + MONTH_IN_FRENCH[getMonth() - 1] + " " + getYear()
-                + " le " + dayOfYear() + "-ième jour de l'année";
+                + MONTH_IN_FRENCH[getMonth() - 1] + " " + getYear();
+        // + " le " + dayOfYear() + "-ième jour de l'année";
     }
 
     @Override
@@ -174,19 +174,18 @@ public class Date implements Comparable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof Date) {
-            Date o = (Date)other;
+            Date o = (Date) other;
             return o.day == day && o.month == month && o.year == year;
         }
         return false;
     }
 
-
     @Override
     public int compareTo(Object o) {
         if (o instanceof Date) {
-            Date d = (Date)o;
-            return ((day * 10) + (month * 100) + (year * 1000)) 
-                    - ((d.day * 10)  + (d.month * 100) + (d.year * 1000));
+            Date d = (Date) o;
+            return ((day * 10) + (month * 100) + (year * 1000))
+                    - ((d.day * 10) + (d.month * 100) + (d.year * 1000));
         }
         throw new RuntimeException("Cannot compare Date and " + o.getClass());
     }
