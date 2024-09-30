@@ -21,14 +21,25 @@ public class Person implements Comparable {
     }
 
     public int getAge() {
-        Date today = new Date();
+        return this.getAgeAt(new Date());
+    }
+
+    public int getAgeAt(Date d) {
+        Date today = new Date(d.getDay(), d.getMonth(), d.getYear());
         int age = today.getYear() - dateOfBirth.getYear();
+        System.out.println(age);
         if (today.getMonth() < dateOfBirth.getMonth()
                 || (today.getMonth() == dateOfBirth.getMonth()
                         && today.getDay() < dateOfBirth.getDay())) {
             age--;
         }
         return age;
+    }
+
+    public boolean equals(Person p) {
+        return this.firstName.compareToIgnoreCase(p.firstName) == 0
+                && this.lastName.compareToIgnoreCase(p.lastName) == 0
+                && this.compareTo(p) == 0;
     }
 
     @Override
