@@ -19,12 +19,15 @@ function main(): void
 {
     $min = -1;
     $max = -1;
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $min = check_and_get($_POST, "min");
-        $max = check_and_get($_POST, "max");
-    } else {
-        $min = check_and_get($_GET, "min");
-        $max = check_and_get($_GET, "max");
+    switch ($_SERVER["REQUEST_METHOD"]) {
+        case "POST":
+            $min = check_and_get($_POST, "min");
+            $max = check_and_get($_POST, "max");
+            break;
+        default:
+            $min = check_and_get($_GET, "min");
+            $max = check_and_get($_GET, "max");
+            break;
     }
 
     if ($min <= 0 || $max <= 0) {
@@ -37,6 +40,7 @@ function main(): void
         : (isset($_POST["per_page"])
             ? intval($_POST["per_page"])
             : 20);
+
     $page_number = ceil(($max - $min) / $max_per_pages);
     $need_pagination = $page_number > 1;
     $current_page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
@@ -72,7 +76,6 @@ function main(): void
         }
         echo "</div>";
     }
-
 
 }
 
