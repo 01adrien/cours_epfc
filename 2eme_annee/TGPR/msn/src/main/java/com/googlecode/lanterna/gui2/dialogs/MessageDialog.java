@@ -83,7 +83,7 @@ public class MessageDialog extends DialogWindow {
      * Shortcut for quickly displaying a message box
      * @param textGUI The GUI to display the message box on
      * @param title Title of the message box
-     * @param text Main message of the message box
+     * @param text tgpr.tuto.Main message of the message box
      * @param buttons Buttons that the user can confirm the message box with
      * @return Which button the user selected
      */

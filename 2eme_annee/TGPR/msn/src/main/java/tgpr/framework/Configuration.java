@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Permet de lire des valeurs de paramètres applicatifs stockés dans le fichier
- * {@code /config.properties} des
+ * Permet de lire des valeurs de paramètres applicatifs stockés dans le fichier {@code /config.properties} des
  * ressources
  * du projet.
  */
@@ -14,17 +13,14 @@ public class Configuration {
 
     static {
         try {
-            props.load(Configuration.class.getResourceAsStream(
-                    "/home/adrien/Desktop/cours_epfc/2eme_annee/TGPR/msn/src/main/ressources/config.properties"));
-            System.out.println(Configuration.props);
+            props.load(Configuration.class.getResourceAsStream("/config.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Permet de récupérer dans un {@code String} la valeur du paramètre dont le nom
-     * est passé en argument.
+     * Permet de récupérer dans un {@code String} la valeur du paramètre dont le nom est passé en argument.
      *
      * @param key le nom (la clef) du paramètre
      * @return la valeur du paramètre
@@ -34,12 +30,10 @@ public class Configuration {
     }
 
     /**
-     * Permet de récupérer dans un {@code String} la valeur du paramètre dont le nom
-     * est passé en argument
-     * ou une valeur par défaut si le nom n'est pas trouvé dans le fichier de
-     * configuration.
+     * Permet de récupérer dans un {@code String} la valeur du paramètre dont le nom est passé en argument
+     * ou une valeur par défaut si le nom n'est pas trouvé dans le fichier de configuration.
      *
-     * @param key          le nom (la clef) du paramètre
+     * @param key le nom (la clef) du paramètre
      * @param defaultValue la valeur par défaut
      * @return la valeur du paramètre
      */
@@ -49,8 +43,7 @@ public class Configuration {
     }
 
     /**
-     * Permet de récupérer dans un {@code int} la valeur du paramètre dont le nom
-     * est passé en argument.
+     * Permet de récupérer dans un {@code int} la valeur du paramètre dont le nom est passé en argument.
      *
      * @param key le nom (la clef) du paramètre
      * @return la valeur du paramètre ou zéro si pas trouvé ou invalide
@@ -60,21 +53,18 @@ public class Configuration {
     }
 
     /**
-     * Permet de récupérer dans un {@code int} la valeur du paramètre dont le nom
-     * est passé en argument
-     * ou une valeur par défaut si le nom n'est pas trouvé dans le fichier de
-     * configuration.
+     * Permet de récupérer dans un {@code int} la valeur du paramètre dont le nom est passé en argument
+     * ou une valeur par défaut si le nom n'est pas trouvé dans le fichier de configuration.
      *
-     * @param key          le nom (la clef) du paramètre
+     * @param key le nom (la clef) du paramètre
      * @param defaultValue la valeur par défaut
-     * @return la valeur du paramètre ou la valeur par défaut si pas trouvé ou
-     *         invalide
+     * @return la valeur du paramètre ou la valeur par défaut si pas trouvé ou invalide
      */
     public static int getInt(String key, int defaultValue) {
         var res = props.getProperty(key);
         try {
             return res == null ? defaultValue : Integer.parseInt(res);
-        } catch (NumberFormatException e) {
+        } catch(NumberFormatException e) {
             return defaultValue;
         }
     }

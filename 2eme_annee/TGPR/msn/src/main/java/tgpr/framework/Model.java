@@ -30,11 +30,9 @@ public abstract class Model {
 
     private static Connection db = null;
 
-    private static final int cacheDuration = 60; // Configuration.getInt("db.cache.duration", 60);
-    private static final boolean cacheEnabled = false; // Configuration.get("db.cache.enabled",
-                                                       // "false").equalsIgnoreCase("true");
-    private static final boolean cacheDebug = false; // Configuration.get("db.cache.debug",
-                                                     // "false").equalsIgnoreCase("true");
+    private static final int cacheDuration = Configuration.getInt("db.cache.duration", 60);
+    private static final boolean cacheEnabled = Configuration.get("db.cache.enabled", "false").equalsIgnoreCase("true");
+    private static final boolean cacheDebug = Configuration.get("db.cache.debug", "false").equalsIgnoreCase("true");
     private static final HashMap<String, CacheEntry> cache = new HashMap<>();
 
     private static boolean isCachedExpired(LocalDateTime ts) {
@@ -44,8 +42,7 @@ public abstract class Model {
     }
 
     private static Object getFromCache(PreparedStatement stmt) {
-        if (!cacheEnabled)
-            return null;
+        if (!cacheEnabled) return null;
         var entry = cache.getOrDefault(stmt.toString(), null);
         if (entry != null && isCachedExpired(entry.timestamp))
             removeFromCache(stmt);
@@ -57,14 +54,12 @@ public abstract class Model {
     }
 
     private static void addToCache(PreparedStatement stmt, Object obj) {
-        if (!cacheEnabled)
-            return;
+        if (!cacheEnabled) return;
         cache.put(stmt.toString(), new CacheEntry(LocalDateTime.now(), obj));
     }
 
     private static void removeFromCache(PreparedStatement stmt) {
-        if (!cacheEnabled)
-            return;
+        if (!cacheEnabled) return;
         cache.remove(stmt.toString());
         if (cacheDebug)
             System.out.println(asString(LocalDateTime.now()) + ": Cache Removal: size=" + cache.size());
@@ -80,18 +75,13 @@ public abstract class Model {
     }
 
     /**
-     * Méthode abstraite à surcharger dans chaque classe du modèle pour copier
-     * (<i>mapper</i>) les données
-     * récupérées en base de données (à travers un {@link ResultSet}) dans les
-     * attributs correspondant de la classe
+     * Méthode abstraite à surcharger dans chaque classe du modèle pour copier (<i>mapper</i>) les données
+     * récupérées en base de données (à travers un {@link ResultSet}) dans les attributs correspondant de la classe
      * du modèle.
      *
-     * @param rs le {@link ResultSet} contenant les données récupérées en base de
-     *           données ; il est positionné sur
-     *           l'enregistrement pour lequel on veut <i>mapper</i> les données vers
-     *           l'instance courante.
-     * @throws SQLException en cas d'erreur de lecture ou de confusion de format de
-     *                      données
+     * @param rs le {@link ResultSet} contenant les données récupérées en base de données ; il est positionné sur
+     *           l'enregistrement pour lequel on veut <i>mapper</i> les données vers l'instance courante.
+     * @throws SQLException en cas d'erreur de lecture ou de confusion de format de données
      */
     protected abstract void mapper(ResultSet rs) throws SQLException;
 
@@ -117,21 +107,24 @@ public abstract class Model {
 
     private static Connection getDatabaseConnection() throws SQLException {
         if (db == null) {
-            // var server = Configuration.get("db.server");
-            // var database = Configuration.get("db.database");
-            // var user = Configuration.get("db.user");
-            // var password = Configuration.get("db.password");
+            var server = Configuration.get("db.server");
+            var database =  Configuration.get("db.database");
+            var user = Configuration.get("db.user");
+            var password =  Configuration.get("db.password");
             MariaDbDataSource ds = new MariaDbDataSource();
-            ds.setUrl("jdbc:mariadb://127.0.0.1:3306/tgpr-msn");
-            ds.setUser("bob");
-            ds.setPassword("0101");
-            boolean debug = false; // Configuration.get("db.debug").equals("true");
+            ds.setUrl("jdbc:mariadb://" + server + ":3306/" + database);
+            ds.setUser(user);
+            ds.setPassword(password);
+            boolean debug = Configuration.get("db.debug").equals("true");
             if (debug)
                 db = ProxyDataSourceBuilder.create(ds)
-                        .logQueryToSysOut() // logQueryBySlf4j(), logQueryByJUL(), logQueryToSysOut()
+                        .logQueryToSysOut()    // logQueryBySlf4j(), logQueryByJUL(), logQueryToSysOut()
                         .build().getConnection();
             else
                 db = ds.getConnection();
+
+
+            //db = DriverManager.getConnection("jdbc:mariadb://localhost:3306/tgpr-msn?user=root&password=root");
         }
         return db;
     }
@@ -141,7 +134,7 @@ public abstract class Model {
         var user = Configuration.get("db.user");
         var password = Configuration.get("db.password");
         return DriverManager.getConnection("jdbc:mariadb://" + server + ":3306" + "?user=" + user + "&password" +
-                "=" + password);
+                        "=" + password);
     }
 
     private static void closeDb() throws SQLException {
@@ -165,13 +158,10 @@ public abstract class Model {
     }
 
     /**
-     * Exécute le script SQL se trouvant dans le fichier dont le chemin est passé en
-     * paramètre. Ce fichier doit
-     * être stocké dans les ressources du projet et le chemin doit correspondre à ce
-     * fichier.
+     * Exécute le script SQL se trouvant dans le fichier dont le chemin est passé en paramètre. Ce fichier doit
+     * être stocké dans les ressources du projet et le chemin doit correspondre à ce fichier.
      *
-     * @param resourceName le chemin vers le fichier ressource contenant le script
-     *                     SQL à exécuter
+     * @param resourceName le chemin vers le fichier ressource contenant le script SQL à exécuter
      */
     public static void seedData(String resourceName) {
         try {
@@ -196,38 +186,31 @@ public abstract class Model {
                     "class.");
         try {
             return clazz.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException
-                | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée ne retourner
-     * qu'un seul enregistrement, et
+     * Effectue une requête SQL de lecture en base de données, supposée ne retourner qu'un seul enregistrement, et
      * retourne
-     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à
-     * {@link #mapper(ResultSet)}.
+     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à {@link #mapper(ResultSet)}.
      *
      * @param type   le type d'objet à retourner
-     * @param sql    la requête SQL de type {@code SELECT} ; les éventuels
-     *               paramètres sont représentés par {@code :name}
+     * @param sql    la requête SQL de type {@code SELECT} ; les éventuels paramètres sont représentés par {@code :name}
      *               où {@code name} représente le nom du paramètre
-     * @param params la liste des valeurs pour les différents paramètres de la
-     *               requête (voir {@link Params})
-     * @param <T>    la classe correspondant au type d'objet à retourner (doit
-     *               hériter de {@link Model})
-     * @return une instance de la classe {@code T} contenant les données lues en
-     *         base données
+     * @param params la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
+     * @param <T>    la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return une instance de la classe {@code T} contenant les données lues en base données
      */
     public static <T extends Model> T queryOne(Class<T> type, String sql, Params params) {
         T obj = null;
         try {
             var stmt = convertToUnnamedParams(sql, params);
             var cachedResult = getFromCache(stmt);
-            if (cachedResult != null)
-                return (T) cachedResult;
+            if (cachedResult != null) return (T) cachedResult;
             var rs = stmt.executeQuery();
             if (rs.next()) {
                 obj = newInstance(type, rs);
@@ -242,53 +225,40 @@ public abstract class Model {
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée ne retourner
-     * qu'un seul enregistrement, et
+     * Effectue une requête SQL de lecture en base de données, supposée ne retourner qu'un seul enregistrement, et
      * retourne
-     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à
-     * {@link #mapper(ResultSet)}.
+     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à {@link #mapper(ResultSet)}.
      *
      * @param type le type d'objet à retourner
-     * @param sql  la requête SQL de type {@code SELECT} ; il s'agit d'une requête
-     *             sans paramètre
-     * @param <T>  la classe correspondant au type d'objet à retourner (doit hériter
-     *             de {@link Model})
-     * @return une instance de la classe {@code T} contenant les données lues en
-     *         base données
+     * @param sql  la requête SQL de type {@code SELECT} ; il s'agit d'une requête sans paramètre
+     * @param <T>  la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return une instance de la classe {@code T} contenant les données lues en base données
      */
     public static <T extends Model> T queryOne(Class<T> type, String sql) {
         return queryOne(type, sql, new Params());
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée ne retourner
-     * qu'un seul enregistrement, et
+     * Effectue une requête SQL de lecture en base de données, supposée ne retourner qu'un seul enregistrement, et
      * retourne
-     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à
-     * {@link #mapper(ResultSet)}.
+     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à {@link #mapper(ResultSet)}.
      *
-     * @param getInstance retourne une nouvelle instance d'une classe du modèle en
-     *                    fonction de la valeur du
+     * @param getInstance retourne une nouvelle instance d'une classe du modèle en fonction de la valeur du
      *                    discriminateur
-     * @param sql         la requête SQL de type {@code SELECT} ; les éventuels
-     *                    paramètres sont représentés par
+     * @param sql         la requête SQL de type {@code SELECT} ; les éventuels paramètres sont représentés par
      *                    {@code :name}
      *                    où {@code name} représente le nom du paramètre
-     * @param params      la liste des valeurs pour les différents paramètres de la
-     *                    requête (voir {@link Params})
-     * @param <T>         la classe correspondant au type d'objet à retourner (doit
-     *                    hériter de {@link Model})
-     * @return une instance de la classe {@code T} ou d'une classe héritant de
-     *         {@code T} contenant les données lues
-     *         en base données
+     * @param params      la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
+     * @param <T>         la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return une instance de la classe {@code T} ou d'une classe héritant de {@code T} contenant les données lues
+     * en base données
      */
     public static <T extends Model> T queryOne(Function<ResultSet, T> getInstance, String sql, Params params) {
         T obj = null;
         try {
             var stmt = convertToUnnamedParams(sql, params);
             var cachedResult = getFromCache(stmt);
-            if (cachedResult != null)
-                return (T) cachedResult;
+            if (cachedResult != null) return (T) cachedResult;
             var rs = stmt.executeQuery();
             if (rs.next()) {
                 obj = getInstance.apply(rs);
@@ -303,45 +273,35 @@ public abstract class Model {
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée ne retourner
-     * qu'un seul enregistrement, et
+     * Effectue une requête SQL de lecture en base de données, supposée ne retourner qu'un seul enregistrement, et
      * retourne
-     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à
-     * {@link #mapper(ResultSet)}.
+     * l'objet métier correspondant à l'enregistrement trouvé, en faisant appel à {@link #mapper(ResultSet)}.
      *
-     * @param getInstance retourne une nouvelle instance d'une classe du modèle en
-     *                    fonction de la valeur du
+     * @param getInstance retourne une nouvelle instance d'une classe du modèle en fonction de la valeur du
      *                    discriminateur
-     * @param sql         la requête SQL de type {@code SELECT} ; il s'agit d'une
-     *                    requête sans paramètre
-     * @param <T>         la classe correspondant au type d'objet à retourner (doit
-     *                    hériter de {@link Model})
-     * @return une instance de la classe {@code T} ou d'une classe héritant de
-     *         {@code T} contenant les données lues
-     *         en base données
+     * @param sql         la requête SQL de type {@code SELECT} ; il s'agit d'une requête sans paramètre
+     * @param <T>         la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return une instance de la classe {@code T} ou d'une classe héritant de {@code T} contenant les données lues
+     * en base données
      */
     public static <T extends Model> T queryOne(Function<ResultSet, T> getInstance, String sql) {
         return queryOne(getInstance, sql, new Params());
     }
 
     /**
-     * Méthode abstraite permettant de rafraîchir les données de l'objet métier
-     * courant en les récupérant à nouveau
-     * depuis la base de données. Cette méthode doit être surchangée dans les
-     * classes héritantes.
+     * Méthode abstraite permettant de rafraîchir les données de l'objet métier courant en les récupérant à nouveau
+     * depuis la base de données. Cette méthode doit être surchangée dans les classes héritantes.
      */
     public abstract void reload();
 
     /**
-     * Permet de rafraîchir les données d'un objet métier en les récupérant à
-     * nouveau depuis la base de données.
+     * Permet de rafraîchir les données d'un objet métier en les récupérant à nouveau depuis la base de données.
      *
      * @param sql    la requête SQL à effectuer
      * @param params les valeurs des éventuels paramètres pour la requête
      */
     public void reload(String sql, Params params) {
-        // on efface le cache des objets du modèle avant de faire un reload pour être
-        // sûr de lire en BD
+        // on efface le cache des objets du modèle avant de faire un reload pour être sûr de lire en BD
         clearCache();
         try {
             var stmt = convertToUnnamedParams(sql, params);
@@ -355,30 +315,23 @@ public abstract class Model {
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée retourner
-     * zéro, un ou plusieurs enregistrements,
-     * et retourne une liste contenant les objets métier correspondants aux
-     * enregistrements trouvés,
+     * Effectue une requête SQL de lecture en base de données, supposée retourner zéro, un ou plusieurs enregistrements,
+     * et retourne une liste contenant les objets métier correspondants aux enregistrements trouvés,
      * en faisant appel à {@link #mapper(ResultSet)}.
      *
      * @param type   le type d'objet à retourner
-     * @param sql    la requête SQL de type {@code SELECT} ; les éventuels
-     *               paramètres sont représentés par {@code :name}
+     * @param sql    la requête SQL de type {@code SELECT} ; les éventuels paramètres sont représentés par {@code :name}
      *               où {@code name} représente le nom du paramètre
-     * @param params la liste des valeurs pour les différents paramètres de la
-     *               requête (voir {@link Params})
-     * @param <T>    la classe correspondant au type d'objet à retourner (doit
-     *               hériter de {@link Model})
-     * @return liste d'instances de la classe {@code T} contenant les données lues
-     *         en base données
+     * @param params la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
+     * @param <T>    la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return liste d'instances de la classe {@code T} contenant les données lues en base données
      */
     public static <T extends Model> List<T> queryList(Class<T> type, String sql, Params params) {
         List<T> list = new ArrayList<>();
         try {
             var stmt = convertToUnnamedParams(sql, params);
             var cachedResult = getFromCache(stmt);
-            if (cachedResult != null)
-                return (List<T>) cachedResult;
+            if (cachedResult != null) return (List<T>) cachedResult;
             var rs = stmt.executeQuery();
             while (rs.next()) {
                 T obj = newInstance(type, rs);
@@ -394,53 +347,40 @@ public abstract class Model {
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée retourner
-     * zéro, un ou plusieurs enregistrements,
-     * et retourne une liste contenant les objets métier correspondants aux
-     * enregistrements trouvés,
+     * Effectue une requête SQL de lecture en base de données, supposée retourner zéro, un ou plusieurs enregistrements,
+     * et retourne une liste contenant les objets métier correspondants aux enregistrements trouvés,
      * en faisant appel à {@link #mapper(ResultSet)}.
      *
      * @param type le type d'objet à retourner
-     * @param sql  la requête SQL de type {@code SELECT} ; il s'agit d'une requête
-     *             sans paramètre
-     * @param <T>  la classe correspondant au type d'objet à retourner (doit hériter
-     *             de {@link Model})
-     * @return liste d'instances de la classe {@code T} contenant les données lues
-     *         en base données
+     * @param sql  la requête SQL de type {@code SELECT} ; il s'agit d'une requête sans paramètre
+     * @param <T>  la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return liste d'instances de la classe {@code T} contenant les données lues en base données
      */
     public static <T extends Model> List<T> queryList(Class<T> type, String sql) {
         return queryList(type, sql, new Params());
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée retourner
-     * zéro, un ou plusieurs enregistrements,
-     * et retourne une liste contenant les objets métier correspondants aux
-     * enregistrements trouvés,
+     * Effectue une requête SQL de lecture en base de données, supposée retourner zéro, un ou plusieurs enregistrements,
+     * et retourne une liste contenant les objets métier correspondants aux enregistrements trouvés,
      * en faisant appel à {@link #mapper(ResultSet)}.
      *
-     * @param getInstance retourne une nouvelle instance d'une classe du modèle en
-     *                    fonction de la valeur du
+     * @param getInstance retourne une nouvelle instance d'une classe du modèle en fonction de la valeur du
      *                    discriminateur
-     * @param sql         la requête SQL de type {@code SELECT} ; les éventuels
-     *                    paramètres sont représentés par
+     * @param sql         la requête SQL de type {@code SELECT} ; les éventuels paramètres sont représentés par
      *                    {@code :name}
      *                    où {@code name} représente le nom du paramètre
-     * @param params      la liste des valeurs pour les différents paramètres de la
-     *                    requête (voir {@link Params})
-     * @param <T>         la classe correspondant au type d'objet à retourner (doit
-     *                    hériter de {@link Model})
-     * @return liste d'instances de la classe {@code T} ou de classes héritant de
-     *         {@code T} contenant les données
-     *         lues en base données
+     * @param params      la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
+     * @param <T>         la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return liste d'instances de la classe {@code T} ou de classes héritant de {@code T} contenant les données
+     * lues en base données
      */
     public static <T extends Model> List<T> queryList(Function<ResultSet, T> getInstance, String sql, Params params) {
         List<T> list = new ArrayList<>();
         try {
             var stmt = convertToUnnamedParams(sql, params);
             var cachedResult = getFromCache(stmt);
-            if (cachedResult != null)
-                return (List<T>) cachedResult;
+            if (cachedResult != null) return (List<T>) cachedResult;
             var rs = stmt.executeQuery();
             while (rs.next()) {
                 T obj = getInstance.apply(rs);
@@ -456,37 +396,28 @@ public abstract class Model {
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée retourner
-     * zéro, un ou plusieurs enregistrements,
-     * et retourne une liste contenant les objets métier correspondants aux
-     * enregistrements trouvés,
+     * Effectue une requête SQL de lecture en base de données, supposée retourner zéro, un ou plusieurs enregistrements,
+     * et retourne une liste contenant les objets métier correspondants aux enregistrements trouvés,
      * en faisant appel à {@link #mapper(ResultSet)}.
      *
-     * @param getInstance retourne une nouvelle instance d'une classe du modèle en
-     *                    fonction de la valeur du
+     * @param getInstance retourne une nouvelle instance d'une classe du modèle en fonction de la valeur du
      *                    discriminateur
-     * @param sql         la requête SQL de type {@code SELECT} ; il s'agit d'une
-     *                    requête sans paramètre
-     * @param <T>         la classe correspondant au type d'objet à retourner (doit
-     *                    hériter de {@link Model})
-     * @return liste d'instances de la classe {@code T} ou de classes héritant de
-     *         {@code T} contenant les données
-     *         lues en base données
+     * @param sql         la requête SQL de type {@code SELECT} ; il s'agit d'une requête sans paramètre
+     * @param <T>         la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
+     * @return liste d'instances de la classe {@code T} ou de classes héritant de {@code T} contenant les données
+     * lues en base données
      */
     public static <T extends Model> List<T> queryList(Function<ResultSet, T> getInstance, String sql) {
         return queryList(getInstance, sql, new Params());
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée retourner
-     * zéro, un ou plusieurs enregistrements,
+     * Effectue une requête SQL de lecture en base de données, supposée retourner zéro, un ou plusieurs enregistrements,
      * et retourne un {@link ResultSet} contenant les enregistrements trouvés.
      *
-     * @param sql    la requête SQL de type {@code SELECT} ; les éventuels
-     *               paramètres sont représentés par {@code :name}
+     * @param sql    la requête SQL de type {@code SELECT} ; les éventuels paramètres sont représentés par {@code :name}
      *               où {@code name} représente le nom du paramètre
-     * @param params la liste des valeurs pour les différents paramètres de la
-     *               requête (voir {@link Params})
+     * @param params la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
      * @return le {@link ResultSet} contenant les enregistrements trouvés
      */
     public static ResultSet queryResultSet(String sql, Params params) {
@@ -502,13 +433,10 @@ public abstract class Model {
     /**
      * Effectue une requête SQL d'écriture en base de données.
      *
-     * @param sql    la requête SQL de type {@code INSERT}, {@code UPDATE} ou
-     *               {@code DELETE} ;
-     *               les éventuels paramètres sont représentés par {@code :name} où
-     *               {@code name} représente le nom du
+     * @param sql    la requête SQL de type {@code INSERT}, {@code UPDATE} ou {@code DELETE} ;
+     *               les éventuels paramètres sont représentés par {@code :name} où {@code name} représente le nom du
      *               paramètre
-     * @param params la liste des valeurs pour les différents paramètres de la
-     *               requête (voir {@link Params})
+     * @param params la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
      * @return le nombre d'enregistrements mis à jour en base de données
      */
     public static int execute(String sql, Params params) {
@@ -526,22 +454,15 @@ public abstract class Model {
     }
 
     /**
-     * Effectue une requête SQL de lecture en base de données, supposée ne retourner
-     * qu'une seule valeur scalaire et
-     * retourne la valeur trouvée. Typiquement, cette méthode est utile pour
-     * effectuer une requête du type
+     * Effectue une requête SQL de lecture en base de données, supposée ne retourner qu'une seule valeur scalaire et
+     * retourne la valeur trouvée. Typiquement, cette méthode est utile pour effectuer une requête du type
      * {@code SELECT COUNT(*) FROM ...}.
      *
-     * @param type   le type de valeur à retourner (typiquement Integer, String,
-     *               Float, ...)
-     * @param sql    la requête SQL de type {@code SELECT AGG(...) FROM ...} ; les
-     *               éventuels paramètres sont représentés
-     *               par {@code :name} où {@code name} représente le nom du
-     *               paramètre
-     * @param params la liste des valeurs pour les différents paramètres de la
-     *               requête (voir {@link Params})
-     * @param <T>    la classe correspondant au type d'objet à retourner (doit
-     *               hériter de {@link Model})
+     * @param type   le type de valeur à retourner (typiquement Integer, String, Float, ...)
+     * @param sql    la requête SQL de type {@code SELECT AGG(...) FROM ...} ; les éventuels paramètres sont représentés
+     *               par {@code :name} où {@code name} représente le nom du paramètre
+     * @param params la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
+     * @param <T>    la classe correspondant au type d'objet à retourner (doit hériter de {@link Model})
      * @return la valeur scalaire trouvée
      */
     public static <T> T queryScalar(Class<T> type, String sql, Params params) {
@@ -565,14 +486,11 @@ public abstract class Model {
     }
 
     /**
-     * Effectue une requête SQL de type INSERT et retourne la clé primaire entière
-     * générée par auto-incrémentation.
+     * Effectue une requête SQL de type INSERT et retourne la clé primaire entière générée par auto-incrémentation.
      *
-     * @param sql    la requête SQL de type {@code INSERT} ; les éventuels
-     *               paramètres sont représentés par {@code :name}
+     * @param sql    la requête SQL de type {@code INSERT} ; les éventuels paramètres sont représentés par {@code :name}
      *               où {@code name} représente le nom du paramètre
-     * @param params la liste des valeurs pour les différents paramètres de la
-     *               requête (voir {@link Params})
+     * @param params la liste des valeurs pour les différents paramètres de la requête (voir {@link Params})
      * @return la valeur de la clé primaire auto-générée
      */
     public static int insert(String sql, Params params) {
@@ -601,12 +519,10 @@ public abstract class Model {
             if (name.isBlank())
                 throw new RuntimeException("Invalid named parameter in sql statement " + sql);
             if (!caseInsensitiveParams.containsKey(name))
-                throw new RuntimeException(
-                        "No value given for parameter '" + name + "' (received: " + caseInsensitiveParams + ")");
+                throw new RuntimeException("No value given for parameter '" + name + "' (received: " + caseInsensitiveParams + ")");
             fields.add(name);
         }
-        PreparedStatement stmt = getDatabaseConnection().prepareStatement(
-                sql.replaceAll(findParametersPattern.pattern(), "?"),
+        PreparedStatement stmt = getDatabaseConnection().prepareStatement(sql.replaceAll(findParametersPattern.pattern(), "?"),
                 Statement.RETURN_GENERATED_KEYS);
         for (int i = 0; i < fields.size(); ++i)
             stmt.setObject(i + 1, caseInsensitiveParams.get(fields.get(i)));

@@ -124,7 +124,7 @@ public class TextBox extends AbstractInteractableComponent<TextBox> {
     }
 
     /**
-     * Main constructor of the {@code TextBox} which decides size, initial content and style
+     * tgpr.tuto.Main constructor of the {@code TextBox} which decides size, initial content and style
      * @param preferredSize Size of the {@code TextBox}
      * @param initialContent Initial content of the {@code TextBox}
      * @param style Style to use for this {@code TextBox}, instead of auto-detecting

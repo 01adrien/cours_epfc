@@ -40,7 +40,7 @@ public class Label extends AbstractComponent<Label> {
     private final EnumSet<SGR> additionalStyles;
 
     /**
-     * Main constructor, creates a new Label displaying a specific text.
+     * tgpr.tuto.Main constructor, creates a new Label displaying a specific text.
      * @param text Text the label will display
      */
     public Label(String text) {

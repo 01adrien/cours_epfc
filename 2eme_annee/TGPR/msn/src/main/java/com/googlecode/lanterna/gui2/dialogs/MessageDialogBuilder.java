@@ -76,7 +76,7 @@ public class MessageDialogBuilder {
 
     /**
      * Sets the main text of the {@code MessageDialog}
-     * @param text Main text of the {@code MessageDialog}
+     * @param text tgpr.tuto.Main text of the {@code MessageDialog}
      * @return Itself
      */
     public MessageDialogBuilder setText(String text) {

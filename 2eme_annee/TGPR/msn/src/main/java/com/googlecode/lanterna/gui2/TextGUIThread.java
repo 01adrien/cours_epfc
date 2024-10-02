@@ -40,7 +40,7 @@ public interface TextGUIThread {
     void invokeLater(Runnable runnable) throws IllegalStateException;
 
     /**
-     * Main method to call when you are managing the event/input/update loop yourself. This method will run one round
+     * tgpr.tuto.Main method to call when you are managing the event/input/update loop yourself. This method will run one round
      * through the GUI's event/input queue and update the visuals if required. If the operation did nothing (returning
      * {@code false}) you could sleep for a millisecond and then try again. If you use {@code SameTextGUIThread} you
      * must either call this method directly to make the GUI update or use one of the methods on

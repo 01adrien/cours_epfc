@@ -22,7 +22,7 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 
 /**
- * Main interface for different border classes, with additional methods to help lanterna figure out the size and offset
+ * tgpr.tuto.Main interface for different border classes, with additional methods to help lanterna figure out the size and offset
  * of components wrapped by borders.
  * @author Martin
  */
