@@ -13,7 +13,6 @@ if (isset($_GET["pseudo"])) {
         $description = $profile["profile"];
         $picture_path = $profile["picture_path"];
     }
-
 } else {
     die("La page s'attend à recevoir un paramètre `pseudo` via la méthode GET");
 }

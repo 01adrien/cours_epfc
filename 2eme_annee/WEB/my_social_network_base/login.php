@@ -2,8 +2,8 @@
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["pseudo"]) && isset($_POST["password"])) {
-        $password = $_POST["password"];
-        $pseudo = $_POST["pseudo"];
+        $password = sanitize($_POST["password"]);
+        $pseudo = sanitize($_POST["pseudo"]);
         $error = null;
         $query = $pdo->prepare("SELECT * FROM Members where pseudo = :pseudo");
         $query->execute(["pseudo" => $pseudo]);

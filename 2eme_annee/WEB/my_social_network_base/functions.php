@@ -12,13 +12,11 @@ try {
     die("Erreur lors de l'accès à la base de données.");
 }
 
-function sanitize($var)
+function sanitize(string $str): string
 {
-    $var = stripslashes($var);
-    $var = strip_tags($var);
-    $var = htmlspecialchars($var);
-    return $var;
+    return trim(htmlspecialchars($str, ENT_QUOTES, "UTF-8"));
 }
+
 
 function redirect($url, $statusCode = 303)
 {
