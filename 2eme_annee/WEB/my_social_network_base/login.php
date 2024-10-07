@@ -46,11 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <table>
                 <tr>
                     <td>Pseudo:</td>
-                    <td><input id="pseudo" name="pseudo" type="text" value=""></td>
+                    <td><input id="pseudo" name="pseudo" type="text" value="" required></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
-                    <td><input id="password" name="password" type="password" value=""></td>
+                    <td><input id="password" name="password" type="password" value="" required></td>
                 </tr>
             </table>
             <input type="submit" value="Log In">
