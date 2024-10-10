@@ -7,10 +7,12 @@ public class Queue<E> {
 
     public boolean offer(E e) {
         return this.queue.add(e);
+
     }
-    public E poll() {
+
+    public E poll() throws RuntimeException {
         if (this.isEmpty()) {
-            return null;
+            throw new RuntimeException("queue is empty");
         }
         return this.queue.remove(0);
     }
@@ -19,7 +21,7 @@ public class Queue<E> {
         if (this.isEmpty()) {
             return null;
         }
-        return  this.queue.get(0);
+        return this.queue.get(0);
     }
 
     public boolean isEmpty() {
@@ -29,5 +31,4 @@ public class Queue<E> {
     public int size() {
         return this.queue.size();
     }
-    
 }
