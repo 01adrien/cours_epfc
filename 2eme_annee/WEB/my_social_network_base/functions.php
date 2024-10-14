@@ -4,6 +4,7 @@ $dbname = "my_social_network_base";
 $dbuser = "root";
 $dbpassword = "root";
 
+session_start();
 
 try {
     $pdo = new PDO("mysql:host=$dbhost;dbname=$dbname;charset=utf8", "$dbuser", "$dbpassword");
@@ -22,4 +23,13 @@ function redirect($url, $statusCode = 303)
 {
     header('Location: ' . $url, true, $statusCode);
     die();
+}
+
+function check_login()
+{
+    global $user;
+    if (!isset($_SESSION['user']))
+        redirect('index.php');
+    else
+        $user = $_SESSION['user'];
 }

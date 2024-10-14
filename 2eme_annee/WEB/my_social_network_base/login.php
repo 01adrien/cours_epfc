@@ -1,5 +1,6 @@
 <?php
 require_once "functions.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["pseudo"]) && isset($_POST["password"])) {
         $password = sanitize($_POST["password"]);
@@ -14,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($password !== $user["password"]) {
                 $error = "password dont match..";
             } else {
-                echo "OK</br>";
-                redirect("http://localhost/my_social_network_base/profile.php?pseudo=$pseudo", 303);
+                $_SESSION["user"] = $pseudo;
+                redirect("profile.php", 303);
             }
         }
     } else {

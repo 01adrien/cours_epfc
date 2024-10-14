@@ -1,5 +1,6 @@
 <?php
 require_once "functions.php";
+check_login();
 $query = $pdo->prepare("SELECT pseudo FROM Members");
 $query->execute();
 $members = $query->fetchAll();

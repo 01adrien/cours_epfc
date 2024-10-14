@@ -1,20 +1,23 @@
 <?php
 require_once "functions.php";
 
+check_login();
+
 if (isset($_GET["pseudo"])) {
     $pseudo = sanitize($_GET["pseudo"]);
 
-    $query = $pdo->prepare("SELECT * FROM Members where pseudo = :pseudo");
-    $query->execute(array("pseudo" => $pseudo));
-    $profile = $query->fetch(); // un seul résultat au maximum
-    if ($query->rowCount() == 0) {
-        die("L'utilisateur n'existe pas");
-    } else {
-        $description = $profile["profile"];
-        $picture_path = $profile["picture_path"];
-    }
 } else {
-    die("La page s'attend à recevoir un paramètre `pseudo` via la méthode GET");
+    $pseudo = $user;
+}
+
+$query = $pdo->prepare("SELECT * FROM Members where pseudo = :pseudo");
+$query->execute(array("pseudo" => $pseudo));
+$profile = $query->fetch();
+if ($query->rowCount() == 0) {
+    die("L'utilisateur n'existe pas");
+} else {
+    $description = $profile["profile"] ?? "";
+    $picture_path = $profile["picture_path"] ?? "";
 }
 ?>
 
