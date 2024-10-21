@@ -6,13 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = sanitize($_POST["password"]);
         $pseudo = sanitize($_POST["pseudo"]);
         $error = null;
+        $pdo = connect();
         $query = $pdo->prepare("SELECT * FROM Members where pseudo = :pseudo");
         $query->execute(["pseudo" => $pseudo]);
-        $user = $query->fetch();
+        $current_user = $query->fetch();
         if ($query->rowCount() == 0) {
             $error = "unknow user..";
         } else {
-            if ($password !== $user["password"]) {
+            if (!password_verify($password, $current_user["password"])) {
                 $error = "password dont match..";
             } else {
                 $_SESSION["user"] = $pseudo;

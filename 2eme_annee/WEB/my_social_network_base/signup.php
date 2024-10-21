@@ -6,6 +6,7 @@ $errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["pseudo"]) && strlen($_POST["pseudo"]) > 2) {
         $pseudo = sanitize($_POST["pseudo"]);
+        $pdo = connect();
         $query = $pdo->prepare("SELECT * FROM Members where pseudo =:pseudo");
         $query->execute(["pseudo" => $pseudo]);
         $user = $query->fetch();
@@ -22,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $user = $pseudo;
                 $sql = "INSERT INTO Members (pseudo, password) VALUES (?,?)";
                 $stmt = $pdo->prepare($sql);
+                $password = password_hash($password, PASSWORD_BCRYPT);
                 $stmt->execute([$pseudo, $password]);
                 redirect("profile.php", 303);
             }

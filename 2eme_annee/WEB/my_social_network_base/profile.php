@@ -10,11 +10,12 @@ if (isset($_GET["pseudo"])) {
     $pseudo = $user;
 }
 
+$pdo = connect();
 $query = $pdo->prepare("SELECT * FROM Members where pseudo = :pseudo");
 $query->execute(array("pseudo" => $pseudo));
 $profile = $query->fetch();
 if ($query->rowCount() == 0) {
-    die("L'utilisateur n'existe pas");
+    abort("L'utilisateur n'existe pas");
 } else {
     $description = $profile["profile"] ?? "";
     $picture_path = $profile["picture_path"] ?? "";
@@ -33,14 +34,7 @@ if ($query->rowCount() == 0) {
 
 <body>
     <div class="title"><?php echo $pseudo; ?>`s Profile!'s Profile!</div>
-    <div class="menu">
-        <a href="profile.php">Home</a>
-        <a href="members.php">Members</a>
-        <a href="friends.php">Friends</a>
-        <a href="messages.php">Messages</a>
-        <a href="edit_profile.php">Edit Profile</a>
-        <a href="logout.php">Log Out</a>
-    </div>
+    <?php include "menu.php" ?>
     <div class="main">
         <?php
         if (strlen($description) == 0) {
@@ -54,7 +48,7 @@ if ($query->rowCount() == 0) {
         if (strlen($picture_path) == 0) {
             echo 'No picture loaded yet!';
         } else {
-            echo "<image src='$picture_path' width='100' alt='$pseudo&apos;s photo!'>";
+            echo "<image src='images/$picture_path' width='100' alt='$pseudo&apos;s photo!'>";
         }
 
         ?>

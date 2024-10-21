@@ -1,6 +1,8 @@
 <?php
 require_once "functions.php";
 check_login();
+
+$pdo = connect();
 $query = $pdo->prepare("SELECT pseudo FROM Members");
 $query->execute();
 $members = $query->fetchAll();
@@ -21,19 +23,14 @@ $members = $query->fetchAll();
 <body>
     <div class="title">Other Members</div>
     <div class="menu">
-        <a href="profile.php">Home</a>
-        <a href="members.php">Members</a>
-        <a href="friends.php">Friends</a>
-        <a href="messages.php">Messages</a>
-        <a href="edit_profile.php">Edit Profile</a>
-        <a href="logout.php">Log Out</a>
+        <?php include "menu.php" ?>
     </div>
     <div class="main">
         <ul>
             <?php
             foreach ($members as $member) {
                 $name = $member['pseudo'];
-                echo "<li><a href=http://localhost/my_social_network_base/profile.php?pseudo=" . $name . ">" . $name . "</a></li>";
+                echo "<li><a href=profile.php?pseudo=" . $name . ">" . $name . "</a></li>";
             }
             ?>
         </ul>
