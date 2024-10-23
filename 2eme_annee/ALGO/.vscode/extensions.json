@@ -4,21 +4,9 @@
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
 		"lfs.vscode-emacs-friendly",
-		"vscjava.vscode-java-p",
-		"vscjava.vscode-java-debug",
-		"vscjava.vscode-java-pack",
-		"vscjava.vscode-java-dependency",
-		"tushortz.java-imports-snippets",
-		"vscjava.vscode-java-dependency",
-		"tushortz.java-snippets",
-		"redhat.java",
-		"vscjava.vscode-java-test",
-		"donjayamanne.githistory",
-		"yzhang.markdown-all-in-one",
-		"sadeghpm.sql-snippets",
 		"bierner.markdown-mermaid",
 		"sjhuangx.vscode-scheme",
-		"devsense.phptools-vscode",
+		"justusadam.language-haskell",
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": []
