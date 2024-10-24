@@ -1,10 +1,14 @@
+
 public class App {
     public static void main(String[] args) throws Exception {
-        PrimeFlixAccount primeFlixAccount = new PrimeFlixAccount("Bob");
-        Movie newMovie = new Movie("Barbie", 2023, false, false);
-        primeFlixAccount.rentMovie(newMovie);
-        double bill = primeFlixAccount.getInvoice();
-        System.out.println(bill);
-        primeFlixAccount.printHistory();
+        PrimeFlixPremium premiumAccount = new PrimeFlixPremium("Bob");
+        premiumAccount.rentMovie(
+                new Movie("Spiderman 22", 2022, true, true));
+        premiumAccount.streamMovie(
+                new Movie("Dune", 2023, false, true));
+        premiumAccount.rentMovie(
+                new Movie("Dune 2", 2023, false, false));
+        premiumAccount.printHistory();
+        System.out.println(premiumAccount.getInvoice());
     }
 }

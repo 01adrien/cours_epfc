@@ -5,16 +5,18 @@ public class PrimeFlixAccount {
 
     protected final String userName;
     protected double invoice = 0;
-    protected List<Movie> movies;
+    protected List<Movie> rentedMovies;
 
     public PrimeFlixAccount(String userName) {
         this.userName = userName;
-        movies = new ArrayList<Movie>();
+        this.rentedMovies = new ArrayList<Movie>();
     }
 
     public void rentMovie(Movie movie) {
-        invoice += movie.isOld() ? 2.99 : 4.99;
-        movies.add(movie);
+        if (!movie.isFree()) {
+            invoice += movie.isOld() ? 2.99 : 4.99;
+        }
+        rentedMovies.add(movie);
     }
 
     public double getInvoice() {
@@ -23,7 +25,8 @@ public class PrimeFlixAccount {
 
     public void printHistory() {
         System.out.println(userName);
-        for (Movie movie : movies) {
+        System.out.println("Rented movies:");
+        for (Movie movie : rentedMovies) {
             System.out.println(movie);
         }
     }
