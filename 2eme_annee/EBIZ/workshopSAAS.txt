@@ -1,0 +1,19 @@
+Application: 
+	Play my house.
+
+Contexte: 
+	ASBL veut mettre en place une plateforme pour mettre en contact des 
+	musiciens pour quùils aillent jouer les uns chez les autres.
+
+ROI:
+	
+	
+Calcul des couts:
+	- Calcul du cout de dev pour faire un MVP => somme du prix de dev par US.	
+	- prix environnements (dev + prod)
+	- cout materiel (PC...)
+
+A FAIRE:
+	- liste des US (environ 10)
+
+
