@@ -5,14 +5,12 @@ require_once 'model/Message.php';
 require_once 'framework/View.php';
 require_once 'framework/Controller.php';
 
-class ControllerMember extends Controller
-{
-
+class ControllerMember extends Controller {
+    
     const UPLOAD_ERR_OK = 0;
 
     //gestion de l'édition du profil
-    public function edit_profile(): void
-    {
+    public function edit_profile() : void {
         $member = $this->get_user_or_redirect();
         $errors = [];
         $success = "";
@@ -30,7 +28,7 @@ class ControllerMember extends Controller
                 move_uploaded_file($_FILES['image']['tmp_name'], "upload/$saveTo");
                 $member->picture_path = $saveTo;
                 $member->persist();
-            }
+            } 
         }
 
         if (isset($_POST['profile'])) {
@@ -51,22 +49,23 @@ class ControllerMember extends Controller
         (new View("edit_profile"))->show(["member" => $member, "errors" => $errors, "success" => $success]);
     }
 
-    public function members(): void
-    {
+    public function members() : void {
+        //gerer la sécurité : est-ce que l'utilisateur connecté a bien le droit d'entrer ici ?
         $this->get_user_or_redirect();
+        //mettre le code de contrôle
         $members = Member::get_members();
-        (new View("members"))->show(array("members" => $members));
+        //si tout va bien, faire une vue et l'afficher
+        (new View("members"))->show(["members" => $members]);
     }
 
+
     //page d'accueil. 
-    public function index(): void
-    {
+    public function index() : void {
         $this->profile();
     }
 
     //profil de l'utilisateur connecté ou donné
-    public function profile(): void
-    {
+    public function profile() : void {
         $member = $this->get_user_or_redirect();
         if (isset($_GET["param1"]) && $_GET["param1"] !== "") {
             $member = Member::get_member_by_pseudo($_GET["param1"]);
