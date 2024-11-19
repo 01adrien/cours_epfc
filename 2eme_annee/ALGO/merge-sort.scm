@@ -30,10 +30,11 @@
 
 ; sort a list with merge sort
 (define (sort lst)
-  (if (null? (cdr lst)) (car lst))
-  (merge
-   (sort (slice lst 0 (/ (length lst) 2)))
-   (sort (slice lst (/ (length lst) 2) (length list)))))
+  (display lst)
+  (if (<= (length lst) 1) lst)
+    (merge
+      (sort (slice lst 0 (floor (/ (length lst) 2))))
+      (sort (slice lst (floor (/ (length lst) 2) (length list))))))
 
 
-(sort '(7 9 3 54 12 65))
+(display (sort '(4 9 6 1 22 7)))
