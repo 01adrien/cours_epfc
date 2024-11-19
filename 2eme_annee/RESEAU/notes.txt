@@ -1,0 +1,12 @@
+--- CRYPTOGRAPHIE --- 
+    chiffrement symetrique  => 
+        ex code de cesar (meme cle pour chiffrer/dechiffrer)
+    chiffrement asymetrique => 
+        irreversible 
+        envoie msg chiffrer avec la cle publique du destinataire qu'il pourra dechiffrer avec sa cle privée
+        utilisation de certicat pour l'authenticité de la clef publique
+    chiffrement hybride => 
+        chiffrement asymetrique pour echanger la clef puis chiffrement symetrique avec cette clef
+    
+-- CERTIFICAT TLS --
+

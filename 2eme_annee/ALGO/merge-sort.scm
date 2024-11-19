@@ -1,4 +1,4 @@
-
+;guile 2.2.3
 ; merge two sorted list (a & b) into a new one (c)
 (define (merge a b c)
   (cond 
@@ -7,7 +7,6 @@
    ((<= (car a) (car b))
       (merge (cdr a) b (cons (car a) c)))
    (else (merge a (cdr b) (cons (car b) c)))))
-
 
 
 ; take n element from lst 
@@ -30,11 +29,14 @@
 
 ; sort a list with merge sort
 (define (sort lst)
-  (display lst)
-  (if (<= (length lst) 1) lst)
-    (merge
-      (sort (slice lst 0 (floor (/ (length lst) 2))))
-      (sort (slice lst (floor (/ (length lst) 2) (length list))))))
+  (if (or (null? lst) (null? (cdr lst))) 
+      lst
+      (let ((mid (floor (/ (length lst) 2))))
+       (merge
+        (sort (slice lst 0 mid))
+        (sort (slice lst mid (length lst)))
+        '()))))
 
 
-(display (sort '(4 9 6 1 22 7)))
+
+(display (sort '(4 9 45 0 8 6 1 22 7)))
