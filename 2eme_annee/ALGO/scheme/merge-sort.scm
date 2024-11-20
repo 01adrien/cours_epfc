@@ -1,13 +1,4 @@
-;guile 2.2.3
-; merge two sorted list (a & b) into a new one (c)
-(define (merge a b c)
-  (cond 
-   ((null? a) (append (reverse c) b))
-   ((null? b) (append (reverse c) a))
-   ((<= (car a) (car b))
-      (merge (cdr a) b (cons (car a) c)))
-   (else (merge a (cdr b) (cons (car b) c)))))
-
+; guile 2.2.3
 
 ; take n element from lst 
 (define (take lst n)
@@ -25,6 +16,16 @@
     (slice (cdr lst) (- start 1) (- end 1)))
    (else
     (take lst end))))
+
+
+; merge two sorted list (a & b) into a new one (c)
+(define (merge a b c)
+  (cond 
+   ((null? a) (append (reverse c) b))
+   ((null? b) (append (reverse c) a))
+   ((<= (car a) (car b))
+      (merge (cdr a) b (cons (car a) c)))
+   (else (merge a (cdr b) (cons (car b) c)))))
 
 
 ; sort a list with merge sort
