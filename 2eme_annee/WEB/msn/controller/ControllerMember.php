@@ -51,11 +51,14 @@ class ControllerMember extends Controller {
 
     public function members() : void {
         //gerer la sécurité : est-ce que l'utilisateur connecté a bien le droit d'entrer ici ?
-        $this->get_user_or_redirect();
+        $user = $this->get_user_or_redirect();
+        $relations = $user->get_other_members_and_relationships();
+        //echo '<pre>', var_dump($relations) , '</pre>';
+
         //mettre le code de contrôle
         $members = Member::get_members();
         //si tout va bien, faire une vue et l'afficher
-        (new View("members"))->show(["members" => $members]);
+        (new View("members"))->show(["members" => $members , "relations"=> $relations]);
     }
 
 
