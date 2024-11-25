@@ -20,7 +20,7 @@
              (cond 
                ((null? (cdr lst)) (car lst))
                ((equal? (length low) k) p)
-               ((< (length low) k ) (k-smallest high k))
+               ((< (length low) k ) (k-smallest high (- k (length low))))
                (else (k-smallest low k)))))))
 
-(display (k-smallest-v1 '(1 1 1) 6))
+(display (k-smallest '(1 1 1 2 3 4) 4))

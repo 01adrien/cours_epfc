@@ -1,0 +1,57 @@
+
+music-share.adrien.com est une plateforme SAAS de partage d'instruments entre particuliers.
+Dans cette application il y a 3 types d'utilisateurs:
+     - celui qui veut jouer d'un instrument et depense son argent (le musicien).
+     - celui qui met l'instrument a disposition et recupere l'argent (le proprietaire).
+     - celui qui controle la bonne utilisation du service et prend un pourcentage.(l'admin employe par la plateforme)
+Le principe est simple, les proprietaires vont poster des annonces d'instruments avec un prix horaire.
+Les musiciens vont reserver de creneaux pour venir jouer de cette instrument chez ce proprietaire.  
+
+Users Stories pour un MVP:
+
+    - En tant que *musicien* je veux pouvoir consulter la liste des instruments disponible.
+      Afn de pouvoir en choisir un qui me convient.
+      
+    - En tant que *musicien* je veux pouvoir consulter les details d'un instruments.
+      Afin d'avoir plus d'infos dessus (locaisation, disponibilite...).
+      
+    - En tant que *musicien* je veux pouvoir reserver un creneaux sur un instruments.
+      Afin d'aller jouer et de me faire plaisir.
+      
+    - En tant que *musicien / proprietaire* je veux pouvoir modifier des creneaux de reservation.
+      Afin d'avoir plus de flexibilite en cas d'imprevu (annulation ou changement horaires).
+      
+    - En tant que *proprietaire* je veux pouvoir consulter la liste de mes instruments dispo sur l'app.
+      Afin de modifier si necessaire certaines informations (photo, etat...).
+
+    - En tant que *musicien / proprietaire* je veux pouvoir consulter mes reservations passees et futures.
+      Afin de m'organiser dans l'utilisation de l'app et d'avoir un historique.
+
+    - En tant que *proprietaire* je veux pouvoir modifier les informations annonces (adresse, dispo).
+      Afin de pouvoir adapter l'utilisation de mes instruments dans le temps.
+      
+    - En tant que *musicien / proprietaire* je veux pouvoir me creer un compte utiliateur.
+      Afin de gerer mes differentes actions sur la plateforme.
+      
+    - En tant que *musicien / admin / proprietaire* je veux disposer d'une messagerie interne a l'app.
+      Afin de pouvoir communiquer avec les differents membres directement sur la plateforme.
+
+    - En tant que *proprietaire* je veux pouvoir ajouter des instruments sur l'app.
+      Afin de pouvoir en proposer un maximum pour attirer le plus de musicien possible.
+
+    - En tant que *admin* je veux pouvoir valider les annonces instruments qui arrivent.
+      Afin d'en verifier l'authenticite et la veracite.
+
+    - En tant que *admin* je veux pouvoir supprimer des utilisateurs ou instruments.
+      Afin de pouvoir agir en cas de mauvaise utilisation de la plateforme.
+
+    - En tant que *proprietaire* je veux pouvoir etre payer apres une reservation.
+      Afin de gagner de l'argent pour acheter d'autres instruments.
+
+    - En tant que *musicien* je veux pouvoir payer une fois que je fais une reservation.
+      Afin de la valider et de pouvoir aller jouer de cet instrument.
+
+    - En tant que *admin* je veux pouvoir prendre un pourcentage sur les reservations passees.
+      Afin de pouvoir me remunerer et avoir des fonds pour continuer le dev de l'app.
+
+	
