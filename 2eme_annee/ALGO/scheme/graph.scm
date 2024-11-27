@@ -1,36 +1,50 @@
-(define get-data car)
-(define get-neighbor cadr)
-
+(define name car)
+(define neighbor cadr)
+(define first car)
+(define rest cdr)
 
 (define graph 
-    '(("A" (2 3 4)) ("F" (1 3 5 6)) ("B" (1 2 6))
-      ("C" (1 7 8)) ("G" (2 6)) ("E" (2 3 5)) ("U" (4 8) (4 7))))
+  '(("A" (5)) ("F" (4 5 6 7 1)) ("B" (4 2))
+    ("C" (5 4)) ("G" (4)) ("E" (5)) ("U" (4))))
 
 (define visited '())
 
 (define (visit summit)
-    (display (get-data summit))
-    (set! visited (cons (get-data summit) visited)))
+  (if (and (not (null? summit)) (not (visited? summit)))
+      (and 
+        (display (name summit))
+	      (newline)
+	      (set! visited (cons (name summit) visited)))))
+
 
 (define (visited? summit)
-    (member? (summit) visited))
+  (member (name summit) visited))
+
+
+(define (still-neighbor? summit)
+  (not (equal? (length (neighbor summit)) 0)))
+
+
+(define (closest summit)
+  (if (null? summit)
+      '()
+      (list-ref graph (- (first (neighbor summit)) 1))))
+
 
 (define (depth-first summit)
     (visit summit)
-    (if (not (null? (get-neighbor summit)))
-        (let* ((next-summit-index car (get-neighbor summit))
-               (next-summit (get-data (list-ref graph next-summit-i))))
-            (cond 
-                ((not (visited? next-summit))
-                    (and (visit next-summit)))
-                ((visited? summit new-visited-list)
-                    (depth-first graph  ))))
-        '()))
+    (if (still-neighbor? summit)
+      (let ((next-summit (closest summit)))
+          (if (not (visited? next-summit)) 
+            (depth-first next-summit))
+          (depth-first `(,(name summit) ,(rest (neighbor summit)))))))
         
+    
+    
 
 
-(display visited)
 (newline)
-(visit (list-ref graph 1))
+(depth-first (list-ref graph 1))
 (newline)
 (display visited)
+

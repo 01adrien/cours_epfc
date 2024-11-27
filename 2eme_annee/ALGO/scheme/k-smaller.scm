@@ -25,3 +25,13 @@
                (else (k-smallest low k)))))
 
 (display (k-smallest '(1 1 1 2 3 4) 4))
+
+(define (depth-first summit)
+  (visit summit)
+  (if (still-neighbor? summit)
+      (let ((next-summit (closest summit)))
+	 ;;(display `("next summit" ,next-summit))
+	 (if (not (visited? next-summit))
+	     (and (depth-first next-summit)
+		  (depth-first `(,(name summit) ,(cdr (neighbor summit))))))))))
+
