@@ -14,13 +14,14 @@
 (define (k-smallest lst k)
     (if (>= k (length lst))
       '()
-       (let ((p (car lst)))
-           (let ((low (filter-low lst p))
-                 (high (filter-high lst p)))
+       (let* 
+        ((p (car lst)))
+        ((low (filter-low lst p))
+        ((high (filter-high lst p)))))
              (cond 
                ((null? (cdr lst)) (car lst))
                ((equal? (length low) k) p)
                ((< (length low) k ) (k-smallest high (- k (length low))))
-               (else (k-smallest low k)))))))
+               (else (k-smallest low k)))))
 
 (display (k-smallest '(1 1 1 2 3 4) 4))
