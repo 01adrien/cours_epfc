@@ -17,14 +17,15 @@
 
 (define (depth-first summit)
     (visit summit)
-    (if )
-    (let* ((next-summit-index car (get-neighbor summit))
-           (next-summit (get-data (list-ref graph next-summit-i))))
-        (cond 
-            ((not (visited? next-summit))
-                (and (visit next-summit)))
-            ((visited? summit new-visited-list)
-                (depth-first graph  )))))
+    (if (not (null? (get-neighbor summit)))
+        (let* ((next-summit-index car (get-neighbor summit))
+               (next-summit (get-data (list-ref graph next-summit-i))))
+            (cond 
+                ((not (visited? next-summit))
+                    (and (visit next-summit)))
+                ((visited? summit new-visited-list)
+                    (depth-first graph  ))))
+        '()))
         
 
 
