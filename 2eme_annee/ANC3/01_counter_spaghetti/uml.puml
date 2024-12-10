@@ -1,0 +1,23 @@
+@startuml
+
+skinparam Shadowing false               /' Désactive l'effet d'ombre sur les éléments '/
+skinparam classAttributeIconSize 0      /' Taille des icônes d'attribut de classe (ici 0 pour les cacher) '/
+skinparam defaultFontName Consolas      /' Utilisation de la police Consolas par défaut '/
+!pragma useIntermediatePackages false   /' Désactive l'utilisation de packages intermédiaires '/
+
+
+class Counter {
+    -name : String
+    -maxVal : Int
+    -value : Int
+    +getValue()
+    +increment()
+    +decrement()
+    +setValue()
+    +setName()
+    +getName()
+    +isMin()
+    +isMax()
+}
+
+@enduml
