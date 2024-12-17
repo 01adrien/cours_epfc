@@ -2,64 +2,67 @@ package counter.model;
 
 import counter.CounterChangeType;
 
-import java.util.Observable;
+
 import java.util.Random;
 
- ;
+import javafx.beans.property.*;
+;
 
-public class CounterModel extends Observable {
-    private final int MAX_VALUE ;
-    private String name ;
-    private int value  ;
+public class CounterModel {
+    private final int MAX_VALUE = 3 ;
+    private final StringProperty name = new SimpleStringProperty("") ;
+    private final IntegerProperty value = new SimpleIntegerProperty()  ;
 
     public CounterModel(String name) {
-        this.MAX_VALUE = 3;
-        this.name = name;
-        this.value = new Random().nextInt(-MAX_VALUE, MAX_VALUE + 1);
+        setName(name);
+        setValue(new Random().nextInt(-MAX_VALUE, MAX_VALUE + 1));
     }
 
-    public int getValue() {
-        return value;
+    private int getValue() {
+        return value.getValue();
     }
 
-    private void changed (CounterChangeType type) {
-        setChanged();
-        notifyObservers(type);
+
+    private void setValue(int value) {
+        this.value.setValue(value);
     }
+
 
     public void increment() {
         if (!isMax()){
-            ++value;
-            changed(CounterChangeType.VALUE_CHANGED);
+            value.set(getValue() + 1);
         }
     }
 
     public void decrement() {
         if (!isMin()){
-            --value;
-            changed(CounterChangeType.VALUE_CHANGED);
+            value.set(getValue() - 1);
         }
     }
 
-    public boolean isMin() {
-        return value == -MAX_VALUE;
+    public ReadOnlyIntegerProperty valueProperty() {
+        return value;
     }
 
-    public boolean isMax() {
-        return value == MAX_VALUE;
-    }
-
-    public String getName() {
+    public ReadOnlyStringProperty nameProperty() {
         return name;
     }
 
+    public boolean isMin() {
+        return value.get() == -MAX_VALUE;
+    }
+
+    public boolean isMax() {
+        return value.get() == MAX_VALUE;
+    }
+
+
     public void setName(String name) {
-        this.name = name;
-        changed(CounterChangeType.NAME_CHANGED);
+        this.name.set(name);
     }
 
     public boolean isValidName() {
-        return name.length() < 3;
+        return name.getName().length() < 3;
     }
 
     @Override
