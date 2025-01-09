@@ -1,0 +1,92 @@
+1 - LE CONTEXTE
+
+    Music-Share est une plateforme SaaS qui facilite le partage d'instruments de musique entre particuliers. 
+    Music-Share s'est rendu compte a travers diferentes etudes et sondages que la plupart des musiciens seraient 
+    curieux de jouer sur d'autres instrument que ceux sur lesquels ils jouent au quotidien.
+    Et qu'il y avait egalement d'autres musiciens qui possedes des instruments e qui etaient pres a 
+    les partager moyennant finance!!
+    L'objectif principal est de mettre en relation des musiciens souhaitant jouer de différents instruments 
+    avec des propriétaires disposés à louer leurs instruments. 
+    La plateforme agit également comme un intermédiaire pour assurer la sécurité des transactions et 
+    prend une commission pour son service.
+    
+
+2 - LES MOTIVATIONS
+
+    Les motivations sont multiples:
+        - Permettre aux musiciens d'accéder à une variété d'instruments sans les acheter.
+        - Offrir aux propriétaires la possibilité de rentabiliser leurs instruments inutilisés.
+        - Potentiellement creer de belles rencontres et des moments de partage
+        - Permettre a Music-Share de gagner de l'argent    
+
+
+3 - OBJECTIFS DU MARCHÉ
+
+    Le projet constite a developper une plateforme de partage d'instrument.
+    Elle devra etre disponible a travers une application web, iphone et android.
+    Le marché comprend:
+        - La fourniture des differentes application.
+        - La fourniture des differents environnement (production, test et dev).
+        - La maintenance et modification de la plateforme. 
+
+
+4 - LES SPÉCIFICATIONS TECHNIQUES
+
+    Backend : Développement avec une technologie robuste (Node.js, Django, ou Ruby on Rails).
+    Frontend : Interface utilisateur développée en React ou Vue.js pour une expérience utilisateur fluide.
+    Base de données : Utilisation de PostgreSQL ou MongoDB pour la gestion des données des utilisateurs, instruments et transactions.
+    Authentification : Implémentation de OAuth 2.0 pour la sécurité des comptes utilisateurs.
+    Paiement : Intégration avec des services de paiement tiers (Stripe, PayPal) pour les transactions sécurisées.
+
+
+5 - LES LIVRABLES
+
+    MVP (Produit Minimum Viable) :
+        Liste des instruments disponibles.
+        Détails des instruments.
+        Fonctionnalité de réservation.
+        Gestion des annonces et des réservations.
+        Système de messagerie.
+        Paiement en ligne pour musiciens et propriétaires.
+    Documentation technique :
+        Documentation de l'API backend.
+        Documentation des interfaces utilisateur.
+    Rapport de test : Résultats des tests utilisateurs et des tests fonctionnels pour chaque fonctionnalité.
+
+
+6 - LE MÉTRE
+
+
+
+7 - LE PLANNING
+
+    Phase 1 : Analyse et Conception (1 mois)
+        Étude de marché.
+        Conception des wireframes et de l'architecture technique.
+
+    Phase 2 : Développement Backend et Frontend (3 mois)
+        Développement des API backend.
+        Développement des interfaces utilisateur.
+
+    Phase 3 : Intégration et Tests (1 mois)
+        Intégration des différentes fonctionnalités.
+        Tests fonctionnels et utilisateurs.
+
+    Phase 4 : Déploiement et Suivi (1 mois)
+        Déploiement sur serveur de production.
+        Suivi post-lancement et corrections de bugs.
+
+
+8 - LA GOUVERNANCE
+
+    Équipe de projet :
+        Chef de projet : Supervise la planification, l'exécution et la livraison du projet.
+        Développeurs backend : Responsable du développement de l'API et de la logique métier.
+        Développeurs frontend : Conception et développement de l'interface utilisateur.
+        UX/UI Designer : Responsable de l'expérience utilisateur et de la conception graphique.
+        Testeurs : Assure la qualité en testant chaque fonctionnalité avant le lancement.
+        Responsable produit : S'assure que les fonctionnalités livrées répondent aux besoins des utilisateurs.
+    Processus de décision :
+        Réunions hebdomadaires pour le suivi de l'avancement.
+        Validation des livrables à chaque fin de phase par le chef de projet et le responsable produit.
+        
