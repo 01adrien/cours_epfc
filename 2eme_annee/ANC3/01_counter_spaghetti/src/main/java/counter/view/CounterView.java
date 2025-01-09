@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import java.util.Observable;
 import java.util.Observer;
 
-public class CounterView extends VBox implements Observer {
+public class CounterView extends VBox  {
     private final Label lblValue = new Label();
     private Button btnPlus;
     private Button btnMinus;
@@ -52,7 +52,7 @@ public class CounterView extends VBox implements Observer {
         VBox textBox = new VBox();
         textBox.setAlignment(Pos.CENTER);
 
-        txtName = new TextField(counterModel.getName());
+        txtName = new TextField(counterModel.nameProperty().getName());
         txtName.setAlignment(Pos.CENTER);
         txtName.setMaxWidth(170);
 
@@ -79,6 +79,10 @@ public class CounterView extends VBox implements Observer {
         txtName.setOnKeyTyped(e -> {
             counterModel.setName(txtName.getText());
         });
+
+        counterModel.valueProperty().addListener((obs, oldVal, newVal) -> {
+
+        });
     }
 
     public void refresh() {
@@ -90,11 +94,9 @@ public class CounterView extends VBox implements Observer {
         btnMinus.setDisable(isValid || counterModel.isMin());
         btnPlus.setDisable(isValid || counterModel.isMax());
 
-        lblValue.setText(String.valueOf(counterModel.getValue()));
+
+
+        lblValue.setText(String.valueOf(counterModel.nameProperty().getName()));
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        refresh();
-    }
 }
