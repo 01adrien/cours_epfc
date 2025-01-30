@@ -1,0 +1,111 @@
+@startuml
+
+'!theme plain
+'top to bottom direction
+skinparam defaultFontName Consolas
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+'skinparam packageStyle rectangle
+skinparam nodesep 150
+skinparam ranksep 100
+hide attributes
+'hide methods
+
+set namespaceSeparator none
+
+together {
+    package org.controlsfx.* {
+        class SpreadsheetView
+    }
+
+    package javafx.* {
+        class Application
+        class BorderPane
+        class HBox
+
+        'class Stage
+        'class Scene
+    }
+}
+
+set namespaceSeparator .
+
+package anc3.spreadsheet {
+    class App
+
+    Application <|-- App
+}
+
+package anc3.spreadsheet.view {
+    class MainView {
+        MainView(SpreadsheetViewModel)
+    }
+
+    class MySpreadsheetView {
+        MySpreadsheetView(SpreadsheetViewModel)
+    }
+
+    class FooterView {
+        FooterView(SpreadsheetViewModel)
+    }
+
+    MainView ..> MySpreadsheetView : <<create>>
+    MainView ..> FooterView : <<create>>
+
+}
+
+package anc3.spreadsheet.model {
+    class SpreadsheetModel {
+        SpreadsheetModel(\n  rows: int,\n  cols: int\n)
+    }
+
+    class SpreadsheetCellModel {
+        SpreadsheetCellModel(\n  value: String,\n  row: int,\n  col: int\n)
+    }
+
+    SpreadsheetModel *--> SpreadsheetCellModel
+
+}
+
+package anc3.spreadsheet.viewmodel {
+
+    class SpreadsheetViewModel {
+        SpreadsheetViewModel(SpreadSheetModel)
+    }
+
+    class SpreadsheetCellViewModel {
+        SpreadsheetCellViewModel(SpreadSheetCellModel)
+    }
+
+
+
+    SpreadsheetViewModel *--> SpreadsheetCellViewModel
+}
+
+
+
+
+BorderPane <|-- MainView
+SpreadsheetView <|-- MySpreadsheetView
+HBox <|-- FooterView
+
+App ..> SpreadsheetModel : <<create>>
+App ..> SpreadsheetViewModel : <<create>>
+App ..> MainView : <<create>>
+
+SpreadsheetViewModel ..> SpreadsheetCellViewModel : <<create>>
+SpreadsheetModel ..> SpreadsheetCellModel : <<create>>
+
+MySpreadsheetView *-->  SpreadsheetViewModel
+FooterView *-->  SpreadsheetViewModel
+
+SpreadsheetViewModel *-->  SpreadsheetModel
+SpreadsheetCellViewModel *-->  SpreadsheetCellModel
+
+'App *--> Stage
+'App ..> Scene : <<create>>
+'Stage *--> Scene
+'Scene *--> MainView
+
+
+@enduml

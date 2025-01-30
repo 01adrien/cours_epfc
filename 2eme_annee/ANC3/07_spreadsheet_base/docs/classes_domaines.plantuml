@@ -1,0 +1,28 @@
+@startuml
+
+class Spreadsheet {
+
+}
+
+class Cell {
+
+}
+
+class Expression {
+}
+
+class Literal {
+}
+
+class CellRef {
+}
+
+
+
+Spreadsheet "1" -- "*" Cell
+Cell "1" -- "1" Expression
+Expression <|-- Literal
+Expression <|-- CellRef
+
+
+@enduml

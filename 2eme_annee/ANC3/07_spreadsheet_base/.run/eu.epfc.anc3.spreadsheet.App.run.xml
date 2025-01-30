@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="eu.epfc.anc3.spreadsheet.App" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="eu.epfc.anc3.spreadsheet.App" />
+    <module name="controlsfxspreadsheet" />
+    <option name="VM_PARAMETERS" value="--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls --add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=org.controlsfx.controls " />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="eu.epfc.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

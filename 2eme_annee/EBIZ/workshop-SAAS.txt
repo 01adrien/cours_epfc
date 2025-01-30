@@ -17,3 +17,13 @@ A FAIRE:
 	- liste des US (environ 10)
 
 
+
+
+1 . le contexte 
+2 . les motivations
+3 . les objectifs principaux du marché
+4 . les spécifications techniques : limité à minimum 3 spécifications techniques originales (non copiée des exemples)
+5 . la liste des livrables : avec minimum 5 livrables
+6 . le métré : avec minimum 5 points
+7 . le planning : avec minimum 5 jalons
+8 . la gouvernance : limitée à une règle de gouvernance non vue au cours et qui convient à votre projet

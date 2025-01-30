@@ -1,19 +1,18 @@
-package org.example.anc3;
+package org.example.counterlist;
 
-import org.example.anc3.model.Counter;
-import org.example.anc3.view.MainView;
+import org.example.counterlist.counter.model.CounterList;
+import org.example.counterlist.counter.view.MainView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.anc3.viewmodel.MainViewModel;
 
 public class CounterApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        var model = new Counter("My Counter")
-        var viewModel = new MainViewModel(model);
-        var view = new MainView(viewModel);
+        var model = new CounterList();
+        var view = new MainView(model);
+
         createScene(stage, view);
         stage.show();
     }
@@ -21,7 +20,6 @@ public class CounterApp extends Application {
     private void createScene(Stage stage, MainView view) {
         Scene scene = new Scene(view);
         stage.setTitle("Counter");
-        stage.setHeight(160);
         stage.setScene(scene);
     }
 
