@@ -1,3 +1,5 @@
 RewriteEngine on
+
+
 RewriteBase /msn/
 RewriteRule ^([\w\_\-\%\~\+]*)/?([\w\_\-\%\~\+]*)?/?([\w\_\-\%\~\+]*)?/?([\w\_\-\%\~\+]*)?/?([\w\_\-\%\~\+]*)?/?$ index.php?controller=$1&action=$2&param1=$3&param2=$4&param3=$5 [NC,L]
