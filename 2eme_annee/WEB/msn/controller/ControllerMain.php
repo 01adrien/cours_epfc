@@ -4,11 +4,13 @@ require_once 'model/Member.php';
 require_once 'framework/View.php';
 require_once 'framework/Controller.php';
 
-class ControllerMain extends Controller {
+class ControllerMain extends Controller
+{
 
     //si l'utilisateur est connecté, redirige vers son profil.
     //sinon, produit la vue d'accueil.
-    public function index() : void {
+    public function index(): void
+    {
         if ($this->user_logged()) {
             $this->redirect("member", "profile");
         } else {
@@ -17,7 +19,8 @@ class ControllerMain extends Controller {
     }
 
     //gestion de la connexion d'un utilisateur
-    public function login() : void {
+    public function login(): void
+    {
         $pseudo = '';
         $password = '';
         $errors = [];
@@ -33,22 +36,23 @@ class ControllerMain extends Controller {
         (new View("login"))->show(["pseudo" => $pseudo, "password" => $password, "errors" => $errors]);
     }
 
-    public function signup() : void {
+    public function signup(): void
+    {
         $pseudo = '';
         $password = '';
         $password_confirm = '';
         $errors = [];
-        if(isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['password_confirm'])){
+        if (isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['password_confirm'])) {
             $pseudo = trim($_POST['pseudo']);
             $password = $_POST['password'];
             $password_confirm = $_POST['password_confirm'];
-            
+
             $member = new Member($pseudo, password_hash($password, PASSWORD_BCRYPT));
             $errors = Member::validate_unicity($pseudo);
             $errors = array_merge($errors, $member->validate());
             $errors = array_merge($errors, Member::validate_passwords($password, $password_confirm));
 
-            if (count($errors) == 0) { 
+            if (count($errors) == 0) {
                 $member->persist(); //sauve l'utilisateur
                 $this->log_user($member);
             }

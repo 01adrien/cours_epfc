@@ -23,7 +23,9 @@ public class HeaderView extends VBox {
     }
 
     private void manageComponent() {
-        TextField input = new TextField(viewModel.inputValueProperty().get());
+        TextField input = new TextField("");
+        input.textProperty().bindBidirectional(viewModel.inputValueProperty());
+
         /*
         input.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!Objects.equals(oldValue, newValue) && viewModel.isSelectedCell()) {
@@ -32,8 +34,8 @@ public class HeaderView extends VBox {
                 // viewModel.addAction("DEBUG : change view " + newVal); // TODO : remove
             }
         });
-        */
 
+*/
         this.getChildren().add(input);
     }
 }

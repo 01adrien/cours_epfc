@@ -1,6 +1,7 @@
 package eu.epfc.anc3.spreadsheet.model;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,7 +11,7 @@ public class SpreadsheetModel {
     private final int rows;
     private final int columns;
     private final ObservableList<ObservableList<SpreadsheetCellModel>> data = FXCollections.observableArrayList();
-    private final SimpleObjectProperty<String> inputProperty = new SimpleObjectProperty<>("");
+    private final SimpleStringProperty inputProperty = new SimpleStringProperty("");
     private SpreadsheetCellModel selectedCell;
 
 
@@ -21,18 +22,18 @@ public class SpreadsheetModel {
     }
 
     public int getRowCount() {
-        return this.rows;
+        return rows;
     }
 
     public int getColumnCount() {
-        return this.columns;
+        return columns;
     }
 
     public SpreadsheetCellModel getCell(int line, int column) {
         return data.get(line).get(column);
     }
 
-    public SimpleObjectProperty<String> inputValueProperty () {
+    public SimpleStringProperty inputValueProperty () {
         return inputProperty;
     }
 
@@ -50,8 +51,7 @@ public class SpreadsheetModel {
     }
 
     public void setSelectedCell(int row, int col) {
-        SpreadsheetCellModel cell = getCell(row, col);
-        selectedCell = cell;
+        selectedCell = getCell(row, col);
     }
 
     public SpreadsheetCellModel getSelectedCell(){

@@ -2,14 +2,15 @@ package eu.epfc.anc3.spreadsheet.view;
 
 import eu.epfc.anc3.spreadsheet.tools.ExcelConverter;
 import eu.epfc.anc3.spreadsheet.viewmodel.SpreadsheetViewModel;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.TablePosition;
-import org.controlsfx.control.spreadsheet.GridBase;
-import org.controlsfx.control.spreadsheet.SpreadsheetCell;
-import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
-import org.controlsfx.control.spreadsheet.SpreadsheetView;
+import javafx.scene.control.TextField;
+import org.controlsfx.control.spreadsheet.*;
 
 import java.util.Objects;
 
@@ -27,6 +28,8 @@ public class MySpreadsheetView extends SpreadsheetView {
         this.setGrid(this.grid);
 
         layoutSpreadSheet();
+
+
     }
 
 
@@ -48,6 +51,7 @@ public class MySpreadsheetView extends SpreadsheetView {
 
                 int finalRow = row;
                 int finalColumn = column;
+
                 cell.itemProperty().addListener((observableValue, oldVal, newVal) -> {
                     if(!Objects.equals(oldVal, newVal)) {
                         viewModel.setCellValue(finalRow, finalColumn, (String) newVal);
@@ -56,6 +60,8 @@ public class MySpreadsheetView extends SpreadsheetView {
                         // viewModel.addAction("DEBUG : change view " + newVal); // TODO : remove
                     }
                 });
+
+
 
 
 
@@ -87,9 +93,12 @@ public class MySpreadsheetView extends SpreadsheetView {
 
                 // Met à jour la sélection dans le ViewModel
                 viewModel.setSelectedCell(selectedRow, selectedColumn);
-                viewModel.setInputValue("kkkklklk");
+                
+
+                //System.out.println((grid.getRows().get(selectedRow).get(selectedColumn)).itemProperty())
                 }
             }
         });
     }
+
 }

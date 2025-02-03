@@ -11,14 +11,11 @@
 
 <body>
     <div class="title">Members</div>
-    <?php include('view/menu.html'); ?>
+    <?php include 'view/menu.html'; ?>
     <div class="main">
         <ul>
             <?php for ($i = 0; $i < count($members); $i++): ?>
                 <li><a href='member/profile/<?= $members[$i]->pseudo ?>'><?= $members[$i]->pseudo ?></a>
-                    <pre>
-                                <?php var_dump($relations[$i]) ?>
-                            </pre>
                     <?php if ($relations[$i]['follower'] == 1 && $relations[$i]['followee'] == 1): ?>
                         <div>
                             <p><-> is a mutual friend</p>

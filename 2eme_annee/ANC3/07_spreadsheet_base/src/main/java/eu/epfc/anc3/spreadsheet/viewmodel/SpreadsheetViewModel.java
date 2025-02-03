@@ -9,11 +9,13 @@ import javafx.beans.property.*;
 public class SpreadsheetViewModel {
 
     private final SpreadsheetModel model;
+    private  final SimpleBooleanProperty inputDisabled = new SimpleBooleanProperty(true);
 
     public SpreadsheetViewModel(SpreadsheetModel model) {
         this.model = model;
 
     }
+
     private SpreadsheetCellViewModel getCellViewModel(int line, int column) {
         return new SpreadsheetCellViewModel(model.getCell(line, column));
     }
@@ -35,23 +37,23 @@ public class SpreadsheetViewModel {
         getCellViewModel(line, column).setCellValue(value);
     }
 
-    public SimpleObjectProperty<String> inputValueProperty() {
+    public SimpleStringProperty inputValueProperty() {
         return model.inputValueProperty();
     }
 
     public void setSelectedCell(int row, int col) {
 
-        if (model.getSelectedCell() != null) {
-            model.getSelectedCell().valueProperty().unbindBidirectional(model.inputValueProperty());
+        if (isSelectedCell()) {
+            getSelectedCellProperty().unbindBidirectional(model.inputValueProperty());
         }
         model.setSelectedCell(row, col);
-        getCellValueProperty(row, col).bindBidirectional(model.inputValueProperty());
-        // model.setInput(model.getSelectedCell().valueProperty().get());
+        model.setInput(getSelectedCellProperty().getValue());
+        getSelectedCellProperty().bindBidirectional(model.inputValueProperty());
 
     }
 
-    public void setInputValue(String value){
-        model.setInput(value);
+    public void setInputValue(String str){
+        model.setInput(str);
     }
 
     public SimpleObjectProperty<String> getSelectedCellProperty() {
