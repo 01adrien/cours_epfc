@@ -1,0 +1,16 @@
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart postgrest-prbd-tuto
+sudo systemctl status postgrest-prbd-tuto
+
+sudo cat /etc/systemd/system/postgrest-prbd-tuto.service
+
+sudo -u postgres psql -d prbd_tuto
+
+psql -U utilisateur -d base_de_donnees  # Se connecter à PostgreSQL
+\q                                     # Quitter psql
+\l                                     # Lister les bases de données
+\c base_de_donnees                     # Changer de base de données
+\dt                                    # Lister les tables de la base actuelle
+\d table_name                          # Voir la structure d'une table

@@ -1,0 +1,67 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run init.sql",
+            "type": "shell",
+            "command": "psql",
+            "args": [
+                "-U",
+                "postgres",
+                "-d",
+                "prbd_tuto",
+                "-f",
+                "${workspaceFolder}/backend/init.sql"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run security.sql",
+            "type": "shell",
+            "command": "psql",
+            "args": [
+                "-U",
+                "postgres",
+                "-d",
+                "prbd_tuto",
+                "-f",
+                "${workspaceFolder}/backend/security.sql"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run backend.sql",
+            "type": "shell",
+            "command": "psql",
+            "args": [
+                "-U",
+                "postgres",
+                "-d",
+                "prbd_tuto",
+                "-f",
+                "${workspaceFolder}/backend/backend.sql"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run sql scripts",
+            "dependsOn": [
+                "run init.sql",
+                "run security.sql",
+                "run backend.sql",
+            ],
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+/.idea/*
+!/.idea/dataSources.xml
+!/.idea/modules.xml
+!/.idea/libraries
+
+/.idea/libraries/*
+!/.idea/libraries/Dart_SDK.xml
+!/.idea/libraries/Flutter_Plugins.xml
+
+/data
+.DS_Store
+
+.hive
