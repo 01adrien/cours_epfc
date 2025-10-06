@@ -1,0 +1,42 @@
+
+--- POSTGREST SYSTEM ---
+
+sudo systemctl daemon-reload
+sudo systemctl restart postgrest-prbd
+sudo systemctl status postgrest-prbd
+sudo cat /etc/systemd/system/postgrest-prbd.service
+sudo journalctl -u postgrest-prbd.service -n 100
+sudo lsof -i :3000
+
+
+
+# erreur silencieuse via systemctl
+/usr/local/bin/postgrest /home/adrien/Bureau/prbd_2425_g03/postgrest.conf
+
+--- SQL POSTGRES CMD ---
+
+sudo -u postgres psql -d prbd_2425_g03
+
+# Se connecter à PostgreSQL
+psql -U <utilisateur> -d <base_de_donnees>  
+
+# Quitter psql
+\q                                      
+
+# Lister les bases de données
+\l                                      
+
+# Changer de base de données
+\c <base_de_donnees>                      
+
+# Lister les tables de la base actuelle
+\dt                                     
+
+# Voir la structure d'une table
+\d <table_name>              
+
+# Lister les schemas d'une DB
+\dn
+
+# lister les fonctions d'un schema
+\df <schema_name>.*

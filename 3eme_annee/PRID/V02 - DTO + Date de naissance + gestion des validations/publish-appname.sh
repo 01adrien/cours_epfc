@@ -1,0 +1,1 @@
+DOCKER_APP_NAME=prid-tuto

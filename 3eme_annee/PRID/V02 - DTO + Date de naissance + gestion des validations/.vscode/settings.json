@@ -1,0 +1,32 @@
+{
+    "workbench.startupEditor": "none",
+    "workbench.statusBar.visible": false,
+    "workbench.sideBar.location": "left",
+    "editor.minimap.enabled": false,
+    "editor.renderLineHighlight": "none",
+    "editor.renderWhitespace": "none",
+    "editor.cursorBlinking": "solid",
+    "editor.fontSize": 14,
+    "editor.smoothScrolling": true,
+    "files.autoSave": "onFocusChange",
+    "breadcrumbs.enabled": false,
+    "explorer.openEditors.visible": 1,
+    "extensions.ignoreRecommendations": true,
+    "workbench.editor.enablePreview": true,
+    "workbench.editor.enablePreviewFromQuickOpen": true,
+    "workbench.editor.closeOnFileDelete": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[php]": {
+        "editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+    }
+}

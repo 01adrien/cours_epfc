@@ -1,0 +1,34 @@
+# Ce fichier orchestre les services nécessaires à l'application prid-tuto.
+# Il définit deux services principaux :
+#   - backend : application .NET Core exposée sur le port 80
+#   - db      : base de données PostgreSQL persistée dans un volume Docker
+#
+# Utilisation :
+#   docker-compose up -d
+
+services:
+  backend:
+    build: . # Construit l'image à partir du Dockerfile dans le répertoire courant
+    ports:
+      - "80:80" # Expose le backend sur le port 80 de l'hôte
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production # Définit l'environnement .NET
+      - ASPNETCORE_URLS=http://*:80 # Écoute sur le port 80
+    entrypoint: ["/app/wait-for-postgres.sh", "dotnet", "backend.dll"] # Attend la BDD avant de démarrer
+    depends_on:
+      - db # Démarre après la base de données
+    restart: unless-stopped # Redémarre le service en cas d'échec
+  db:
+    # image: postgres:17.2
+    image: ghcr.io/enterprisedb/postgresql:17.2
+    restart: unless-stopped # Redémarre le service en cas d'échec
+    environment:
+      POSTGRES_DB: prid-tuto # Nom de la base de données
+      POSTGRES_USER: postgres # Utilisateur pour se connecter à la BD
+      POSTGRES_PASSWORD: dummy123 # Mot de passe pour se connecter à la BD
+    ports:
+      - "5432:5432" # Expose PostgreSQL sur le port 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persiste les données PostgreSQL
+volumes:
+  pgdata: # Volume nommé pour la persistance des données
