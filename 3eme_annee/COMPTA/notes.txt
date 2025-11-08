@@ -1,0 +1,48 @@
+--------------- LE BILAN ---------------
+
+Avoirs de l'entreprise = actif
+Dettes de l'entreprise = passif
+
+Actif:
+    L’ensemble des biens meubles et immeubles,
+    corporels et incorporels, que possède l’entreprise.
+    **Emploi des ressources**
+
+Passif:
+    L’ensemble des moyens mis à la disposition de l’entreprise.
+    **Origine des ressources**
+
+
+Actif = ce que l’entreprise possède
+Passif = ce que l’entreprise doit
+
+Liquidité : capacité d’un bien à être transformé rapidement en argent.
+
+Exigibilité : délai avant qu’une dette doive être remboursée.
+
+** POSTE DU BILAN
+
+• Les différents éléments de l’actif et du passif sont
+appelés postes du bilan.
+
+• Les Actifs fixes = actifs immobilisés (incorporels et
+corporels)
+
+    • Comprend les éléments destinés à rester dans
+    l’entreprise pendant une période relativement
+    longue et dont la présence est nécessaire à
+    l'exploitation de l'entreprise. Ex: brevets,
+    immeubles, matériel roulant, le mobilier,...
+
+• Les Actifs circulants =
+    • Comprend les éléments qui seront rapidement
+    transformé en espèces (stocks, créances,
+    placements de trésorerie,...)
+    • Le disponible reprend la caisse et les comptes
+    bancaires.
+• Les capitaux propres = les fonds propres de l’entreprise
+
+    • Comprend les fonds mis à disposition par les
+    associés argents, des apports en nature.
+    • Les dettes à plus d'un an (dettes à long terme) et
+    les dettes à moins d’un an (dettes à court terme).

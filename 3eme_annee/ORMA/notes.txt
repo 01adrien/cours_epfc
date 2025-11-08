@@ -1,0 +1,39 @@
+------------------ TABLEAU INVESTISSEMENT / AMORTISSEMENT ------------------
+
+Designation         date achat            Valeur HT          Durée              Amortissement / an
+
+notaire             01/01/2026            2000               5 ans              400  
+Pas de porte        ----------            5000               -----              1000 
+fond de commerce    ----------            40.000             -----              8000 
+vehicule            ----------            10.000             -----              2000 
+travaux             ----------            10.000             -----              2000    
+
+Total                                     67.000                                13.4000
+
+
+------------------ TABLEAU BILAN INITIAL ------------------
+
+ACTIF                                  PASSIF
+
+notaire             2000               subsides         10.000
+pas de porte        5000               especes          31.000
+garantie loc        4000               emprunt          50.000
+fond de commerce    40.000  
+materiel roulant    10.000  
+travaux             10.000                  
+stock initial       10.000              
+tresorerie          10.000
+
+
+------------------ TABLEAU CHIFFRE D'AFFAIRE ------------------
+
+
+PRODUITS          ACHAT HT      VENTE HT      COEF        VENTE       COUT         CA                   
+SERVICES                                                  MOIS        MENSUEL      MENSUEL
+
+pizza             3             15            5           2000        6000         30.000
+dessert           1             5             5           500         500          2500
+soft              1             2             2           2000        2000         4000
+vin               6             18            3           200         1200         3600
+biere             1             3             3           500         500          1500
+a emporter        3             15            5           1000        3000         15000
