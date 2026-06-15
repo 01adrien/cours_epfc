@@ -1,0 +1,34 @@
+Le corpus de cette synthése est composé de 4 documents, tous ayant pour sujet l'intelligence artificielle.
+Le premier étant un article du site web institutionnelle du Conseil de l'Union européenne intitulée « Avantages et risques de l'IA ».
+Comme seconde source nous avons un article tiré du média en ligne 'the conversation' rédigé par Sabine Bernheim-Desvaux et Juliette Sénéchal, 
+toutes deux professeures de droit, intitulé « Intelligence artificielle : protéger notre libre arbitre face aux manipulations numériques ».
+En troisième, un article du site web Labo Société Numérique, dispositif du gouvernement français, 
+intitulé « Quels rapports entretiennent les Français.es avec l'intelligence artificielle ? ».
+Et pour finir, un reportage télévisé de la RTBF intitulé « Sora : un générateur IA de vidéos qui inquiète ».
+Ces quatres documents se questionnent sur les opportunités et les risques lies aux intelligences artificielles ainsi qu'aux moyen d'y répondre.
+
+Tout d'abord l'ensemble des documents s'accordent sur le fait que l'IA apporte une avancée majeure dans pleins de domaine.
+En effet, pour le Conseil de l'Union européenne elle permet de rendre les processus plus efficace, de réduire les erreurs humaines 
+et de nous liberer des taches répétitives.
+Le reportage de la rtbf nous en offre un exemple trés concret dans les studios de création digitale ou elle permet un gain de temps et d'argent non négligeable.
+Les etudes cités dans l'article du Labo Société Numérique se fait le relaie de cette engouement, on peut y voir que entre 2023 et 2024 le nombre d'utilisateur de l'IA 
+a trés largement augmenté.
+
+Ces sources pointent également du doigt certains risques, tout d'abord le Conseil de l'Union européenne met en avant l'opacité, les biais et 
+d'eventuelles comportement discriminatoires de ces sytemes.
+Pour les deux professeures de droit de l'article de 'the conversation', l'IA permet un ciblage comportemental ce qui entre des mains mal intentionné peut conduire a des dérives 
+ayant un impact négatif sur les utilisateurs. En effet pour elles cela pose un probléme quand au libre arbitre des utiliateurs.
+Dans la vidéo sur l'outil sora, le journaliste de la rtbf alerte quand a la facilité a créer des vidéo type deep fake 
+et s'inquiète des possibilités de desinformation que cela engendre.
+
+En paralléle la législation fait débat, selon l'article de 'the conversation' les differentes reglementation se contredisent 
+et se base sur des notions trop abstraites pour pouvoir légiferer correctement.
+Pour répondre a cela le Conseil de l'Union européenne introduit une classification par niveau de risque pour pouvoir régir plus finement ces systemes.
+Mais toujour pour Sabine Bernheim-Desvaux et Juliette Sénéchal le citoyen est trop faiblement protégé et selon elles, l'annonce du nouveau Digital Fairness Act
+ne fait que confirmer le retard en matiére de protection du consommateur.
+
+Pour conclure, ces document dressent un constat nuancé de l'IA.
+Réelle source de progrés, elle est aussi porteurse de risque pour la démocratie et les droits individuelle.
+Des pistes emergent pour repondre aux problémes qu'elle souleve:
+renforcer le cadre législatif, develloper des outils de detection de contenus generés par IA. 
+Mais L'IA semble evoluer beaucoup plus vite que notre capicité a la controler

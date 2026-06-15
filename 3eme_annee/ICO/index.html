@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Intelligence Artificielle – Présentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F3EF;
+    --dark: #1A1A18;
+    --accent: #2D5BE3;
+    --muted: #8C8C84;
+    --line: #D6D4CE;
+    --white: #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  #logo {
+    width: 200px;
+    height: 75px;
+    margin-top: 20px;
+  }
+
+  #deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    display: flex;
+    opacity: 0; pointer-events: none;
+    transition: opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1);
+    transform: translateX(60px);
+  }
+  .slide.active { opacity: 1; pointer-events: all; transform: translateX(0); }
+  .slide.exit { opacity: 0; transform: translateX(-60px); pointer-events: none; }
+
+  .sidebar {
+    width: 56px; background: var(--dark);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px; flex-shrink: 0;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #444; cursor: pointer;
+    transition: background .3s, transform .3s;
+  }
+  .dot.on { background: var(--accent); transform: scale(1.4); }
+
+  .content {
+    flex: 1; padding: 52px 64px 40px;
+    display: flex; flex-direction: column;
+    overflow: hidden; gap: 10px;
+  }
+
+  .slide-num { font-size: 11px; font-weight: 400; letter-spacing: .18em; color: var(--muted); text-transform: uppercase; }
+  .rule { width: 40px; height: 2px; background: var(--accent); margin-top: 6px; }
+  .slide-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px); font-weight: 300;
+    color: var(--dark); line-height: 1.1; letter-spacing: -.01em; margin-top: 20px;
+  }
+  .slide-title span { color: var(--accent); }
+  .subtitle { font-size: 15px; font-weight: 300; color: var(--muted); margin-top: 10px; letter-spacing: .04em; }
+
+  @keyframes itemIn { to { opacity: 1; transform: none; } }
+  @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+  @keyframes popIn { from { opacity:0; transform:scale(.7); } to { opacity:1; transform:scale(1); } }
+
+  /* ── COVER ── */
+  .cover-deco {
+    position: absolute; right: 0; top: 0;
+    width: 38%; height: 100%; background: var(--dark);
+    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .cover-deco-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(90px, 14vw, 160px); font-weight: 300;
+    color: rgba(255,255,255,.06); letter-spacing: -.04em;
+    white-space: nowrap; transform: rotate(-90deg);
+  }
+  .year-badge {
+    position: absolute; bottom: 52px; right: 52px;
+    font-size: 11px; font-weight: 400; letter-spacing: .16em;
+    color: rgba(255,255,255,.3); text-transform: uppercase;
+  }
+
+  /* ── SOURCES ── */
+  .sources { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+  .source-card {
+    border: 1px solid var(--line); padding: 16px 18px; border-radius: 4px;
+    opacity: 0; transform: translateY(12px); animation: itemIn .4s forwards;
+  }
+  .source-tag { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 500; margin-bottom: 6px; }
+  .source-title { font-size: 25px; color: var(--dark); font-weight: 400; line-height: 1.4; }
+
+  /* ── PLAN ── */
+  .plan { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; padding-top: 10px; }
+  .plan-box {
+    padding: 16px 18px; border-left: 2px solid var(--line);
+    opacity: 0; transform: translateY(12px); animation: itemIn .4s forwards;
+  }
+  .plan-box.accent { border-left-color: var(--accent); }
+  .plan-label { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin-bottom: 6px; }
+  .plan-text { font-size: 25px; color: var(--dark); font-weight: 400; }
+
+  /* ── AVANTAGES : card grid ── */
+  .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .adv-card {
+    padding: 20px 22px; border-radius: 6px;
+     border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 8px;
+    opacity: 0; transform: translateY(14px); animation: itemIn .4s forwards;
+    position: relative; overflow: hidden;
+  }
+  
+  .adv-num { font-size: 10px; font-weight: 500; color: var(--accent); letter-spacing: .12em; }
+  .adv-text { font-size: 23px; font-weight: 400; color: var(--dark); line-height: 1.4; }
+  .adv-card.wide { grid-column: span 2; flex-direction: row; align-items: center; gap: 24px; }
+  .adv-stat { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 56px); font-weight: 300; color: var(--dark); white-space: nowrap; }
+  .adv-stat span { color: var(--accent); }
+  .adv-stat-label { font-size: 12px; color: var(--muted); font-weight: 300; margin-top: 4px; }
+
+  /* ── RISQUES : horizontal strips ── */
+  .risk-list { display: flex; flex-direction: column; margin-top: 16px; }
+  .risk-row {
+    display: flex; align-items: center;
+    padding: 13px 0; border-bottom: 1px solid var(--line); gap: 20px;
+    opacity: 0; transform: translateX(-20px); animation: slideIn .4s forwards;
+  }
+  .risk-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--accent); min-width: 36px; line-height: 1; }
+  .risk-label { font-size: 25px; font-weight: 400; color: var(--dark); flex: 1; }
+  .risk-badge { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; padding: 4px 10px; border-radius: 100px; font-weight: 500; }
+  .risk-badge.red { background: #FDECEA; color: #C0392B; }
+  .risk-badge.orange { background: #FEF3E2; color: #D35400; }
+  .risk-badge.yellow { background: #FEFBE6; color: #9A7D0A; }
+
+  /* ── EXEMPLE ── */
+  .example-visual { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ex-card { padding: 20px 22px; border-radius: 4px; opacity: 0; animation: itemIn .4s forwards; }
+  .ex-card.dark-card { background: var(--dark); }
+  .ex-card.light-card { border: 1px solid var(--line); }
+  .ex-card-label { font-size: 10px; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: 10px; }
+  .ex-card.dark-card .ex-card-label { color: rgba(255,255,255,.4); }
+  .ex-card-title { font-size: 25px; color: var(--dark); font-weight: 400; line-height: 1.3; }
+  .ex-card.dark-card .ex-card-title { color: var(--white); }
+
+  /* ── CONCLUSION : scattered tags ── */
+  .conclu-body { flex: 1; position: relative; margin-top: 16px; min-height: 0; }
+  .float-tag {
+    position: absolute;
+    padding: 10px 22px; border-radius: 100px;
+    font-size: 25px; letter-spacing: .02em; font-weight: 400;
+    opacity: 0; animation: popIn .5s cubic-bezier(.34,1.56,.64,1) forwards;
+    cursor: default; transition: transform .2s, box-shadow .2s;
+    white-space: nowrap;
+
+  }
+  .float-tag:hover { transform: scale(1.07) !important; box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+  .ft-dark { background: var(--dark); color: var(--white); }
+  .ft-blue { background: var(--accent); color: var(--white); }
+  .ft-outline { border: 1.5px solid var(--dark); color: var(--dark); }
+  .ft-muted { border: 1.5px solid var(--line); color: var(--muted); }
+  .conclu-note {
+    font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300;
+    max-width: 460px; position: absolute; bottom: 0; left: 0;
+    opacity: 0; animation: itemIn .5s .7s forwards;
+  }
+  .conclu-note strong { color: var(--dark); font-weight: 400; }
+
+  /* ── NAV ── */
+  #nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; z-index: 100; }
+  .nav-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.07);
+    color: #fff; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center; transition: background .2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,.18); }
+  .nav-btn:disabled { opacity: .3; cursor: default; }
+  .nav-counter { font-size: 11px; font-weight: 400; letter-spacing: .14em; color: rgba(255,255,255,.4); min-width: 40px; text-align: center; }
+
+  /* stagger */
+  .adv-card:nth-child(1),.source-card:nth-child(1),.plan-box:nth-child(1),.ex-card:nth-child(1) { animation-delay:.05s }
+  .adv-card:nth-child(2),.source-card:nth-child(2),.plan-box:nth-child(2),.ex-card:nth-child(2) { animation-delay:.15s }
+  .adv-card:nth-child(3),.source-card:nth-child(3),.plan-box:nth-child(3),.ex-card:nth-child(3) { animation-delay:.25s }
+  .adv-card:nth-child(4),.source-card:nth-child(4),.plan-box:nth-child(4),.ex-card:nth-child(4) { animation-delay:.35s }
+  .risk-row:nth-child(1) { animation-delay:.04s }
+  .risk-row:nth-child(2) { animation-delay:.13s }
+  .risk-row:nth-child(3) { animation-delay:.22s }
+  .risk-row:nth-child(4) { animation-delay:.31s }
+  .risk-row:nth-child(5) { animation-delay:.40s }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- S1 -->
+  <div class="slide active" id="s1">
+    <div class="sidebar"></div>
+    <div class="content" style="position:relative;overflow:hidden;justify-content:center;">
+      <div>
+        <div class="slide-num">01 — Couverture</div>
+        <div class="rule" style="margin-bottom:32px;"></div>
+        <div class="slide-title" style="max-width:55%;">L'intelligence<br>artificielle :<br><span>progrès</span><br>ou menace ?</div>
+        <div class="subtitle" style="margin-top:20px;">Adrien Gaucher · Alexandre Henin</div>
+        <div><svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108.39 50"><rect id="bg" width="108.39" height="50" fill="#004a93"/><path id="name" d="M16.45,12.68a5.54,5.54,0,0,0-5,5.85v13.2a5.31,5.31,0,0,0,4.72,5.67,5.54,5.54,0,0,0,1.15.12H27.86V35.29H17.41a4.86,4.86,0,0,1-.54,0,3.46,3.46,0,0,1-3.22-3.71v-5.3h14.2l.06-2.22H13.62V18.42a3.33,3.33,0,0,1,3.09-3.56,5,5,0,0,1,.76-.06H27.93V12.57H17.56A4.11,4.11,0,0,0,16.45,12.68Zm34.81,1.58a5.6,5.6,0,0,0-4.55-1.68H34.54V37.5l2.22,0V28h9.82c3.9,0,6.22-2.31,6.22-6.19V17.65a5,5,0,0,0-.87-2.6A3.29,3.29,0,0,0,51.26,14.26Zm-.68,7.54a3.5,3.5,0,0,1,0,.65c-.32,2.37-1.43,3.34-3.81,3.34h-10v-11h10c2.23,0,3.84,1.35,3.84,3.21Zm8.89-7.19a5.37,5.37,0,0,0-1.25,3.32V37.5h2.21V26.29H74.74V24.07H60.43V18.14a3.79,3.79,0,0,1,.08-.77c.46-1.69,1.79-2.58,3.86-2.58H74.81V12.57H64.23A5.92,5.92,0,0,0,59.47,14.61Zm26.09.19h10.5V12.57H85.57a5.73,5.73,0,0,0-4.16,1.25,5.49,5.49,0,0,0-1.91,4.4V31.48a5.46,5.46,0,0,0,1.8,4.64c1.29,1.15,2.11,1.4,4.65,1.4H96V35.29H85.9A4.77,4.77,0,0,1,83.59,35a3.46,3.46,0,0,1-1.87-3.5V18.15a3.23,3.23,0,0,1,1.12-2.58C83.55,15,84,14.8,85.56,14.8Z" fill="#fff"/></svg></div>
+      </div>
+      <div class="cover-deco"><div class="cover-deco-text">IA</div></div>
+      <div class="year-badge">2025–2026</div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="slide" id="s2">
+    <div class="sidebar"></div>
+    <div class="content">
+      <div><div class="slide-num">02 — Introduction</div><div class="rule"></div></div>
+      <div class="slide-title">Nos <span>sources</span></div>
+      <div class="sources">
+        <div class="source-card"><div class="source-tag">Source 01</div><div class="source-title">Conseil de l'Europe</div></div>
+        <div class="source-card"><div class="source-tag">Source 02</div><div class="source-title">The Conversation</div></div>
+        <div class="source-card"><div class="source-tag">Source 03</div><div class="source-title">RTBF</div></div>
+        <div class="source-card"><div class="source-tag">Source 04</div><div class="source-title">Labo Société Numérique</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="slide" id="s3">
+    <div class="sidebar"></div>
+    <div class="content">
+      <div><div class="slide-num">03 — Problématique</div><div class="rule"></div></div>
+      <div class="slide-title">L'IA : <span>avancée bénéfique</span> ou danger réel ?</div>
+      <div class="plan">
+        <div class="plan-box accent"><div class="plan-label">Partie I</div><div class="plan-text">Les avantages</div></div>
+        <div class="plan-box"><div class="plan-label">Partie II</div><div class="plan-text">Les risques</div></div>
+        <div class="plan-box"><div class="plan-label">Partie III</div><div class="plan-text">Encadrement</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 AVANTAGES -->
+  <div class="slide" id="s4">
+    <div class="sidebar"></div>
+    <div class="content">
+      <div><div class="slide-num">04 — Avantages</div><div class="rule"></div></div>
+      <div class="slide-title">Ce que l'IA <span>apporte</span></div>
+      <div class="adv-grid">
+        <div class="adv-card hi">
+          <div class="adv-num">01</div>
+          <div class="adv-text">Automatisation des tâches répétitives</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-num">02</div>
+          <div class="adv-text">Gain de temps &amp; réduction des erreurs</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-num">03</div>
+          <div class="adv-text">Création digitale : images, vidéos</div>
+        </div>
+        <div class="adv-card">
+            <div class="adv-num">04</div>
+            <div class="adv-text">Usage en forte hausse</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 RISQUES -->
+  <div class="slide" id="s5">
+    <div class="sidebar"></div>
+    <div class="content">
+      <div><div class="slide-num">05 — Risques</div><div class="rule"></div></div>
+      <div class="slide-title">Les <span>dangers</span> à considérer</div>
+      <div class="adv-grid">
+        <div class="adv-card">
+          <div class="adv-num">01</div>
+          <div class="risk-label">Manipulation via contenus personnalisés</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-num">02</div>
+          <div class="risk-label">Biais algorithmiques → discriminations</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-num">03</div>
+          <div class="risk-label">Opacité des systèmes — boîte noire</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-num">04</div>
+          <div class="risk-label">Menaces sécurité &amp; vie privée</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-num">05</div>
+          <div class="risk-label">Désinformation &amp; libre arbitre</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 -->
+  <div class="slide" id="s6">
+    <div class="sidebar"></div>
+    <div class="content">
+      <div><div class="slide-num">06 — Exemple concret</div><div class="rule"></div></div>
+      <div class="slide-title">Sora &amp; les <span>deepfakes</span></div>
+      <div class="example-visual">
+        <div class="ex-card dark-card"><div class="ex-card-label">Outil IA</div><div class="ex-card-title">Sora</div></div>
+        <div class="ex-card light-card"><div class="ex-card-label">Risque</div><div class="ex-card-title">Deepfakes</div></div>
+        <div class="ex-card light-card" style="grid-column:span 2;"><div class="ex-card-label">Conséquence</div><div class="ex-card-title">Un danger pour la démocratie</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7 Encadrement -->
+  <div class="slide" id="s7">
+    <div class="sidebar"></div>
+    <div class="content">
+      <div><div class="slide-num">07 — Encadrement</div><div class="rule"></div></div>
+      <div class="slide-title" style="max-width:72%;">Une opportunité<br>à <span>encadrer</span></div>
+      <div class="conclu-body" id="concluBody">
+        <div class="conclu-note">
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- S8 conclusion -->
+  <div class="slide" id="s8">
+    <div class="sidebar"></div>
+    <div class="content">
+      <div><div class="slide-num">08 — Conclusion</div><div class="rule"></div></div>
+      <div class="slide-title" style="max-width:72%;">Conclusion</div>
+      <div class="plan">
+        <div class="plan-box accent"><div class="plan-text">L'IA booste productivité et créativité humaine.</div></div>
+        <div class="plan-box"><div class="plan-text">Elle menace vie privée et démocratie.</div></div>
+        <div class="plan-box"><div class="plan-text">Une régulation forte reste indispensable.</div></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S9 MERCI -->
+  <div class="slide" id="s9">
+    <div class="sidebar"></div>
+    <div class="content" style="position:relative;overflow:hidden;justify-content:center;">
+      <div class="cover-deco" style="clip-path:polygon(0 0,100% 0,100% 100%,22% 100%);width:42%;">
+        <div class="cover-deco-text" style="font-size:clamp(60px,10vw,120px);">✦</div>
+      </div>
+      <div style="max-width:58%;">
+        <div class="slide-num">09 — Fin</div>
+        <div class="rule" style="margin-bottom:36px;"></div>
+        <div class="slide-title" style="font-size:clamp(56px,9vw,110px);line-height:1;">Merci.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="nav">
+  <button class="nav-btn" id="prev" disabled>&#8592;</button>
+  <span class="nav-counter" id="counter">1 / 9</span>
+  <button class="nav-btn" id="next">&#8594;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const sidebars = document.querySelectorAll('.sidebar');
+  let cur = 0;
+
+  const tags = [
+    { text: 'Opportunité',          cls: 'ft-dark',    top: 5,  left: 2  },
+    { text: 'Risque',               cls: 'ft-outline', top: 5,  left: 36 },
+    { text: 'Régulation',           cls: 'ft-blue',    top: 5,  left: 58 },
+    { text: 'AI Act',               cls: 'ft-dark',    top: 42, left: 15 },
+    { text: 'Démocratie',           cls: 'ft-muted',   top: 42, left: 44 },
+    { text: 'Libertés individuelles', cls: 'ft-outline', top: 42, left: 66 },
+  ];
+
+  function buildConclu() {
+    const body = document.getElementById('concluBody');
+    body.querySelectorAll('.float-tag').forEach(el => el.remove());
+    tags.forEach((t, i) => {
+      const el = document.createElement('div');
+      el.className = `float-tag ${t.cls}`;
+      el.textContent = t.text;
+      el.style.top = t.top + '%';
+      el.style.left = t.left + '%';
+      el.style.animationDelay = (0.05 + i * 0.1) + 's';
+      body.appendChild(el);
+    });
+  }
+  buildConclu();
+
+  sidebars.forEach(sb => {
+    slides.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' on' : '');
+      d.addEventListener('click', () => go(i));
+      sb.appendChild(d);
+    });
+  });
+
+  function updateDots() {
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('on', (i % slides.length) === cur);
+    });
+  }
+
+  function go(target) {
+    if (target === cur) return;
+    const old = cur;
+    slides[old].classList.remove('active');
+    slides[old].classList.add('exit');
+    setTimeout(() => slides[old].classList.remove('exit'), 600);
+    cur = target;
+    slides[cur].classList.add('active');
+    updateDots();
+    document.getElementById('counter').textContent = `${cur + 1} / ${slides.length}`;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('next').disabled = cur === slides.length - 1;
+
+    const animEls = slides[cur].querySelectorAll('.adv-card,.source-card,.plan-box,.ex-card,.risk-row,.float-tag,.conclu-note');
+    animEls.forEach(el => {
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+    });
+  }
+
+  document.getElementById('prev').addEventListener('click', () => { if (cur > 0) go(cur - 1); });
+  document.getElementById('next').addEventListener('click', () => { if (cur < slides.length - 1) go(cur + 1); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (cur < slides.length - 1) go(cur + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { if (cur > 0) go(cur - 1); }
+  });
+</script>
+</body>
+</html>

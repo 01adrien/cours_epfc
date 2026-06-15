@@ -1,0 +1,42 @@
+Synthèse de documents – L'intelligence artificielle : entre opportunités et menaces pour la société
+
+Le corpus mis à notre disposition pour réaliser cette synthèse comporte quatre documents, tous traitant de l'intelligence artificielle. 
+Le premier est un article du site web institutionnelle du Conseil de l'Union européenne intitulée « Avantages et risques de l'IA ». 
+Le deuxième est un article tiré du média en ligne 'the conversation' rédigé par Sabine Bernheim-Desvaux et Juliette Sénéchal, toutes deux professeures de droit, 
+intitulé « Intelligence artificielle : protéger notre libre arbitre face aux manipulations numériques », publié en février 2025. 
+Le troisième est un article du site web Labo Société Numérique, dispositif du gouvernement français, 
+intitulé « Quels rapports entretiennent les Français.es avec l'intelligence artificielle ? », publié en 2025. 
+Enfin, le quatrième est un reportage télévisé de la RTBF intitulé « Sora : un générateur IA de vidéos qui inquiète », diffusé en février 2024. 
+Ces quatre sources amènent à se poser la question suivante : 
+dans quelle mesure l'intelligence artificielle constitue-t-elle une avancée bénéfique pour la société, 
+et quelles réponses sont apportées aux risques qu'elle engendre ?
+
+Tout d'abord, les sources reconnaissent le potentiel important de l'IA. 
+Le Conseil de l'UE souligne qu'elle améliore l'efficacité des processus, réduit les erreurs humaines et libère les travailleurs des tâches répétitives. 
+Le reportage de la rtbf sur Sora illustre ce potentiel dans la création vidéo, où les studios y voient un outil réduisant les coûts de production. 
+L'enquête française confirme une adoption rapide : 33 % des Français ont utilisé l'IA en 2024, contre 20 % en 2023.
+
+Ensuite, plusieurs sources alertent sur des risques sérieux. Le Conseil de l'UE identifie cinq dangers principaux : 
+opacité des systèmes, manque de responsabilité, biais et discriminations, risques pour la sécurité, et violations des droits fondamentaux. 
+Sabine Bernheim-Desvaux et Juliette Sénéchal approfondissent le risque de manipulation : 
+les outils d'IA permettent de cibler les individus selon leur profil comportemental, fragilisant ainsi le libre arbitre des citoyens. 
+Le reportage sur Sora illustre ce danger concrètement, en montrant que cet outil peut générer des vidéos hyperréalistes de personnes réelles, 
+ouvrant la voie aux deepfakes à des fins de désinformation.
+
+En parallèle, la législation fait débat. Le Conseil de l'UE présente l'AI Act comme une réponse équilibrée, 
+classant les systèmes d'IA par niveaux de risque. Mais les deux professeures de droit soulignent les limites des ces réglementations : 
+contradictions internes, multiplication des autorités de contrôle et critères juridiques flous, 
+notamment la notion de « conscience » sur laquelle reposent certaines interdictions. 
+La Commission européenne a d'ailleurs annoncé un futur Digital Fairness Act pour combler ces lacunes, 
+signe que la protection des citoyens face à l'IA reste inachevée.
+
+Enfin, le  révèle des usages inégaux selon l'âge et le genre. 
+Les 18-24 ans sont les plus grands utilisateurs (69 %), tandis que les 70 ans et plus sont les plus méfiants (70 % de défiance). 
+Les hommes utilisent et font davantage confiance à l'IA que les femmes. 
+Au global, 56 % des Français n'ont pas confiance en cette technologie en 2024.
+
+Pour conclure, les quatre sources dressent un tableau nuancé de l'intelligence artificielle : 
+réelle source de progrès, elle est aussi porteuse de risques pour les droits fondamentaux et la démocratie. 
+Des pistes émergent — renforcer le cadre juridique, développer des outils de détection des contenus générés par IA, 
+réduire les inégalités d'accès — mais se heurtent à des résistances au nom de la liberté des utilisateurs. 
+La question fondamentale qui demeure est celle de la préservation de l'autonomie humaine dans un monde où les machines apprennent à influencer et à créer.

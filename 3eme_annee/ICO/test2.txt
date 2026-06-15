@@ -1,0 +1,15 @@
+Le corpus mis a notre disposition est constitué de quatres sources, toutes ayant comme sujet l'IA.
+
+Ces sources amenent a se poser la question suivante:
+Dans quelle messure l'IA represente t'elle une avancée bénéfique pour notre société,
+et quelles réponses sont apportées aux risques qu'elle engendre ?
+
+
+Tout d'abord les quatres ... s'accordent sur l'impact positif des intelligence artificielle,
+L'UE souligne que de maniére generale ces outils permettent d'ameliorer les processus, d'eviter les erreurs humaines et d'automatiser les taches repetiticves.
+Le reportage de la rtbf donne une illustration concrete de ce potentiel dans le domaine de la creation digitale ou ces outils offrent productivité accrue ainsi que gain financier.
+L'equete ... confirme un relle engouement et une adoption croissante de ces outils, on peur y lire que entre 2023 et 2024 il y une augmentation de 13%.
+
+Ensuite certaine sources alertent sur des risques serieux,
+L'UE identifie plusierus sources de danger: l'opacité de ces systemes ainsi qu'un manque de responsabilité de ces ystemes.
+  
