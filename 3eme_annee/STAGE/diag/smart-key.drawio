@@ -1,0 +1,74 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" version="29.6.6">
+  <diagram name="Page-1" id="5xqudTDfq93Xxci7z-ZB">
+    <mxGraphModel dx="1367" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-7" edge="1" parent="1" source="Hi8_gV6-1aR8jC3qlZbB-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Hi8_gV6-1aR8jC3qlZbB-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-8" connectable="0" parent="Hi8_gV6-1aR8jC3qlZbB-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="&amp;nbsp;Open&amp;nbsp;" vertex="1">
+          <mxGeometry relative="1" x="-0.1759" y="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-17" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.181;entryY=1.01;entryDx=0;entryDy=0;entryPerimeter=0;" target="Hi8_gV6-1aR8jC3qlZbB-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="440" as="sourcePoint" />
+            <mxPoint x="205" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-18" connectable="0" parent="Hi8_gV6-1aR8jC3qlZbB-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="Check QR code" vertex="1">
+          <mxGeometry relative="1" x="-0.0446" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="ESP 32&amp;nbsp; + CAMERA" vertex="1">
+          <mxGeometry height="70" width="250" x="120" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="SERRURE" vertex="1">
+          <mxGeometry height="60" width="110" x="580" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-5" edge="1" parent="1" source="Hi8_gV6-1aR8jC3qlZbB-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="Hi8_gV6-1aR8jC3qlZbB-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-6" connectable="0" parent="Hi8_gV6-1aR8jC3qlZbB-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="Scanne QR code" vertex="1">
+          <mxGeometry relative="1" x="0.2" y="-2" as="geometry">
+            <mxPoint x="-2" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="UTILISATEUR" vertex="1">
+          <mxGeometry height="50" width="140" x="175" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-12" edge="1" parent="1" source="Hi8_gV6-1aR8jC3qlZbB-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.681;entryY=-0.021;entryDx=0;entryDy=0;entryPerimeter=0;" target="Hi8_gV6-1aR8jC3qlZbB-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="290" y="230" />
+              <mxPoint x="290" y="230" />
+            </Array>
+            <mxPoint x="350" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-13" connectable="0" parent="Hi8_gV6-1aR8jC3qlZbB-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="Granted ?" vertex="1">
+          <mxGeometry relative="1" x="-0.0516" y="1" as="geometry">
+            <mxPoint y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-20" edge="1" parent="1" source="Hi8_gV6-1aR8jC3qlZbB-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="Hi8_gV6-1aR8jC3qlZbB-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-21" connectable="0" parent="Hi8_gV6-1aR8jC3qlZbB-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" value="Qr code / serrure OK ?" vertex="1">
+          <mxGeometry relative="1" x="-0.1294" y="4" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="APP WEB" vertex="1">
+          <mxGeometry height="70" width="150" x="175" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Hi8_gV6-1aR8jC3qlZbB-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="DATABASE" vertex="1">
+          <mxGeometry height="80" width="130" x="185" y="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

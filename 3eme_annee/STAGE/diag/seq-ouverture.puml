@@ -1,0 +1,60 @@
+@startuml ouverture_acces
+
+title Validation d'un accès par QR code
+
+actor Utilisateur
+participant "Serrure\n(ESP32)" as Serrure
+participant "Backend\n(Express)" as Backend
+database "MongoDB" as DB
+participant "Tableau de bord\n(Vue.js)" as Dashboard
+
+Utilisateur -> Serrure : Présente un QR code
+
+note right of Serrure
+Lecture du QR code avec la caméra
+et décodage via ESP32QRCodeReader.
+end note
+
+Serrure -> Backend : POST /access\n(UUID du pass, token)
+
+Backend -> DB : Vérifier le pass
+DB --> Backend : Informations du pass
+
+note right of Backend
+Vérification :
+• authenticité du token
+• validité du pass
+• période de validité
+• autorisation sur la serrure
+end note
+
+alt Accès autorisé
+
+    Backend -> DB : Enregistrer l'événement
+    DB --> Backend : OK
+
+    Backend --> Serrure : 200 OK
+
+    note right of Serrure
+    Déverrouillage de la serrure,
+    affichage de la validation
+    puis reverrouillage automatique.
+    end note
+
+else Accès refusé
+
+    Backend -> DB : Enregistrer le refus
+    DB --> Backend : OK
+
+    Backend --> Serrure : 403 Forbidden
+
+    note right of Serrure
+    Affichage du refus
+    sur l'écran OLED.
+    end note
+
+end
+
+Backend --> Dashboard : Diffusion de l'événement\n(WebSocket)
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml database
+
+hide circle
+skinparam linetype ortho
+
+entity "User" as User {
+    * _id : ObjectId
+    --
+    firstname : String
+    lastname : String
+    email : String
+    password : String
+    role : String
+}
+
+entity "Zone" as Zone {
+    * _id : ObjectId
+    --
+    name : String
+    description : String
+}
+
+entity "Lock" as Lock {
+    * _id : ObjectId
+    --
+    name : String
+    token : String
+    online : Boolean
+    lastSeen : Date
+}
+
+entity "AccessPass" as Pass {
+    * _id : ObjectId
+    --
+    uuid : String
+    enabled : Boolean
+    validFrom : Date
+    validTo : Date
+}
+
+entity "Event" as Event {
+    * _id : ObjectId
+    --
+    type : String
+    date : Date
+    success : Boolean
+}
+
+Zone ||--o{ Lock : contains
+
+User ||--o{ Pass : owns
+
+Zone ||--o{ Pass : grants access
+
+Lock ||--o{ Event : generates
+
+Pass ||--o{ Event : used for
+
+@enduml

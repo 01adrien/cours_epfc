@@ -1,0 +1,31 @@
+PIN pour module USB:
+    - GPIO 1 (UART TX)
+    - GPIO 3 (UART RX)
+    - GPIO 0 (changer mode flash ou serie)
+    - GND  
+
+LIBO K80 Power Supply - Pinout Summary
+
+1. CONTROL +
+   - Entrée signal de contrôle positif (généralement relié à un bouton ou un relais pour actionner la serrure)
+
+2. CONTROL -
+   - Masse / retour pour le signal de contrôle (GND du bouton ou relais)
+
+3. PUSH
+   - Entrée bouton poussoir pour déclencher l’ouverture manuellement
+
+4. GND
+   - Masse générale / référence pour le circuit interne
+
+5. 12V
+   - Sortie 12V DC pour alimenter la serrure ou d’autres périphériques
+
+6. -COM
+   - Contact commun pour la serrure / relais de sortie
+
+7. +NC
+   - Contact Normally Closed (fermé par défaut, s’ouvre pour activer la serrure)
+
+8. +NO
+   - Contact Normally Open (ouvert par défaut, se ferme pour activer la serrure)

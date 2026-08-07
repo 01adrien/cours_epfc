@@ -1,0 +1,46 @@
+Acteurs:
+    - utilisateur
+    - camera + esp 32
+    - serrure connécté
+    - app web (generation key + DB)
+
+
+Creer serrure dans l'app
+Qr code a droit d'accés a certaine serrure => serrure avec un id (hardcodé dans le firmware de chaque module ?)
+possibilité de faire des groupes de serrures dans l'app ? (tag)
+systeme de permissions par serrure ?
+SHA-512 pour la key du QR code
+des tags dans les serrures et qui sont repris dans le QR code
+
+FLOW AUTHENTIFICATION:
+    - L'utilisateur recoit un QR code.
+    - L'utilisateur scanne le QR code sur le module caméra.
+    - L'esp 32 fait une requete HTTP a l'app (avec la key du QR code + l'id de la serrure).
+    - L'app interroge la DB pour le couple key / serrure.
+    - L'esp 32 recoit réponse de l'app:
+        - Access Granted, diode verte + esp 32 ouvre serrure.
+        - Access Denied, diode rouge.
+
+
+FLOW CREATION NOUVELLE SERRURE (plus tard)
+    - dans l'app
+
+------------------------------------------
+------------------ DEV -------------------
+------------------------------------------
+
+Premier proto en python, envoie du flux vidéo de la caméra de l'esp 32 vers un serveur qui ailleurs 
+qui décode les QR code.
+Python + numpy + open-cv + pyzbar (qr code)
+
+
+-- Procedure creation nouvelle serrure
+
+On creer une serrure dans le backend, ca genere un qr code avec un token JWT + l'adreese du serveur de lock
+
+Sur la serrure on rentre en mode config, on scanne le wifi et apres on scanne le QR du serveur
+
+
+Attendion bien dire que l'objectif lien avec la plateforme na pu etre rempli
+
+le QR code est l'interface homme machine

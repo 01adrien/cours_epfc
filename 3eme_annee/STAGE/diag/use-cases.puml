@@ -1,0 +1,62 @@
+@startuml use_case_diagram
+left to right direction
+
+actor "Administrateur" as Admin
+actor "Utilisateur final" as User
+actor "Serrure connectée" as Lock
+
+rectangle "Système de contrôle d'accès" {
+
+  usecase "Gérer les zones" as UC1
+  usecase "Gérer les serrures" as UC2
+  usecase "Gérer les utilisateurs" as UC3
+  usecase "Générer un pass d'accès" as UC4
+  usecase "Activer / désactiver un pass" as UC5
+  usecase "Consulter les événements" as UC6
+  usecase "Ouvrir une serrure\nà distance" as UC12
+
+  usecase "Présenter un QR code" as UC7
+  usecase "Traiter une demande d'accès" as UC8
+  usecase "Déverrouiller la serrure" as UC9
+  usecase "Enregistrer un événement" as UC10
+
+  usecase "S'initialiser via QR code" as UC11
+
+  usecase "Demander la réinitialisation" as UC13
+  usecase "Traiter la réinitialisation" as UC14
+  usecase "Supprimer la configuration\nde la serrure" as UC15
+}
+
+' Administration
+Admin --> UC1
+Admin --> UC2
+Admin --> UC3
+Admin --> UC4
+Admin --> UC5
+Admin --> UC6
+Admin --> UC12
+
+' Utilisateur
+User --> UC7
+
+' Serrure
+Lock --> UC8
+Lock --> UC9
+Lock --> UC11
+Lock --> UC13
+
+' Relations
+UC7 ..> UC8 : <<include>>
+UC8 ..> UC9 : <<extend>>
+UC8 ..> UC10 : <<include>>
+
+UC12 ..> UC9 : <<include>>
+UC12 ..> UC10 : <<include>>
+
+UC2 ..> UC11 : <<include>>
+
+UC13 ..> UC14 : <<include>>
+UC14 ..> UC15 : <<include>>
+UC14 ..> UC10 : <<include>>
+
+@enduml

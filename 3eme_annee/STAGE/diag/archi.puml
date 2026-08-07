@@ -1,0 +1,51 @@
+@startuml architecture_globale
+
+title Architecture globale du prototype
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+top to bottom direction
+
+actor Administrateur
+actor Utilisateur
+
+rectangle "Frontend" {
+
+    component "Dashboard\nVue.js" as Dashboard
+
+}
+
+rectangle "Backend" {
+
+    component "Express.js\nAPI REST" as API
+    database "MongoDB" as DB
+
+}
+
+rectangle "Système embarqué" {
+
+    component "Firmware\nESP32-CAM\nFreeRTOS" as ESP
+
+    component "Caméra\nQR Code" as Cam
+    component "OLED" as OLED
+    component "RESET" as BTN
+    component "Serrure\nélectromagnétique" as LOCK
+}
+
+Administrateur --> Dashboard
+
+Dashboard --> API : REST
+API --> Dashboard : WebSocket
+
+API --> DB : Mongoose
+
+Utilisateur --> Cam : QR Code
+
+ESP --> API : HTTP REST
+
+ESP -- Cam
+ESP -- OLED
+ESP -- BTN
+ESP -- LOCK
+
+@enduml

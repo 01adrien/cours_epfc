@@ -1,0 +1,58 @@
+@startuml reset_serrure
+
+title Réinitialisation d'une serrure connectée
+
+actor Administrateur
+participant "Serrure\n(ESP32)" as Serrure
+participant "Backend\n(Express)" as Backend
+database "MongoDB" as DB
+participant "Tableau de bord\n(Vue.js)" as Dashboard
+
+Administrateur -> Serrure : Maintient le bouton RESET\npendant 3 secondes
+
+note right of Serrure
+La LED s'allume pour indiquer
+que la demande de
+réinitialisation est validée.
+end note
+
+note right of Serrure
+Suppression des paramètres
+stockés dans la mémoire NVS
+(Wi-Fi, identifiant et token).
+end note
+
+Serrure -> Backend : POST /locks/reset\n(id, token)
+
+note left of Backend
+Dernière communication réseau
+avant le redémarrage.
+Elle permet au backend de
+synchroniser son état avec
+la serrure.
+end note
+
+Backend -> DB : Identifier la serrure
+DB --> Backend : Serrure trouvée
+
+Backend -> DB : Supprimer la configuration\net enregistrer l'événement
+DB --> Backend : Confirmation
+
+Backend --> Dashboard : Diffuser l'événement\n(WebSocket)
+
+Backend --> Serrure : 200 OK
+
+note right of Serrure
+Redémarrage automatique.
+end note
+
+note right of Serrure
+Au prochain démarrage,
+la mémoire NVS étant vide,
+la serrure détecte l'absence
+de configuration et passe
+automatiquement en mode
+configuration.
+end note
+
+@enduml

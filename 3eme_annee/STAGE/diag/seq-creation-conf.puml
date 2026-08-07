@@ -1,0 +1,83 @@
+@startuml creation_config_serrure
+
+title Création et initialisation d'une serrure connectée
+
+actor Administrateur
+participant "Tableau de bord\n(Vue.js)" as Dashboard
+participant "Backend\n(Express)" as Backend
+database "MongoDB" as DB
+participant "Serrure\n(ESP32)" as Serrure
+
+== Création de la serrure ==
+
+Administrateur -> Dashboard : Créer une nouvelle serrure
+
+Dashboard -> Backend : POST /locks
+
+note right of Backend
+Génération d'un identifiant
+unique et d'un token
+d'authentification.
+end note
+
+Backend -> DB : Enregistrer la serrure
+DB --> Backend : Confirmation
+
+Backend --> Dashboard : Identifiant + token
+
+note right of Dashboard
+Génération des QR codes
+de configuration :
+• Wi-Fi
+• Backend
+end note
+
+Dashboard --> Administrateur : Afficher les QR codes
+
+== Installation ==
+
+Administrateur -> Serrure : Installer la serrure
+
+alt Première installation
+
+    note right of Serrure
+    Lecture de la mémoire NVS.
+    Aucune configuration
+    n'est présente.
+    end note
+
+    Administrateur -> Serrure : Scanner le QR Wi-Fi
+
+    note right of Serrure
+    Enregistrement des
+    paramètres réseau.
+    end note
+
+    Administrateur -> Serrure : Scanner le QR Backend
+
+    note right of Serrure
+    Enregistrement de
+    l'identifiant et du token.
+    end note
+
+end
+
+== Première connexion ==
+
+Serrure -> Backend : POST /register\n(id, token)
+
+Backend -> DB : Vérifier le token
+DB --> Backend : Token valide
+
+Backend -> DB : Activer la serrure
+DB --> Backend : Confirmation
+
+Backend --> Serrure : Configuration validée
+
+note right of Serrure
+Connexion au Wi-Fi
+et passage en mode
+fonctionnement.
+end note
+
+@enduml
