@@ -3,16 +3,6 @@
 hide circle
 skinparam linetype ortho
 
-entity "User" as User {
-    * _id : ObjectId
-    --
-    firstname : String
-    lastname : String
-    email : String
-    password : String
-    role : String
-}
-
 entity "Zone" as Zone {
     * _id : ObjectId
     --
@@ -25,6 +15,7 @@ entity "Lock" as Lock {
     --
     name : String
     token : String
+    zone: Zone
     online : Boolean
     lastSeen : Date
 }
@@ -32,10 +23,10 @@ entity "Lock" as Lock {
 entity "AccessPass" as Pass {
     * _id : ObjectId
     --
+    name : String
     uuid : String
     enabled : Boolean
-    validFrom : Date
-    validTo : Date
+    expiredAt : Date
 }
 
 entity "Event" as Event {
@@ -43,12 +34,9 @@ entity "Event" as Event {
     --
     type : String
     date : Date
-    success : Boolean
 }
 
 Zone ||--o{ Lock : contains
-
-User ||--o{ Pass : owns
 
 Zone ||--o{ Pass : grants access
 
