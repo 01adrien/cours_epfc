@@ -13,18 +13,17 @@ entity "Zone" as Zone {
 entity "Lock" as Lock {
     * _id : ObjectId
     --
-    name : String
     token : String
     zone: Zone
-    online : Boolean
-    lastSeen : Date
+    lastPing : Date
 }
 
 entity "AccessPass" as Pass {
     * _id : ObjectId
     --
-    name : String
+    user : String
     uuid : String
+    zone: Zone
     enabled : Boolean
     expiredAt : Date
 }
