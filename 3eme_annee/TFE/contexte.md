@@ -258,6 +258,69 @@ Aujourd'hui, le coach ne dispose pas d'une traçabilité fine de ce que le runne
 
 Un système de **snapshot** est envisagé pour résoudre ce point : il permettrait de figer et conserver l'état exact du plan/de la séance tel que reçu par le runner à un instant T, pour que le coach puisse ensuite comparer ce que le runner a réellement suivi par rapport à l'état actuel du plan côté serveur. Ce mécanisme n'est pas encore implémenté ; il constitue une perspective d'évolution à documenter dans le TFE (limites actuelles / évolutions envisagées).
 
+## Tentative antérieure : event sourcing (testée puis abandonnée)
+
+Une première approche par **event sourcing** a été testée puis abandonnée, et son analyse est un bon contenu pour le TFE (démarche d'exploration → évaluation → pivot argumenté).
+
+**Principe testé** : des événements (`UpdateUserSessionBlockEvent`, etc.) étaient déclenchés manuellement dans les contrôleurs à chaque modification d'un `SessionBlock`. Chaque événement portait un payload (`SessionBlockPayload`) contenant l'état complet et dénormalisé du bloc concerné à cet instant (label, couleur, champs, unités, icônes...), associé à un `userId`, un `entityId`, un `entityType` et un `eventType`.
+
+**Pourquoi ce n'était pas un event sourcing "pur"** : le payload de chaque événement contenait déjà un état complet dénormalisé d'une seule entité, et non un delta/commande compact (ex. "le champ X est passé de A à B"). C'était donc un hybride : la granularité fine d'un event log, mais le contenu d'un mini-snapshot par entité.
+
+**Deux problèmes concrets identifiés** :
+
+1. **Décalage avec le format attendu côté mobile.** L'app mobile attend un **payload consolidé** (plan/séance entière) traité en un seul lot, pas une série de micro-événements à rejouer. Reconstruire "ce que le runner a reçu" aurait nécessité de retrouver tous les événements pertinents antérieurs à la date de pull, de ne garder que le dernier événement par bloc (puisque chaque événement était déjà un état complet), puis de réassembler manuellement la hiérarchie plan → séance → blocs. Un travail de reconstruction en lecture plus lourd que ce que le pattern est censé apporter, sans bénéficier de son intérêt réel (rejouabilité fine, deltas compacts).
+
+2. **Déclenchement dispersé en contrôleurs.** Les événements étaient créés manuellement dans les contrôleurs, ce qui impose de penser à les déclencher à *chaque* point d'entrée touchant un `SessionBlock` (update direct, suppression en cascade, actions admin, import en masse...). Risque de capture incomplète si un point d'entrée est oublié — la fiabilité de l'event sourcing dépend normalement d'une capture garantie et centralisée, pas dispersée.
+
+**Conclusion retenue** : l'event sourcing (même rendu plus "pur", avec des deltas fins et un vrai replay) aurait *aggravé* le problème plutôt que de le résoudre, car le besoin côté mobile est grossier (un état consolidé par pull), alors que le pattern event sourcing vise une granularité fine adaptée à l'audit détaillé, pas à la reconstruction rapide d'un gros payload cohérent.
+
+**Décision retenue pour le TFE** : partir sur un **snapshot au pull**, avec la règle suivante : à chaque pull du runner, si le plan a changé depuis le dernier snapshot, on stocke directement le payload consolidé exactement tel qu'envoyé au mobile (même format que la transmission normale) — pas de reconstruction, pas de replay. Un vrai audit trail fin des actions du coach (indépendant du besoin de snapshot pour la sync) resterait un système séparé, à ne pas re-fusionner avec le besoin de synchronisation comme la première tentative l'avait fait à tort. Cette tentative event sourcing abandonnée est un bon contenu pour la partie 3.7.7-3.7.8 (illustration d'une démarche d'ingénieur avec exploration, évaluation des trade-offs, et pivot argumenté).
+
+## Piste alternative retenue : reconstruction par date (SCD Type 2), et non event sourcing
+
+Après réflexion, une piste plus économe que le snapshot matérialisé a été retenue comme axe de conception à approfondir : plutôt que de dupliquer un payload complet à chaque pull, **reconstruire l'état du plan à la demande**, en prenant la dernière date de pull du runner et en filtrant les données actuelles pour reconstituer "ce qu'il avait alors".
+
+**Clarification terminologique importante pour le TFE** : cette approche est bien du **SCD (Slowly Changing Dimension) Type 2**, et non de l'event sourcing — la distinction mérite d'être explicite dans le mémoire :
+
+- **SCD Type 2** : on stocke des **versions d'état** (chaque ligne = un état complet valide sur une période, avec des bornes `valid_from`/`valid_to`). Connaître l'état à une date T se fait par une **requête filtrée** (`WHERE valid_from <= T AND (valid_to > T OR valid_to IS NULL)`), sans calcul ni rejeu.
+- **Event sourcing** : on stocke des **événements/deltas** (des faits horodatés). Connaître l'état à une date T nécessite de **rejouer/replier** la séquence d'événements pour reconstruire l'état, qui n'est jamais stocké directement.
+
+La piste retenue (filtrer les versions valides à la date de pull) correspond à un filtre direct sur des états versionnés, donc au SCD Type 2 — pas à un rejeu d'événements.
+
+**Positionnement par rapport à la tentative event sourcing abandonnée** : cette dernière n'était en réalité ni l'un ni l'autre proprement — elle empruntait la structure de stockage de l'event sourcing (un log d'événements horodatés avec `entityId`/`entityType`/`eventType`) sans son bénéfice réel (deltas compacts, replay incrémental), puisque chaque événement contenait déjà un état complet dénormalisé plutôt qu'un delta. Reconstruire l'état à une date donnée nécessitait quand même de filtrer puis dédupliquer (garder le dernier événement par bloc avant la date), une opération de reconstruction plus lourde qu'un simple filtre SCD, sans les bénéfices structurels de l'un ou l'autre pattern.
+
+**Ce qui existe déjà, et ce qui manque** :
+- Pour les **suppressions** : le soft delete déjà en place sur les séances/blocs constitue une brique directement réutilisable pour ce filtre par date (`deleted_at IS NULL OR deleted_at > pull_date`).
+- Pour les **modifications (update)** : rien n'existe encore. Un `UPDATE` classique écrase la valeur précédente, qui devient donc irrécupérable pour une reconstruction a posteriori. Il faudrait faire évoluer ces updates vers un versionnement (nouvelle ligne à chaque modification, avec bornes de validité), a minima sur les entités concernées par la reconstruction (`session_block`, `session_block_field`).
+
+**Point de vigilance identifié** : le risque de "capture dispersée" déjà repéré lors de la tentative event sourcing (déclenchement manuel en contrôleurs, avec un risque d'oubli à un point d'entrée) s'applique de la même façon au versionnement SCD des updates. Pour l'éviter, il est recommandé de centraliser la logique d'écriture (service/repository dédié, ou observer Eloquent sur le modèle) plutôt que de la disperser dans chaque contrôleur.
+
+**Comparaison rapide avec le snapshot matérialisé** (option évoquée précédemment) :
+
+| | Snapshot matérialisé (copie au pull) | Reconstruction par date (SCD Type 2) |
+|---|---|---|
+| Stockage | Duplication du payload à chaque pull (si changement) | Pas de duplication ; versions incrémentales par champ modifié |
+| Lecture | Directe (état déjà figé) | Requête de reconstruction à travers plan → séance → blocs → champs |
+| Écriture | Simple (un insert au pull) | Chaque update doit créer une nouvelle version plutôt qu'un update in-place |
+| Fiabilité | Robuste, capturé explicitement au bon moment | Dépend de la rigueur du versioning à l'écriture (même risque que l'event sourcing abandonné si mal centralisé) |
+| Cohérence avec l'existant | Nouveau mécanisme dédié | Prolonge la logique déjà en place (soft delete) |
+
+Les deux options restent valables ; le choix final dépendra du temps disponible pour l'implémentation. Le snapshot matérialisé est plus simple et plus sûr à réaliser dans le temps imparti du TFE ; la reconstruction par date (SCD Type 2) est plus élégante et plus économe en stockage, mais demande plus de rigueur (versionnement des updates + centralisation du point d'écriture).
+
+**Sources à exploiter pour le chapitre 3.7 (état de l'art / justification du choix)** :
+
+- *Théorie SCD* :
+  - Kimball Group, "Design Tip #152 – Slowly Changing Dimension Types 0, 4, 5, 6, 7" — référence académique historique sur les types SCD : `kimballgroup.com/2013/02/design-tip-152-slowly-changing-dimension-types-0-4-5-6-7`
+  - Luzmo, "Slowly Changing Dimensions: Types and Examples" — bon résumé du piège principal du Type 2 (oubli de clôturer les anciennes lignes, entraînant des doublons en lecture) : `luzmo.com/blog/slowly-changing-dimensions`
+  - GeeksforGeeks, "Slowly Changing Dimensions" — résumé des compromis (stockage, complexité de détection des changements) : `geeksforgeeks.org/software-testing/slowly-changing-dimensions`
+  - Point à noter dans le TFE : ces sources sont orientées data warehouse/BI ; le projet applique le principe SCD Type 2 dans un contexte **transactionnel (OLTP)**, pas décisionnel — à mentionner explicitement comme adaptation du pattern à un nouveau contexte.
+
+- *Implémentation Laravel (pistes déjà existantes, à citer en état de l'art même si une solution custom est développée)* :
+  - `gazugafan/laravel-temporal` — package le plus proche d'un vrai SCD Type 2 sur Eloquent : conserve l'ancienne version intacte et insère une nouvelle révision à chaque update, testé spécifiquement sur MySQL/MariaDB. Point d'attention : la restriction temporelle n'est pas automatiquement appliquée en dehors du query builder Eloquent (`packagist.org/packages/gazugafan/laravel-temporal`).
+  - `ProAI/eloquent-versioning` — permet de ne versionner que certains attributs choisis plutôt que la ligne entière, compatible timestamps et soft delete (`github.com/ProAI/eloquent-versioning`).
+  - `jarektkaczyk/laravel-history` — package récent, approche "time travel" clé en main (`github.com/jarektkaczyk/laravel-history`).
+  - `latomate07/Laraversion` — plus orienté restauration de versions façon Git que reconstruction à une date donnée ; utile comme exemple de modélisation de diff entre versions (`github.com/latomate07/Laraversion`).
+
 ---
 
 # Authentification et sécurité
@@ -472,7 +535,7 @@ Les parties les plus intéressantes techniquement à approfondir sont notamment 
 * architecture Laravel/Inertia/Vue ;
 * modèle organisation/coaches/runners, avec distinction claire entre admin d'organisation (par club) et coach admin (rôle plateforme) ;
 * système d'authentification Sanctum + tokens personnalisés ;
-* fonctionnement hors ligne côté mobile et ses conséquences côté API (suppression logique, snapshot envisagé) ;
+* fonctionnement hors ligne côté mobile et ses conséquences côté API (suppression logique, tentative event sourcing testée puis abandonnée et raisons du pivot, piste retenue de reconstruction par date façon SCD Type 2 — à bien distinguer de l'event sourcing dans le TFE) ;
 * système de permissions, y compris le mécanisme de partage des Training Resources ;
 * abstraction `TrainingResource` ;
 * modèle `BlockType / BlockTypeField / SessionBlock / SessionBlockField` ;
