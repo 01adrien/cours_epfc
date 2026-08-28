@@ -66,6 +66,10 @@ Il existe notamment :
 * coach administrateur ;
 * runner.
 
+# KPI 
+
+La vma est la metrics la plus importante de la plateforme, elle est reseigne au moment de l'assignation du plan et les objectif de chaque séance sont en foction de la vma de l'utilisateur
+
 ## Deux niveaux d'administration bien distincts
 
 Il y a **deux niveaux d'admin séparés**, à ne pas confondre :
