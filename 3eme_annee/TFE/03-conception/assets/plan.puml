@@ -1,0 +1,27 @@
+@startuml
+skinparam backgroundColor white
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+  ArrowColor black
+}
+
+class Plan
+class Session
+class Block
+class BlockType
+class BlockField
+class BlockResult
+
+Plan "1" -- "0..*" Séance : compose
+Séance "1" -- "0..*" Bloc : compose
+Bloc "0..1" -- "0..*" Bloc : contient (imbrication)
+BlockType "1" -- "0..*" Bloc : définit le type de
+Bloc "1" -- "0..*" Champ : porte des valeurs pour
+Bloc "1" -- "0..*" Résultat : produit des
+
+note bottom of Résultat
+  Actuellement enregistrés uniquement
+  au niveau du bloc parent
+end note
+@enduml

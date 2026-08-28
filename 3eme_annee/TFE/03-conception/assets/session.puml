@@ -1,0 +1,28 @@
+@startuml
+skinparam backgroundColor white
+skinparam object {
+  BackgroundColor white
+  BorderColor black
+}
+
+object "Séance : Endurance 45min" as Session
+
+object "Bloc 1 : Échauffement\ndurée = 10 min" as B1
+object "Bloc 2 : Endurance\ndistance = 5000 m\nintensité = 2" as B2
+object "Bloc 2.1 : Accélération\ndurée = 15 s" as B21
+object "Bloc 3 : Retour au calme\ndurée = 10 min" as B3
+
+object "Résultat\ndistance = 5050 m\ndurée = 1520 s\nréussi = oui" as R2
+
+Session --> B1 : bloc 1
+Session --> B2 : bloc 2
+Session --> B3 : bloc 3
+
+B2 --> B21 : contient
+B2 --> R2 : résultat
+
+note bottom of B21
+  Bloc indicatif :
+  pas de résultat suivi
+end note
+@enduml

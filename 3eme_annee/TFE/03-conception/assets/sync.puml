@@ -1,0 +1,18 @@
+@startuml
+skinparam backgroundColor white
+skinparam sequenceMessageAlign center
+
+actor Coach
+participant "Serveur" as Server
+actor Runner
+
+Runner -> Server : pull du plan
+Server -> Runner : plan (séances, blocs)
+note over Runner : hors ligne, plusieurs semaines
+Coach -> Server : supprime un bloc du plan
+note over Server : suppression logique (soft delete)
+Runner -> Server : push des résultats\n(bloc supprimé entre-temps)
+Server -> Server : restaure le bloc (is_restored = true)
+Server -> Server : associe les résultats au bloc restauré
+Server -> Runner : confirmation
+@enduml

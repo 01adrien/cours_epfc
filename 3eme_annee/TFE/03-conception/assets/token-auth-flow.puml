@@ -1,0 +1,32 @@
+@startuml
+skinparam backgroundColor white
+skinparam sequenceMessageAlign center
+
+actor Coach
+participant "Serveur" as Server
+actor Runner
+
+== Création et activation ==
+Coach -> Server : crée le runner (pseudonyme)
+Server -> Coach : token d'activation (usage unique)
+Coach -> Runner : transmet le token d'activation
+Runner -> Server : active l'app avec le token d'activation
+Server -> Runner : token d'accès (14 jours)
+
+== Usage courant ==
+alt token de session encore valide
+    Runner -> Server : appel API (token de session)
+else token de session absent ou expiré
+    Runner -> Server : demande via le token d'accès
+    Server -> Runner : nouveau token de session (15 min)\n+ nouveau token d'accès (rotation, 14 jours)
+    Runner -> Server : appel API (nouveau token de session)
+end
+
+== Expiration ==
+Runner -> Server : demande un token de session (token d'accès expiré)
+Server -> Runner : refus (401)
+Server -> Coach : alerte : token du runner expiré
+Coach -> Server : génère un nouveau token d'activation
+Coach -> Runner : transmet le nouveau token d'activation
+note over Runner, Server : le parcours d'activation reprend depuis le début
+@enduml

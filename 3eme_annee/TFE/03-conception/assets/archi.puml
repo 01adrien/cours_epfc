@@ -1,0 +1,32 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam backgroundColor white
+
+actor "Coach / Admin\n(navigateur)" as CoachUser
+actor "Runner\n(app mobile)" as RunnerUser
+
+package "Serveur unique" {
+  component "Laravel Application" as Laravel {
+    component "Routes Web\n(routes/web.php)" as WebRoutes
+    component "Routes API\n(routes/api.php)" as ApiRoutes
+    component "Contrôleurs Web\n(Inertia responses)" as WebControllers
+    component "Contrôleurs API\n(JSON responses)" as ApiControllers
+    component "Couche métier\npartagée\n(Models / Services)" as Domain
+  }
+  database "MariaDB" as DB
+}
+
+CoachUser --> WebRoutes : HTTP + session Sanctum
+RunnerUser --> ApiRoutes : HTTPS + Bearer token
+
+WebRoutes --> WebControllers
+ApiRoutes --> ApiControllers
+
+WebControllers --> Domain
+ApiControllers --> Domain
+
+WebControllers ..> CoachUser : Réponse Inertia\n(HTML + props Vue)
+ApiControllers ..> RunnerUser : Réponse JSON
+
+Domain --> DB
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+skinparam backgroundColor white
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+  ArrowColor black
+}
+
+class Organisation {
+  + email
+  + password
+  + max_coaches
+  + max_runners
+  + is_admin
+}
+
+class Coach {
+  + name
+  + password
+  + is_admin
+}
+
+class Runner {
+  + name (pseudonyme)
+}
+
+Organisation "1" -- "0..*" Coach : emploie
+Organisation "1" -- "0..*" Runner : rattache
+Coach "0..1" -- "0..*" Runner : encadre
+
+note right of Organisation
+  is_admin = true pour l'organisation
+  interne (éditeur de la plateforme)
+end note
+
+note right of Coach
+  is_admin = true pour un
+  coach admin (rôle plateforme)
+end note
+
+note bottom of Runner
+  Aucun identifiant de connexion web,
+  pas d'identité personnelle stockée
+end note
+@enduml

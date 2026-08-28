@@ -13,6 +13,8 @@ Le projet est composé de deux parties :
 
 Mon TFE porte donc principalement sur la **conception et la réalisation de la plateforme web et des API**.
 
+on a un expert metier pour l'architecture des plans d'entrainement (coach)
+
 ---
 
 # Fonctionnement métier
