@@ -1,0 +1,77 @@
+@startuml MCD
+
+hide circle
+skinparam linetype ortho
+
+entity "Organisation" as Organisation
+entity "Coach" as Coach
+entity "Runner" as Runner
+entity "Token" as Token
+
+entity "TrainingPlan" as TrainingPlan
+entity "TrainingSession" as TrainingSession
+entity "SessionType" as SessionType
+entity "TrainingSessionTemplate" as TrainingSessionTemplate
+
+entity "SessionBlock" as SessionBlock
+entity "SessionBlockOption" as SessionBlockOption
+entity "SessionBlockExercice" as SessionBlockExercice
+entity "SessionBlockTemplate" as SessionBlockTemplate
+
+entity "BlockType" as BlockType
+entity "BlockFieldType" as BlockFieldType
+entity "BlockField" as BlockField
+entity "BlockResult" as BlockResult
+entity "Unit" as Unit
+entity "Intensity" as Intensity
+
+entity "UserTrainingPlan" as UserTrainingPlan
+entity "UserTrainingSession" as UserTrainingSession
+
+' --- Hiérarchie des acteurs ---
+Organisation "1" -- "0..n" Coach : emploie
+Organisation "1" -- "0..n" Runner : encadre
+Coach "0..1" -- "0..n" Runner : accompagne
+Runner "1" -- "0..n" Token : possède
+
+' --- Propriété des Training Resources ---
+Coach "0..1" -- "0..n" TrainingPlan : crée
+Organisation "0..1" -- "0..n" TrainingPlan : possède directement
+Coach "0..1" -- "0..n" BlockType : crée
+Organisation "0..1" -- "0..n" BlockType : possède directement
+Coach "0..1" -- "0..n" SessionType : crée
+Organisation "0..1" -- "0..n" SessionType : possède directement
+Coach "0..1" -- "0..n" TrainingSessionTemplate : crée
+Organisation "0..1" -- "0..n" TrainingSessionTemplate : possède directement
+Coach "0..1" -- "0..n" SessionBlockTemplate : crée
+Organisation "0..1" -- "0..n" SessionBlockTemplate : possède directement
+
+' --- Composition d'un plan-modèle ---
+TrainingPlan "1" -- "0..n" TrainingSession : regroupe
+TrainingSession "0..n" -- "1" SessionType : catégorisée par
+TrainingSessionTemplate "0..1" -- "1" SessionType : catégorisée par
+
+' --- Blocs (rattachement conceptuel à une séance,
+'     quelle que soit sa nature — cf. relation polymorphique en MLD) ---
+(TrainingSession, UserTrainingSession, TrainingSessionTemplate) "1" -- "0..n" SessionBlock : compose
+SessionBlock "0..1" -- "0..n" SessionBlock : contient (imbrication)
+SessionBlock "1" -- "0..1" SessionBlockOption : précise
+SessionBlock "1" -- "0..n" SessionBlockExercice : détaille
+SessionBlock "0..1" -- "0..1" SessionBlockTemplate : extrait comme
+
+BlockType "1" -- "0..n" SessionBlock : détermine la nature de
+BlockType "0..n" -- "0..n" BlockType : peut contenir (types enfants)
+BlockType "1" -- "0..n" BlockFieldType : définit les champs pertinents via
+BlockFieldType "1" -- "0..n" BlockField : valeur concrète
+SessionBlock "1" -- "0..n" BlockField : porte
+SessionBlock "1" -- "0..n" BlockResult : produit
+Unit "1" -- "0..n" BlockField : exprimée dans
+BlockFieldType "0..n" -- "0..n" Unit : unités autorisées
+
+' --- Assignation d'un plan à un runner ---
+Runner "1" -- "0..n" UserTrainingPlan : reçoit
+TrainingPlan "1" -- "0..n" UserTrainingPlan : origine de
+UserTrainingPlan "1" -- "0..n" UserTrainingSession : regroupe
+UserTrainingSession "0..n" -- "1" SessionType : catégorisée par
+
+@enduml

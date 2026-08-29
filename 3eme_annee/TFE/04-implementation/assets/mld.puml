@@ -1,0 +1,287 @@
+@startuml MLD
+
+hide circle
+skinparam linetype ortho
+
+entity "organizations" as organizations {
+  * id : bigint <<PK>>
+  --
+  name : varchar
+  email : varchar (unique)
+  password : varchar
+  max_users : int
+  max_coaches : int
+  active : boolean
+  is_admin : boolean
+  logo_path : varchar
+  color : varchar
+}
+
+entity "coaches" as coaches {
+  * id : bigint <<PK>>
+  --
+  # organization_id : bigint <<FK>>
+  name : varchar
+  password : varchar
+  active : boolean
+  is_admin : boolean
+}
+
+entity "users" as users {
+  * id : bigint <<PK>>
+  --
+  # organization_id : bigint <<FK>>
+  # coach_id : bigint <<FK, nullable>>
+  name : varchar
+  active : boolean
+}
+
+entity "tokens" as tokens {
+  * id : bigint <<PK>>
+  --
+  # user_id : bigint <<FK>>
+  type : enum(ACTIVATION, ACCES)
+  token : varchar (hash, unique)
+  expires_at : timestamp
+  used_at : timestamp
+  revoked_at : timestamp
+}
+
+entity "training_plans" as training_plans {
+  * id : bigint <<PK>>
+  --
+  # coach_id : bigint <<FK, nullable>>
+  # organization_id : bigint <<FK, nullable>>
+  label : varchar
+  description : text
+  share : boolean
+}
+
+entity "session_types" as session_types {
+  * id : bigint <<PK>>
+  --
+  # coach_id : bigint <<FK, nullable>>
+  # organization_id : bigint <<FK, nullable>>
+  label : varchar
+  description : text
+  color : varchar
+  share : boolean
+}
+
+entity "training_sessions" as training_sessions {
+  * id : bigint <<PK>>
+  --
+  # training_plan_id : bigint <<FK, nullable>>
+  # session_type_id : bigint <<FK, nullable>>
+  week_number : int
+  day_number : int
+}
+
+entity "training_session_templates" as training_session_templates {
+  * id : bigint <<PK>>
+  --
+  # coach_id : bigint <<FK, nullable>>
+  # organization_id : bigint <<FK>>
+  # session_type_id : bigint <<FK, nullable>>
+  label : varchar
+  description : text
+  share : boolean
+}
+
+entity "session_blocks" as session_blocks {
+  * id : bigint <<PK>>
+  --
+  # sessionable_id : bigint <<poly, nullable>>
+  # sessionable_type : varchar <<poly, nullable>>
+  # block_type_id : bigint <<FK>>
+  # parent_id : bigint <<FK, nullable, self>>
+  order : int
+  deleted_at : timestamp
+  is_restored : boolean
+  ..
+  sessionable_type ∈ {training_session, user_training_session, training_session_template}
+}
+
+entity "session_block_options" as session_block_options {
+  * id : bigint <<PK>>
+  --
+  # session_block_id : bigint <<FK, unique>>
+  heart_rate_zone : tinyint
+  load : int
+  deleted_at : timestamp
+}
+
+entity "session_block_exercices" as session_block_exercices {
+  * id : bigint <<PK>>
+  --
+  # session_block_id : bigint <<FK>>
+  order : int
+  label : varchar
+  repetitions : int
+  deleted_at : timestamp
+}
+
+entity "session_block_templates" as session_block_templates {
+  * id : bigint <<PK>>
+  --
+  # session_block_id : bigint <<FK, unique, nullable>>
+  # coach_id : bigint <<FK, nullable>>
+  # organization_id : bigint <<FK>>
+  label : varchar
+  description : text
+  share : boolean
+}
+
+entity "block_types" as block_types {
+  * id : bigint <<PK>>
+  --
+  # coach_id : bigint <<FK, nullable>>
+  # organization_id : bigint <<FK, nullable>>
+  label : varchar
+  description : text
+  color : varchar
+  share : boolean
+  training_type : enum(RUNNING, CONDITIONING)
+}
+
+entity "block_type_children" as block_type_children {
+  * id : bigint <<PK>>
+  --
+  # parent_type_id : bigint <<FK -> block_types>>
+  # child_type_id : bigint <<FK -> block_types>>
+}
+
+entity "block_field_types" as block_field_types {
+  * id : bigint <<PK>>
+  --
+  label : enum(DURATION, DISTANCE, REPETITION, RECOVERY_DISTANCE,
+               RECOVERY_DURATION, RECOVERY_INTENSITY, INTENSITY,
+               DISTANCE_OR_DURATION, EXERCICE)
+  icon : text
+}
+
+entity "block_type_fields" as block_type_fields {
+  * id : bigint <<PK>>
+  --
+  # block_type_id : bigint <<FK>>
+  # block_field_type_id : bigint <<FK>>
+  default_value : int
+  order : int
+}
+
+entity "block_field_type_unit" as block_field_type_unit {
+  * id : bigint <<PK>>
+  --
+  # block_field_type_id : bigint <<FK>>
+  # unit_id : bigint <<FK>>
+}
+
+entity "units" as units {
+  * id : bigint <<PK>>
+  --
+  label : varchar
+  symbol : varchar
+}
+
+entity "block_fields" as block_fields {
+  * id : bigint <<PK>>
+  --
+  # session_block_id : bigint <<FK>>
+  # block_type_field_id : bigint <<FK>>
+  # unit_id : bigint <<FK, nullable>>
+  data : int
+  deleted_at : timestamp
+}
+
+entity "block_results" as block_results {
+  * id : bigint <<PK>>
+  --
+  # session_block_id : bigint <<FK>>
+  duration : int
+  distance : int
+  index : int
+  success : boolean
+}
+
+entity "intensities" as intensities {
+  * id : bigint <<PK>>
+  --
+  label : varchar
+  range : varchar
+  low : double
+  high : double
+}
+
+entity "user_training_plans" as user_training_plans {
+  * id : bigint <<PK>>
+  --
+  # user_id : bigint <<FK>>
+  label : varchar
+  description : varchar
+  vma : decimal(5,2)
+  start_date : date
+  pulled_at : timestamp
+  pushed_at : timestamp
+  snapshot : json
+}
+
+entity "user_training_sessions" as user_training_sessions {
+  * id : bigint <<PK>>
+  --
+  # user_training_plan_id : bigint <<FK, nullable>>
+  # session_type_id : bigint <<FK>>
+  week_number : int
+  day_number : int
+  comment : text
+  feedback : int
+  deleted_at : timestamp
+  is_restored : boolean
+}
+
+' --- Relations ---
+organizations ||--o{ coaches
+organizations ||--o{ users
+coaches |o--o{ users
+users ||--o{ tokens
+
+organizations |o--o{ training_plans
+coaches |o--o{ training_plans
+organizations |o--o{ session_types
+coaches |o--o{ session_types
+organizations |o--o{ block_types
+coaches |o--o{ block_types
+organizations ||--o{ training_session_templates
+coaches |o--o{ training_session_templates
+organizations ||--o{ session_block_templates
+coaches |o--o{ session_block_templates
+
+training_plans ||--o{ training_sessions
+session_types |o--o{ training_sessions
+session_types |o--o{ training_session_templates
+session_types ||--o{ user_training_sessions
+
+training_sessions |o--o| session_blocks : sessionable
+user_training_sessions |o--o| session_blocks : sessionable
+training_session_templates |o--o| session_blocks : sessionable
+session_blocks |o--o{ session_blocks : parent_id
+session_blocks ||--o| session_block_options
+session_blocks ||--o{ session_block_exercices
+session_blocks |o--o| session_block_templates
+
+block_types ||--o{ session_blocks
+block_types }o--o{ block_type_children
+block_types ||--o{ block_type_fields
+block_field_types ||--o{ block_type_fields
+block_field_types }o--o{ block_field_type_unit
+units }o--o{ block_field_type_unit
+
+session_blocks ||--o{ block_fields
+block_type_fields ||--o{ block_fields
+units |o--o{ block_fields
+session_blocks ||--o{ block_results
+
+users ||--o{ user_training_plans
+training_plans |o--o{ user_training_plans
+user_training_plans |o--o{ user_training_sessions
+
+@enduml

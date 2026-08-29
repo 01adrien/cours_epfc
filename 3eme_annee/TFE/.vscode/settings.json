@@ -1,0 +1,73 @@
+{
+    // --- Minimap ---
+    "editor.minimap.enabled": false,
+
+    // --- Interface épurée ---
+    "workbench.activityBar.location": "hidden",
+    "workbench.statusBar.visible": true,
+    "breadcrumbs.enabled": false,
+    "workbench.editor.showTabs": "single",
+    "workbench.editor.enablePreview": true,
+    "workbench.tree.indent": 12,
+    "window.menuBarVisibility": "compact",
+    "workbench.layoutControl.enabled": false,
+
+    // --- Éditeur : réduire le bruit visuel ---
+    "editor.renderWhitespace": "none",
+    "editor.guides.indentation": false,
+    "editor.guides.bracketPairs": false,
+    "editor.overviewRulerBorder": false,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.scrollbar.vertical": "auto",
+    "editor.scrollbar.horizontal": "auto",
+    "editor.scrollBeyondLastLine": false,
+    "editor.lightbulb.enabled": "off",
+    "editor.stickyScroll.enabled": false,
+    "editor.matchBrackets": "never",
+    "editor.occurrencesHighlight": "off",
+    "editor.selectionHighlight": false,
+
+    // --- Confort de lecture / rédaction ---
+    "editor.fontSize": 14,
+    "editor.fontFamily": "'JetBrains Mono', Menlo, monospace",
+    "editor.lineHeight": 1.6,
+    "editor.cursorBlinking": "solid",
+    "editor.smoothScrolling": true,
+    "editor.wordWrap": "on",
+    "editor.rulers": [],
+
+    // --- Explorateur de fichiers ---
+    "explorer.compactFolders": false,
+    "explorer.decorations.badges": false,
+    "explorer.decorations.colors": false,
+
+    // --- Réduire les distractions ---
+    "editor.codeLens": false,
+    "editor.inlineSuggest.enabled": false,
+    "editor.hover.enabled": true,
+    "problems.decorations.enabled": false,
+    "workbench.editor.decorations.badges": false,
+    "workbench.editor.decorations.colors": false,
+
+    // --- Markdown (pour la rédaction du TFE) ---
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "other": false,
+            "comments": false,
+            "strings": false
+        },
+        "editor.renderWhitespace": "none"
+    },
+    "markdown.preview.fontSize": 15,
+
+    // --- Fichiers ---
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/*.png": false,
+        "**/.combined_tmp.md": true,
+        "**/.preview_tmp.html": true
+    }
+}
