@@ -9,7 +9,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-OUTPUT="$ROOT_DIR/tfe.odt"
+OUTPUT="$ROOT_DIR/build/tfe.odt"
 
 echo "==> Collecte des fichiers Markdown, dans l'ordre des dossiers"
 MD_FILES=()

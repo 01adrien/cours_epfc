@@ -8,20 +8,25 @@ skinparam class {
 
 class Plan
 class Session
+class SessionType
 class Block
 class BlockType
 class BlockField
 class BlockResult
+class Unit
 
-Plan "1" -- "0..*" Séance : compose
-Séance "1" -- "0..*" Bloc : compose
-Bloc "0..1" -- "0..*" Bloc : contient (imbrication)
-BlockType "1" -- "0..*" Bloc : définit le type de
-Bloc "1" -- "0..*" Champ : porte des valeurs pour
-Bloc "1" -- "0..*" Résultat : produit des
+Plan "1" -- "0..*" Session : compose
+Session "0..*" -- "1" SessionType : catégorisée par
+Session "1" -- "0..*" Block : compose
+Block "0..1" -- "0..*" Block : contient (imbrication)
+BlockType "1" -- "0..*" Block : définit le type de
+Block "1" -- "0..*" BlockField : porte des valeurs planifiées
+Block "1" -- "0..*" BlockResult : produit des résultats
+BlockField "0..*" -- "1" Unit : exprimée dans
 
-note bottom of Résultat
-  Actuellement enregistrés uniquement
-  au niveau du bloc parent
+note bottom of Unit
+  ex. intensité, mètres, secondes,
+  répétitions
 end note
+
 @enduml

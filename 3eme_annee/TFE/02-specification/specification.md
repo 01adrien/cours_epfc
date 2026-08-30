@@ -1,6 +1,6 @@
 # 2. Analyse et spécification
 
-Cette partie présente le fonctionnement de NoTrackRun, elle décrit successivement le fonctionnement général du systémex, les acteurs qui y interviennent et leurs responsabilités respectives, puis formalise ce fonctionnement en besoins fonctionnels et non fonctionnels, en règles métier et en cas d'utilisation. L'objectif est de poser une compréhension commune du problème à résoudre avant d'en présenter la solution technique.
+Cette partie présente le fonctionnement de NoTrackRun, elle décrit successivement le fonctionnement général du systéme, les acteurs qui y interviennent et leurs responsabilités respectives, puis formalise ce fonctionnement en besoins fonctionnels et non fonctionnels, en règles métier et en cas d'utilisation.L'objectif est de poser une compréhension commune du fonctionnement attendu de la plateforme avant d'en présenter la solution technique.
 
 ## 2.1. Fonctionnement général
 
@@ -8,33 +8,26 @@ Pour rappel le projet consiste en une solution de coaching sportif connecté des
 
 Le fonctionnement général repose sur plusieurs systèmes complémentaires. La plateforme web constitue l'interface principale utilisée par les organisations et les coachs pour gérer les utilisateurs, préparer les entraînements et consulter les résultats. Une API assure la communication avec l'application mobile, utilisée par les runners pour récupérer leurs entraînements et transmettre leurs performances. L'application mobile permet quant à elle au runner de consulter son programme d'entraînement et de réaliser les séances qui lui ont été attribuées.
 
-**Gestion des organisations et des accès.** Le fonctionnement débute lorsqu'une organisation est intégrée à la plateforme. Lors de cet onboarding, un quota d'accès est défini pour l'organisation, comprenant notamment un nombre d'accès destinés aux coachs et un nombre d'accès destinés aux runners. Les accès sont ensuite créés par l'administrateur de la plateforme conformément à ces quotas.
+**Gestion des organisations et des accès.** Tout commence lorsqu'une organisation est intégrée à la plateforme. Lors de cet onboarding, un quota d'accès est défini pour l'organisation, comprenant notamment un nombre d'accès destinés aux coachs et un nombre d'accès destinés aux runners.
 
 Une organisation peut ainsi disposer de plusieurs coachs. Chaque coach peut ensuite créer des runners. Un runner est lié à la fois à son organisation et à son coach.
 
-La plateforme prend également en compte différents niveaux de responsabilité. L'administrateur d'une organisation dispose d'un périmètre limité à son club, tandis que certaines fonctionnalités de gestion de ressources relèvent d'un rôle d'administration à l'échelle de la plateforme. Cette distinction permet de séparer la gestion administrative d'une organisation de la gestion globale des ressources utilisées par les coachs.
+La plateforme prend également en compte différents niveaux de responsabilité. L'organisation dispose d'un périmètre limité à son « club », tandis que certaines fonctionnalités de gestion de ressources relèvent d'un rôle d'administration à l'échelle de la plateforme.
 
 **Création et planification des entraînements.** Une fois son accès créé, le coach utilise la plateforme pour préparer les entraînements de ses runners. Il peut créer de nouveaux runners, mais également construire les entraînements à partir des ressources disponibles.
 
-Le système repose sur le concept de Training Resources. Celles-ci permettent de construire progressivement les différents éléments d'un entraînement. Un coach peut créer ses propres ressources et templates, mais également réutiliser des ressources déjà disponibles créées par ses collègues ou par le coach administrateur de la plateforme. Cette possibilité de réutilisation permet d'éviter de reconstruire systématiquement les mêmes éléments et facilite la préparation de programmes d'entraînement cohérents.
+Le système repose sur le concept de Training Resources. Celles-ci permettent de construire progressivement les différents éléments d'un entraînement. Un coach peut créer ses propres ressources et templates, mais également réutiliser des ressources déjà disponibles créées par ses collègues ou par le coach administrateur de la plateforme. Cette possibilité de réutilisation permet d'éviter de reconstruire systématiquement les mêmes éléments et facilite la préparation des entraînements.
 
-Les ressources sont ensuite utilisées pour composer des séances. Plusieurs séances peuvent être regroupées au sein d'un Training Plan. Celui-ci organise les séances selon une structure temporelle composée de semaines et de jours. Lorsqu'un plan est attribué à un runner, une date de début permet de positionner les séances dans son calendrier d'entraînement.
+La VMA (Vitesse Maximale Aérobie) est le marqueur central autour duquel s'organise la construction d'un entraînement. Elle est renseignée par le coach au moment où il attribue un plan à un runner, et constitue la donnée de référence à partir de laquelle les objectifs de chaque séance sont déterminés. La grande majorité des blocs qui composent une séance n'expriment pas leur intensité en valeur absolue (une vitesse ou une allure précise), mais en un niveau d'intensité relatif à la VMA du runner. C'est ce couple — intensité planifiée par le coach, VMA propre au runner — qui permet à la plateforme de calculer automatiquement le résultat attendu d'un bloc (l'allure ou l'objectif que le runner doit viser), sans que ni le coach ni le runner n'aient à effectuer ce calcul eux-mêmes. Un même plan, construit une seule fois par le coach, produit ainsi des objectifs concrets différents pour chaque runner auquel il est attribué, proportionnels à leurs capacités respectives.
 
-La VMA (Vitesse Maximale Aérobie) est le KPI central autour duquel s'organise la construction d'un entraînement. Elle est renseignée par le coach au moment où il attribue un plan à un runner, et constitue la donnée de référence à partir de laquelle les objectifs de chaque séance sont déterminés. La grande majorité des blocs qui composent une séance n'expriment pas leur intensité en valeur absolue (une vitesse ou une allure précise), mais en un niveau d'intensité relatif à la VMA du runner. C'est ce couple — intensité planifiée par le coach, VMA propre au runner — qui permet à la plateforme de calculer automatiquement le résultat attendu d'un bloc (l'allure ou l'objectif que le runner doit viser), sans que ni le coach ni le runner n'aient à effectuer ce calcul eux-mêmes. Un même plan, construit une seule fois par le coach, produit ainsi des objectifs concrets différents pour chaque runner auquel il est attribué, proportionnels à leurs capacités respectives.
-
-Cette logique de calcul par la VMA s'applique toutefois à un seul des deux types d'entraînement pris en charge par la plateforme. Le système distingue en effet la course à pied, pour laquelle la VMA sert de référence à l'intensité de la plupart des blocs, et le renforcement / conditionnement physique, orienté vers des exercices dont les objectifs ne s'expriment pas de la même manière (répétitions, charge, exercice précis, plutôt qu'une intensité relative à une vitesse de référence). Ce second type d'entraînement a été effectivement demandé et exploité dès la phase bêta, à la demande d'un client.
 
 **Transmission des entraînements au runner.** Une fois qu'un plan a été attribué, le runner récupère son entraînement depuis l'application mobile. La communication entre l'application et la plateforme s'effectue au travers de l'API.
-
-Le runner n'est toutefois pas nécessairement connecté en permanence au réseau. L'application est conçue pour pouvoir récupérer les entraînements et permettre leur réalisation dans un contexte où la connexion peut être temporairement indisponible. Cette contrainte est particulièrement importante dans le cadre d'une activité sportive, qui peut être réalisée dans des environnements où la couverture réseau n'est pas garantie.
 
 Après avoir récupéré son programme, le runner peut réaliser une séance même sans connexion. Les résultats sont alors conservés temporairement par l'application et pourront être transmis à la plateforme lorsque la connexion sera à nouveau disponible.
 
 **Réalisation et transmission des performances.** Après avoir terminé une séance, le runner transmet ses résultats à la plateforme par l'intermédiaire de l'API lorsque cela est possible. Si une connexion réseau est disponible immédiatement, les résultats peuvent être envoyés sans attendre. Dans le cas contraire, l'application attend le rétablissement de la connexion pour effectuer cette transmission.
 
 Les données transmises correspondent aux informations nécessaires au suivi de la séance. Les performances sont notamment associées aux blocs qui composent l'entraînement, ce qui permet de conserver un niveau de détail suffisamment précis pour analyser le déroulement de la séance.
-
-Cette approche permet également de limiter les données transmises à la plateforme. Le suivi des performances ne nécessite notamment pas la transmission systématique des données GPS détaillées du runner. La solution cherche ainsi à fournir les informations nécessaires au coaching tout en limitant la quantité de données personnelles et sportives collectées.
 
 **Consultation et analyse des performances.** Une fois les résultats reçus par la plateforme, le coach peut consulter les performances de ses runners depuis l'interface web.
 
@@ -44,7 +37,7 @@ Deux niveaux de consultation sont proposés. Le premier correspond à une analys
 
 Le système distingue plusieurs acteurs selon leur niveau d'intervention. Cette séparation permet de répartir les responsabilités entre la gestion globale de la plateforme, la gestion d'une organisation, le suivi des runners et l'exécution des entraînements.
 
-**Synthèse des responsabilités**
+
 
 | Acteur | Périmètre | Responsabilités principales |
 | --- | --- | --- |
@@ -150,7 +143,7 @@ Les règles métier définissent les contraintes qui encadrent l'utilisation des
 - L'administrateur d'organisation peut avoir une vue globale sur l'activité de son organisation.
 - Le coach administrateur peut créer des ressources globales utilisables par les différentes organisations.
 
-## 2.6. Cas d'utilisation principaux
-
-Les cas d'utilisation permettent de représenter les principales interactions entre les acteurs et la plateforme. Ils complètent les besoins fonctionnels en mettant en évidence les actions réalisées par chaque type d'utilisateur au sein du système.
+::: annexe
+Diagramme de uses cases reprennant les acteurs et actions ci-dessus — cf. annexe 10.2.
+:::
 

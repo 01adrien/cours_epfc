@@ -5,10 +5,10 @@ skinparam object {
   BorderColor black
 }
 
-object "Séance : Endurance 45min" as Session
+object "Session : Endurance 45min" as Session
 
 object "Bloc 1 : Échauffement\ndurée = 10 min" as B1
-object "Bloc 2 : Endurance\ndistance = 5000 m\nintensité = 2" as B2
+object "Bloc 2 : Endurance\ndistance = 5000 m\nintensité = E2" as B2
 object "Bloc 2.1 : Accélération\ndurée = 15 s" as B21
 object "Bloc 3 : Retour au calme\ndurée = 10 min" as B3
 

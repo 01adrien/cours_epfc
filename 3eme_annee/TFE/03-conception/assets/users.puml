@@ -39,7 +39,7 @@ note right of Coach
 end note
 
 note bottom of Runner
-  Aucun identifiant de connexion web,
+  Aucun identifiant de connexion,
   pas d'identité personnelle stockée
 end note
 @enduml

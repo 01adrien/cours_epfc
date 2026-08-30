@@ -16,8 +16,8 @@ package "Serveur unique" {
   database "MariaDB" as DB
 }
 
-CoachUser --> WebRoutes : HTTP + session Sanctum
-RunnerUser --> ApiRoutes : HTTPS + Bearer token
+CoachUser --> WebRoutes
+RunnerUser --> ApiRoutes
 
 WebRoutes --> WebControllers
 ApiRoutes --> ApiControllers
